@@ -12,22 +12,19 @@ const initialState = {
 export const __addWrite = createAsyncThunk('addWrites', async (payload, thunkAPI) => {
   try {
     const response = await axios.post('http://localhost:4000/posts', payload)
-    thunkAPI.fulfillWithValue(response.data)
+    return thunkAPI.fulfillWithValue(response.data)
   } catch (error) {
-    console.log('error', error)
-    thunkAPI.rejectWithValue(error)
+    return thunkAPI.rejectWithValue(error)
   }
 })
 
 // 게시물 조회 Thunk 함수
-export const __getWrite = createAsyncThunk('getWirtes', async (payload, thunkAPI) => {
+export const __getWrite = createAsyncThunk('getWrites', async (payload, thunkAPI) => {
   try {
-    const response = await axios.get('http://localhost:4000/posts/dsgfdssfg')
-    console.log('response.data', response.data)
-    thunkAPI.fulfillWithValue(response.data)
+    const response = await axios.get('http://localhost:4000/posts/')
+    return thunkAPI.fulfillWithValue(response.data)
   } catch (error) {
-    console.log('error', error)
-    thunkAPI.rejectWithValue('error')
+    return thunkAPI.rejectWithValue(error)
   }
 })
 
@@ -58,13 +55,11 @@ const writeSlice = createSlice({
       state.error = false
     },
     [__getWrite.fulfilled]: (state, action) => {
-      console.log('action', action)
       state.isLoading = false
       state.error = false
       state.writes = action.payload
     },
     [__getWrite.rejected]: (state, action) => {
-      console.log('aaction', action)
       state.isLoading = false
       state.error = action.payload
     },
