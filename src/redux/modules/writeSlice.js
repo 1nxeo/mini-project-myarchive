@@ -9,9 +9,9 @@ const initialState = {
 }
 
 // write 추가 Thunk 함수
-export const __addWrite = createAsyncThunk('addItems', async (payload, thunkAPI) => {
+export const __addWrite = createAsyncThunk('addWrites', async (payload, thunkAPI) => {
   try {
-    const response = await axios.post('http://localhost:4001/posts', payload)
+    const response = await axios.post('http://localhost:4000/posts', payload)
     console.log('response', response)
 
     thunkAPI.fulfillWithValue(response.data)
@@ -33,7 +33,7 @@ const writeSlice = createSlice({
     [__addWrite.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.items = action.payload
+      state.write = action.payload
     },
     [__addWrite.rejected]: (state, action) => {
       state.isLoading = false

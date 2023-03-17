@@ -11,6 +11,19 @@
       "desc": "typicode",
       "createdAt": "2022-12-25",
       "updatedAt": "2023-03-01"
+    },
+    {
+      "url": "sdfsdfsd",
+      "postId": "1",
+      "accountId": "abcd",
+      "nick": "dami",
+      "category": "카테고리3",
+      "title": "fsdfsdf",
+      "desc": "sdfsdf",
+      "createAt": "Fri Mar 17 2023 20:54:47 GMT+0900 (한국 표준시)",
+      "updateAt": "2023-03-01",
+      "isDone": false,
+      "id": 2
     }
   ],
   "comments": [

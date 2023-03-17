@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Input from '../components/Input'
 import Button from '../components/Button'
 import { v4 as uuidv4 } from 'uuid'
-import { __addWrite } from '../redux/modules/itemSlice'
+import { __addWrite } from '../redux/modules/writeSlice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
