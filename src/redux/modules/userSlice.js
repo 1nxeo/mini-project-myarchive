@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import cookies from "../../shared/cookies";
+import { apis } from "../../shared/axios";
 // import { v4 as uuidv4 } from "uuid";
 
 
@@ -8,6 +10,7 @@ const initialState = {
     users:[],
     isLoading: false,
     error:null,
+    loggedIn:false
 };
 
 
@@ -46,6 +49,21 @@ export const __addUsers = createAsyncThunk(
         }
       }
   );
+
+  // export const __loginUser = createAsyncThunk(
+  //   "users/loginUser",
+  //   async (payload, thunkAPI) => {
+  //       try {
+  //         const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, payload);
+  //         const {token} = response.data
+  //         cookies.set("token", token,{path:'/'})
+  //         return thunkAPI.fulfillWithValue(payload)
+  //       } catch (error) {
+  //         return thunkAPI.rejectWithValue(error)
+  //       }
+  //     }
+  // );
+
 
 
 
@@ -89,6 +107,18 @@ const userSlice =createSlice({
             state.error = action.payload; 
             alert(`사용할 수 없는 닉네임입니다!`)
           },
+          // [__loginUser.pending]: (state) => {
+          //   state.isLoading = true;
+          // },
+          // [__loginUser.fulfilled]: (state, action) => {
+          //   state.isLoading = false;
+          //   state.users = action.payload;
+          //   state.loggedIn = true
+          // },
+          // [__loginUser.rejected]: (state, action) => {
+          //   state.isLoading = false; 
+          //   state.error = action.payload; 
+          // },
     }
 
 })
