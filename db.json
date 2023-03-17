@@ -1,10 +1,34 @@
 {
-    "posts": [
-      { "id": 1, "url":"www.naver.com", "postId":"1", "accountId":"abcd", "nick":"dami", "category":"clothes", "title": "json-server", "desc": "typicode","createdAt":"2022-12-25", "updatedAt":"2023-03-01" }
-    ],
-    "comments": [
-      { "id": 1, "body": "some comment", "postId": 1 }
-    ],
-    "profile": { "name": "typicode" },
-    "users":[{"id":1, "userId":"abcd", "nick":"dami","password":"1234"}]
-  }
+  "posts": [
+    {
+      "id": 1,
+      "url": "www.naver.com",
+      "postId": "1",
+      "accountId": "abcd",
+      "nick": "dami",
+      "category": "clothes",
+      "title": "json-server",
+      "desc": "typicode",
+      "createdAt": "2022-12-25",
+      "updatedAt": "2023-03-01"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "users": [
+    {
+      "id": 1,
+      "userId": "abcd",
+      "nick": "dami",
+      "password": "1234"
+    }
+  ]
+}
