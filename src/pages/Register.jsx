@@ -32,7 +32,7 @@ function Register() {
 
   // 중복확인용 state들
   const [validId, setValidId] = useState(false);
-  const [validPw, setValidPw] = useState({ body: "", isValid: false });
+  // const [validPw, setValidPw] = useState({ body: "", isValid: false });
   const [validNick, setValidNick] = useState(false);
 
   // 정규표현식 - id, pw 유효성
@@ -67,21 +67,22 @@ function Register() {
   };
 
   // 비밀번호 중복 확인
-  const validatePwHandler = () => {
-    String(validPw.body) === String(newUser.password)
-      ? setValidPw({ ...validPw, isValid: true })
-      : setValidPw({ ...validPw, isValid: false });
-    console.log("성공적으로 pw값을 바꿨다.", validPw.isValid);
-  };
+  // const validatePwHandler = () => {
+  //   String(validPw.body) === String(newUser.password)
+  //     ? setValidPw({ ...validPw, isValid: true })
+  //     : setValidPw({ ...validPw, isValid: false });
+  //   console.log("성공적으로 pw값을 바꿨다.", validPw.isValid);
+  // };
 
   //회원가입 버튼
   const addUserHandler = (e) => {
     e.preventDefault();
-    validatePwHandler();
-    console.log("pw", validPw.isValid);
+
+    // validatePwHandler();
     if (
       validId &&
-      validPw.isValid &&
+      // validPw.isValid
+      // &&
       validNick
       // &&
       // checkValidId(newUser.accountId) &&
@@ -101,6 +102,7 @@ function Register() {
       <Header />
       <form
         onSubmit={(e) => {
+          console.log("newUser", newUser);
           addUserHandler(e);
         }}
       >
@@ -158,7 +160,7 @@ function Register() {
             }
           />
         </FormWrapper>
-        <FormWrapper>
+        {/* <FormWrapper>
           <label>pwVaildation:</label>
           <Input
             type="password"
@@ -167,14 +169,14 @@ function Register() {
               setValidPw({ ...validPw, body: e.target.value });
             }}
           />
-        </FormWrapper>
-        {validPw.body ? (
+        </FormWrapper> */}
+        {/* {validPw.body ? (
           validPw.isValid ? (
             <span>비밀번호가 일치합니다.</span>
           ) : (
             <span style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</span>
           )
-        ) : null}
+        ) : null} */}
 
         <Button type="submit" style={{ width: "100px" }}>
           회원가입
