@@ -7,10 +7,10 @@ function Nav() {
   const navigate = useNavigate();
   return (
     <StNav>
-      <button onClick={() => navigate("/login")}>로그인</button>
-      <button style={{ width: "70px" }} onClick={() => navigate("/register")}>
+      <Button onClick={() => navigate("/login")}>로그인</Button>
+      <Button style={{ width: "70px" }} onClick={() => navigate("/register")}>
         회원가입
-      </button>
+      </Button>
     </StNav>
   );
 }

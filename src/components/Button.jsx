@@ -10,6 +10,8 @@ const StButton = styled.button`
   border: 1px solid lightgray;
   width: 50px;
   height: 30px;
+  margin: 2.5px;
+  cursor: pointer;
 `;
 
 export default Button;

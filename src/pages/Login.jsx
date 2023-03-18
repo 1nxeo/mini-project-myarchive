@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
@@ -9,18 +9,29 @@ import Input from "../components/Input";
 import Nav from "../components/Nav";
 import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
-import { cookies } from "../shared/cookies";
+// import { cookies } from "../shared/cookies";
 import { __loginUser } from "../redux/modules/userSlice";
-import apis from "../shared/axios";
+import { cookies } from "../shared/cookies";
+// import apis from "../shared/axios";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { loggedIn } = useSelector((state) => state.users);
 
   const [userInfo, setUserInfo] = useState({
     accountId: "",
     password: "",
   });
+
+  useEffect(() => {
+    if (cookies.get("token" && loggedIn)) {
+      navigate("/");
+    }
+    return () => {
+      // second
+    };
+  }, []);
 
   // const submitLoginHandler = async (e) => {
   //   e.preventDefault();
@@ -36,9 +47,11 @@ function Login() {
   //   }
   // };
 
-  const submitLoginHandler = () => {};
-
-  console.log(cookies);
+  const submitLoginHandler = (e) => {
+    e.preventDefault();
+    dispatch(__loginUser(userInfo));
+    setUserInfo({ accountId: "", password: "" });
+  };
 
   return (
     <Wrapper>
@@ -49,6 +62,7 @@ function Login() {
         <FormWrapper>
           <label>ID:</label>
           <Input
+            required
             type="text"
             value={userInfo.accountId}
             onChange={(e) =>
@@ -59,6 +73,7 @@ function Login() {
         <FormWrapper>
           <label>PW:</label>
           <Input
+            required
             type="password"
             value={userInfo.password}
             onChange={(e) =>
@@ -67,13 +82,13 @@ function Login() {
           />
         </FormWrapper>
         <FormWrapper>
-          <button style={{ width: "100px" }}>로그인</button>
-          <button
+          <Button style={{ width: "100px" }}>로그인</Button>
+          <Button
             style={{ width: "100px" }}
             onClick={() => navigate("/register")}
           >
             회원가입
-          </button>
+          </Button>
         </FormWrapper>
       </form>
     </Wrapper>

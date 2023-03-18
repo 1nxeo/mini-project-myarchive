@@ -5,16 +5,17 @@ const token = cookies.get("token");
 
 const apis = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
-  headers: {
-    authorization: `Bearer ${token}`,
-  },
 });
 
 apis.interceptors.request.use(
   // 요청을 보내기 전 수행되는 함수
   function(config){
+    
       console.log('인터셉터 요청 성공!');
-      return config
+      return {...config,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },}
   },
 
   // 오류 요청을 보내기 전 수행되는 함수
@@ -29,7 +30,10 @@ apis.interceptors.response.use(
   // 응답을 내보내기 전 수행되는 함수
   function(response){
       console.log("인터셉터 응답 받았습니다!");
-      return response
+      return {...response,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },}
   },
 
   // 오류 응답을 내보내기 전 수행되는 함수
