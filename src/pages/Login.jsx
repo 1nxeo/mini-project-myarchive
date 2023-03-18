@@ -17,7 +17,6 @@ import { cookies } from "../shared/cookies";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loggedIn } = useSelector((state) => state.users);
 
   const [userInfo, setUserInfo] = useState({
     accountId: "",
@@ -25,12 +24,9 @@ function Login() {
   });
 
   useEffect(() => {
-    if (cookies.get("token" && loggedIn)) {
+    if (cookies.get("token")) {
       navigate("/");
     }
-    return () => {
-      // second
-    };
   }, []);
 
   // const submitLoginHandler = async (e) => {

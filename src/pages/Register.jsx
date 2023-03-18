@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Wrapper from "../components/Wrapper";
@@ -17,7 +17,11 @@ import { useNavigate } from "react-router-dom";
 function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const users = useSelector((state) => state.users);
+  const users = useSelector((state) => state.users);
+
+  // useEffect(() => {
+  //   console.log("hello world!");
+  // }, []);
 
   // 필요한 state 설정
   const [newUser, setNewUser] = useState({
@@ -62,36 +66,30 @@ function Register() {
     setValidNick(true);
   };
 
-  console.log(validPw);
-
   // 비밀번호 중복 확인
   const validatePwHandler = () => {
-    validPw.body === newUser.password
+    String(validPw.body) === String(newUser.password)
       ? setValidPw({ ...validPw, isValid: true })
       : setValidPw({ ...validPw, isValid: false });
+    console.log("성공적으로 pw값을 바꿨다.", validPw.isValid);
   };
 
   //회원가입 버튼
-  const addUserHandler = async (e) => {
-    await validatePwHandler();
-    // console.log(validPw);
+  const addUserHandler = (e) => {
+    e.preventDefault();
+    validatePwHandler();
+    console.log("pw", validPw.isValid);
     if (
       validId &&
-      validPw &&
+      validPw.isValid &&
       validNick
       // &&
       // checkValidId(newUser.accountId) &&
       // checkValidPw(newUser.password)
     ) {
-      if (validPw.isValid) {
-        dispatch(__addUsers(newUser));
+      dispatch(__addUsers(newUser));
+      if (users) {
         navigate("/login");
-      } else if (!validId) {
-        alert("ID를 확인해주세요!");
-      } else if (!validPw.isValid) {
-        alert("패스워드를 확인해주세요!");
-      } else if (!validNick) {
-        alert("닉네임을 확인해주세요!");
       }
     }
   };
@@ -103,15 +101,7 @@ function Register() {
       <Header />
       <form
         onSubmit={(e) => {
-          e.preventDefault();
-          addUserHandler(newUser);
-          setNewUser({
-            accountId: "",
-            password: "",
-            nick: "",
-          });
-          alert("회원가입 성공!");
-          navigate("/login");
+          addUserHandler(e);
         }}
       >
         <FormWrapper>
@@ -132,7 +122,7 @@ function Register() {
           <Button
             type="button"
             style={{ width: "80px" }}
-            onClick={() => checkIdHandler(newUser.accountId)}
+            onClick={() => checkIdHandler({ accountId: newUser.accountId })}
           >
             중복확인
           </Button>
@@ -152,7 +142,7 @@ function Register() {
           <Button
             type="button"
             style={{ width: "80px" }}
-            onClick={() => checkNickHandler(newUser.nick)}
+            onClick={() => checkNickHandler({ nick: newUser.nick })}
           >
             중복확인
           </Button>
@@ -179,12 +169,13 @@ function Register() {
           />
         </FormWrapper>
         {validPw.body ? (
-          validPw.body === newUser.password ? (
+          validPw.isValid ? (
             <span>비밀번호가 일치합니다.</span>
           ) : (
             <span style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</span>
           )
         ) : null}
+
         <Button type="submit" style={{ width: "100px" }}>
           회원가입
         </Button>

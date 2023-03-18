@@ -10,7 +10,6 @@ const initialState = {
     users:[],
     isLoading: false,
     error:null,
-    loggedIn:false
 };
 
 
@@ -42,7 +41,8 @@ export const __addUsers = createAsyncThunk(
     "users/checkUserNick",
     async (payload, thunkAPI) => {
         try {
-          await axios.post(`${process.env.REACT_APP_SERVER_URL}/register/check-nick`, payload);
+          const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/register/check-nick`, payload);
+          
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
           return thunkAPI.rejectWithValue(error)
@@ -79,18 +79,19 @@ const userSlice =createSlice({
           [__addUsers.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.users = action.payload
+            alert("회원가입 성공!")
           },
           [__addUsers.rejected]: (state, action) => {
             state.isLoading = false; 
             state.error = action.payload; 
-            // alert(`${state.error.errorMessage}`)
+            alert("회원가입 실패")
           },
           [__checkUserId.pending]: (state) => {
             state.isLoading = true;
           },
           [__checkUserId.fulfilled]: (state, action) => {
             state.isLoading = false;
-            alert("사용가능한 아이디입니다 !");
+            alert("사용가능한 아이디입니다!");
           },
           [__checkUserId.rejected]: (state, action) => {
             state.isLoading = false; 
@@ -102,7 +103,7 @@ const userSlice =createSlice({
           },
           [__checkUserNick.fulfilled]: (state, action) => {
             state.isLoading = false;
-            alert("사용가능한 닉네임입니다 !");
+            alert("사용가능한 닉네임입니다!");
           },
           [__checkUserNick.rejected]: (state, action) => {
             state.isLoading = false; 
@@ -115,7 +116,6 @@ const userSlice =createSlice({
           [__loginUser.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.users = action.payload;
-            state.loggedIn = true
             alert("로그인완료!")
           },
           [__loginUser.rejected]: (state, action) => {
