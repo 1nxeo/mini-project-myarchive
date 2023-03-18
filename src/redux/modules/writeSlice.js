@@ -11,7 +11,7 @@ const initialState = {
 // 게시물 추가 Thunk 함수
 export const __addWrite = createAsyncThunk('addWrites', async (payload, thunkAPI) => {
   try {
-    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}`, payload)
+    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/list/post`, payload)
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -21,8 +21,8 @@ export const __addWrite = createAsyncThunk('addWrites', async (payload, thunkAPI
 // 게시물 조회 Thunk 함수
 export const __getWrite = createAsyncThunk('getWrites', async (payload, thunkAPI) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/posts/`)
-    return thunkAPI.fulfillWithValue(response.data)
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/list`)
+    return thunkAPI.fulfillWithValue(response.data.posts)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
