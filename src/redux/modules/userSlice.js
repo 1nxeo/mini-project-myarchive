@@ -41,8 +41,7 @@ export const __addUsers = createAsyncThunk(
     "users/checkUserNick",
     async (payload, thunkAPI) => {
         try {
-          const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/register/check-nick`, payload);
-          
+          await axios.post(`${process.env.REACT_APP_SERVER_URL}/register/check-nick`, payload);
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
           return thunkAPI.rejectWithValue(error)

@@ -1,20 +1,20 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import Header from "../components/Header";
-import Wrapper from "../components/Wrapper";
-import GlobalStyle from "../GlobalStyle";
-import Nav from "../components/Nav";
-import Button from "../components/Button";
-import Input from "../components/Input";
-import styled from "styled-components";
+import React from 'react'
+import { useSelector } from 'react-redux'
+import Header from '../components/Header'
+import Wrapper from '../components/Wrapper'
+import GlobalStyle from '../GlobalStyle'
+import Nav from '../components/Nav'
+import Button from '../components/Button'
+import Input from '../components/Input'
+import styled from 'styled-components'
 
 function Detail() {
-  const item = useSelector((state) => state.writes);
+  const item = useSelector((state) => state.posts)
   return (
     <Wrapper>
       <GlobalStyle />
       <Nav />
-      <Header />{" "}
+      <Header />{' '}
       <DetailNav>
         <Button>수정</Button>
         <Button>삭제</Button>
@@ -31,11 +31,11 @@ function Detail() {
               type="text"
               placeholder="댓글을 입력하세요"
               style={{
-                width: "80%",
-                margin: "10px",
+                width: '80%',
+                margin: '10px',
               }}
             />
-            <Button style={{ width: "70px" }}>댓글등록</Button>
+            <Button style={{ width: '70px' }}>댓글등록</Button>
           </StInputBox>
 
           <StComment>
@@ -45,7 +45,7 @@ function Detail() {
         </CommentBox>
       </DetailWrapper>
     </Wrapper>
-  );
+  )
 }
 
 const DetailWrapper = styled.div`
@@ -57,25 +57,25 @@ const DetailWrapper = styled.div`
   justify-content: center;
   align-items: center;
   justify-items: center;
-`;
+`
 const DetailNav = styled.div`
   width: 95%;
   /* border: 1px solid; */
   display: flex;
   justify-content: flex-end;
-`;
+`
 
 const CommentBox = styled.div`
   height: 100%;
   width: 95%;
-`;
+`
 
 const StInputBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
+`
 
 const StComment = styled.div`
   width: 95%;
@@ -85,6 +85,6 @@ const StComment = styled.div`
   width: 95%;
   margin: 5px;
   align-items: center;
-`;
+`
 
-export default Detail;
+export default Detail
