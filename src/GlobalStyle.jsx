@@ -3,15 +3,18 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 
 @font-face {
-    font-family: 'NEXON Lv1 Gothic OTF';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+     font-family: 'DungGeunMo';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
 }
 
     body {
-    font-family: 'NEXON Lv1 Gothic OTF', sans-serif;
+    font-family: 'DungGeunMo', sans-serif;
     line-height: 1.5;
+    background-color: #008080;
   }
+
+
 `;
 export default GlobalStyle;

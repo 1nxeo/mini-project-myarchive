@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
+import styled from "styled-components";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,9 +61,10 @@ function Register() {
     if (validId && validPw.isValid && validNick) {
       if (validPw.isValid) {
         dispatch(__addUsers(newUser));
+        navigate("/login");
       } else if (!validId) {
         alert("ID를 확인해주세요!");
-      } else if (!validPw) {
+      } else if (!validPw.isValid) {
         alert("패스워드를 확인해주세요!");
       } else if (!validNick) {
         alert("닉네임을 확인해주세요!");
@@ -88,9 +90,9 @@ function Register() {
           navigate("/login");
         }}
       >
-        <div>
+        <FormWrapper>
           <label>ID:</label>
-          <Input
+          <input
             required
             type="text"
             value={newUser.accountId}
@@ -98,32 +100,32 @@ function Register() {
               setNewUser({ ...newUser, accountId: e.target.value })
             }
           />
-          <Button
+          <button
             type="button"
             style={{ width: "80px" }}
             onClick={() => checkIdHandler(newUser.accountId)}
           >
             중복확인
-          </Button>
-        </div>
-        <div>
+          </button>
+        </FormWrapper>
+        <FormWrapper>
           <label>nickname:</label>
-          <Input
+          <input
             type="text"
             value={newUser.nick}
             onChange={(e) => setNewUser({ ...newUser, nick: e.target.value })}
           />
-          <Button
+          <button
             type="button"
             style={{ width: "80px" }}
             onClick={() => checkNickHandler(newUser.nick)}
           >
             중복확인
-          </Button>
-        </div>
-        <div>
+          </button>
+        </FormWrapper>
+        <FormWrapper>
           <label>pw:</label>
-          <Input
+          <input
             required
             type="password"
             value={newUser.password}
@@ -131,17 +133,17 @@ function Register() {
               setNewUser({ ...newUser, password: e.target.value })
             }
           />
-        </div>
-        <div>
+        </FormWrapper>
+        <FormWrapper>
           <label>pwVaildation:</label>
-          <Input
+          <input
             type="password"
             value={validPw.body}
             onChange={(e) => {
               setValidPw({ ...validPw, body: e.target.value });
             }}
           />
-        </div>
+        </FormWrapper>
         {validPw.body ? (
           validPw.body === newUser.password ? (
             <span>비밀번호가 일치합니다.</span>
@@ -149,12 +151,18 @@ function Register() {
             <span style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</span>
           )
         ) : null}
-        <Button type="submit" style={{ width: "100px" }}>
+        <button type="submit" style={{ width: "100px" }}>
           회원가입
-        </Button>
+        </button>
       </form>
     </Wrapper>
   );
 }
+
+export const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+`;
 
 export default Register;
