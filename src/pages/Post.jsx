@@ -5,13 +5,13 @@ import styled from 'styled-components'
 import Input from '../components/Input'
 import Button from '../components/Button'
 import { v4 as uuidv4 } from 'uuid'
-import { __addWrite } from '../redux/modules/writeSlice'
+import { __addPost } from '../redux/modules/postSlice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-function Write() {
+function Post() {
   // input state를 한번에 관리함
-  const [writes, setWrites] = useState({
+  const [posts, setPosts] = useState({
     // accountId: '',
     url: '',
     title: '',
@@ -26,44 +26,44 @@ function Write() {
   // input onChange를 한번에 관리함
   const changeInputHandler = (event) => {
     const { value, name } = event.target
-    setWrites((old) => {
+    setPosts((old) => {
       return { ...old, [name]: value }
     })
   }
 
-  // Writes 추가 함수
-  const writesButtonClickHandler = (e) => {
+  // Psots 추가 함수
+  const postsButtonClickHandler = (e) => {
     e.preventDefault()
 
-    const newWrites = {
-      url: writes.url,
+    const newPosts = {
+      url: posts.url,
       postId: '1',
       accountId: 'abcd',
       nick: 'dami',
-      category: writes.category,
-      title: writes.title,
-      desc: writes.desc,
+      category: posts.category,
+      title: posts.title,
+      desc: posts.desc,
       createAt: Date(),
       updateAt: '2023-03-01',
       isDone: false,
     }
 
     // input 칸을 리셋함
-    setWrites({ url: '', title: '', category: '', desc: '' })
+    setPosts({ url: '', title: '', category: '', desc: '' })
 
-    dispatch(__addWrite(newWrites))
+    dispatch(__addPost(newPosts))
   }
 
   return (
     <Wrapper>
       <GlobalStyle />
-      Write
-      <StForm onSubmit={writesButtonClickHandler}>
+      Post
+      <StForm onSubmit={postsButtonClickHandler}>
         URL
-        <Input type="text" name="url" value={writes.url} onChange={changeInputHandler} required></Input>
+        <Input type="text" name="url" value={posts.url} onChange={changeInputHandler} required></Input>
         <br />
         카테고리
-        <select name="category" value={writes.category} onChange={changeInputHandler}>
+        <select name="category" value={posts.category} onChange={changeInputHandler}>
           <option>카테고리1</option>
           <option>카테고리2</option>
           <option>카테고리3</option>
@@ -71,10 +71,10 @@ function Write() {
         </select>
         <br />
         제목
-        <Input type="text" name="title" value={writes.title} onChange={changeInputHandler} required></Input>
+        <Input type="text" name="title" value={posts.title} onChange={changeInputHandler} required></Input>
         <br />
         내용
-        <Input type="text" name="desc" value={writes.desc} onChange={changeInputHandler} required></Input>
+        <Input type="text" name="desc" value={posts.desc} onChange={changeInputHandler} required></Input>
         <br />
         <Button>작성하기</Button>
         <Button onClick={() => navigate('/')}>뒤로가기</Button>
@@ -83,7 +83,7 @@ function Write() {
   )
 }
 
-export default Write
+export default Post
 
 const StForm = styled.form`
   width: 1000px;

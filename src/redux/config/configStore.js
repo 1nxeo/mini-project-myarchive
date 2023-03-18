@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userSlice from '../modules/userSlice'
-import writeSlice from '../modules/writeSlice'
+import postSlice from '../modules/postSlice'
 
 const store = configureStore({
-  reducer: { writes: writeSlice, users: userSlice },
+  reducer: { posts: postSlice, users: userSlice },
 })
 
 export default store
