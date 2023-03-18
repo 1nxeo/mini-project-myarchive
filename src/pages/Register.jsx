@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
+import styled from "styled-components";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,18 +31,35 @@ function Register() {
   const [validPw, setValidPw] = useState({ body: "", isValid: false });
   const [validNick, setValidNick] = useState(false);
 
+  // 정규표현식 - id, pw 유효성
+  // const checkValidId = (item) => {
+  //   // id 영문소문자, 숫자, "-", "_"
+  //   const idRe = /^[a-z0-9_-]{2,10}$/;
+  //   return idRe.test(item);
+  // };
+
+  // const checkValidPw = (item) => {
+  //   // pw 최소 8 자, 최소 하나의 문자 및 하나의 숫자
+  //   const pwRe = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  //   return pwRe.test(item);
+  // };
+
+  // id 영문소문자, 숫자, "-", "_"
+  // const idRe = /^[a-z0-9_-]{2,10}$/;
+  // pw 최소 8 자, 최소 하나의 문자 및 하나의 숫자
+  // const pwRe = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  //
+
   // 아이디 중복확인
   const checkIdHandler = (accId) => {
     dispatch(__checkUserId(accId));
     setValidId(true);
-    alert("사용가능한 아이디입니다 !");
   };
 
   // 닉네임 중복확인
   const checkNickHandler = (nick) => {
     dispatch(__checkUserNick(nick));
     setValidNick(true);
-    alert("사용가능한 닉네임입니다 !");
   };
 
   console.log(validPw);
@@ -57,12 +75,20 @@ function Register() {
   const addUserHandler = async (e) => {
     await validatePwHandler();
     // console.log(validPw);
-    if (validId && validPw.isValid && validNick) {
+    if (
+      validId &&
+      validPw &&
+      validNick
+      // &&
+      // checkValidId(newUser.accountId) &&
+      // checkValidPw(newUser.password)
+    ) {
       if (validPw.isValid) {
         dispatch(__addUsers(newUser));
+        navigate("/login");
       } else if (!validId) {
         alert("ID를 확인해주세요!");
-      } else if (!validPw) {
+      } else if (!validPw.isValid) {
         alert("패스워드를 확인해주세요!");
       } else if (!validNick) {
         alert("닉네임을 확인해주세요!");
@@ -88,7 +114,7 @@ function Register() {
           navigate("/login");
         }}
       >
-        <div>
+        <FormWrapper>
           <label>ID:</label>
           <Input
             required
@@ -98,6 +124,11 @@ function Register() {
               setNewUser({ ...newUser, accountId: e.target.value })
             }
           />
+          {/* {checkValidId(newUser.accountId) ? (
+            <span style={{ color: "red" }}>
+              아이디는 영문 소문자, 숫자, -, _ 로만 이루어져야합니다.
+            </span>
+          ) : null} */}
           <Button
             type="button"
             style={{ width: "80px" }}
@@ -105,14 +136,19 @@ function Register() {
           >
             중복확인
           </Button>
-        </div>
-        <div>
+        </FormWrapper>
+        <FormWrapper>
           <label>nickname:</label>
           <Input
             type="text"
             value={newUser.nick}
             onChange={(e) => setNewUser({ ...newUser, nick: e.target.value })}
           />
+          {/* {checkValidId(newUser.password) ? (
+            <span style={{ color: "red" }}>
+              비밀번호는 영문소문자, 숫자로만 이루어져야합니다.
+            </span>
+          ) : null} */}
           <Button
             type="button"
             style={{ width: "80px" }}
@@ -120,8 +156,8 @@ function Register() {
           >
             중복확인
           </Button>
-        </div>
-        <div>
+        </FormWrapper>
+        <FormWrapper>
           <label>pw:</label>
           <Input
             required
@@ -131,8 +167,8 @@ function Register() {
               setNewUser({ ...newUser, password: e.target.value })
             }
           />
-        </div>
-        <div>
+        </FormWrapper>
+        <FormWrapper>
           <label>pwVaildation:</label>
           <Input
             type="password"
@@ -141,7 +177,7 @@ function Register() {
               setValidPw({ ...validPw, body: e.target.value });
             }}
           />
-        </div>
+        </FormWrapper>
         {validPw.body ? (
           validPw.body === newUser.password ? (
             <span>비밀번호가 일치합니다.</span>
@@ -156,5 +192,11 @@ function Register() {
     </Wrapper>
   );
 }
+
+export const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+`;
 
 export default Register;
