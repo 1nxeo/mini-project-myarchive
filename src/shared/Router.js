@@ -4,6 +4,7 @@ import Mypage from "../pages/Mypage"
 import Login from "../pages/Login"
 import Register from "../pages/Register"
 import Write from "../pages/Write"
+import Detail from "../pages/Detail"
 
 function Router() {
   return (
@@ -14,6 +15,7 @@ function Router() {
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
             <Route path="/write" element={<Write/>}/>
+            <Route path="/detail" element={<Detail/>}/>
         </Routes>
     </BrowserRouter>
   )
