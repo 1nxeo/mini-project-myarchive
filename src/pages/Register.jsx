@@ -19,10 +19,6 @@ function Register() {
   const navigate = useNavigate();
   const users = useSelector((state) => state.users);
 
-  // useEffect(() => {
-  //   console.log("hello world!");
-  // }, []);
-
   // 필요한 state 설정
   const [newUser, setNewUser] = useState({
     accountId: "",
