@@ -1,17 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import apis from '../../shared/axios'
 
 const initialState = {
-  writes: [],
+  posts: [],
   isLoading: false,
   error: null,
 }
 
 // 게시물 추가 Thunk 함수
-export const __addWrite = createAsyncThunk('addWrites', async (payload, thunkAPI) => {
+export const __addPost = createAsyncThunk('addPosts', async (payload, thunkAPI) => {
   try {
-    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}`, payload)
+    const response = await apis.post(`/post`, payload)
+    console.log('response', response)
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -19,47 +21,48 @@ export const __addWrite = createAsyncThunk('addWrites', async (payload, thunkAPI
 })
 
 // 게시물 조회 Thunk 함수
-export const __getWrite = createAsyncThunk('getWrites', async (payload, thunkAPI) => {
+export const __getPost = createAsyncThunk('getPosts', async (payload, thunkAPI) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/posts/`)
-    return thunkAPI.fulfillWithValue(response.data)
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}`)
+    // console.log('response', response.data.posts)
+    return thunkAPI.fulfillWithValue(response.data.posts)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
 })
 
-const writeSlice = createSlice({
-  name: 'writes',
+const postSlice = createSlice({
+  name: 'posts',
   initialState,
   extraReducers: {
     // 게시물 추가 Reducer -------------------------------
 
-    [__addWrite.pending]: (state, action) => {
+    [__addPost.pending]: (state, action) => {
       state.isLoading = true
       state.error = false
     },
-    [__addWrite.fulfilled]: (state, action) => {
+    [__addPost.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.writes = action.payload
+      state.posts = action.payload
     },
-    [__addWrite.rejected]: (state, action) => {
+    [__addPost.rejected]: (state, action) => {
       state.isLoading = false
       state.error = action.payload
     },
 
     // 게시물 조회 Reducer -------------------------------
 
-    [__getWrite.pending]: (state, action) => {
+    [__getPost.pending]: (state, action) => {
       state.isLoading = true
       state.error = false
     },
-    [__getWrite.fulfilled]: (state, action) => {
+    [__getPost.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.writes = action.payload
+      state.posts = action.payload
     },
-    [__getWrite.rejected]: (state, action) => {
+    [__getPost.rejected]: (state, action) => {
       state.isLoading = false
       state.error = action.payload
     },
@@ -67,5 +70,5 @@ const writeSlice = createSlice({
     // 게시물 조회 Reducer -------------------------------
   },
 })
-export const {} = writeSlice.actions
-export default writeSlice.reducer
+export const {} = postSlice.actions
+export default postSlice.reducer
