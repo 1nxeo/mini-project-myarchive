@@ -11,32 +11,29 @@ import { cookies } from "../shared/cookies";
 import { __getMemberPosts } from "../redux/modules/memberSlice";
 import { CardsWrapper } from "./Home";
 import Card from "../components/Card";
+import { changeCates } from "../redux/modules/cateSlice";
 
 function Mypage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { members, isLoading, error } = useSelector((state) => state.members);
-  const cates = useSelector((state) => state.cates);
+  const { cates } = useSelector((state) => state.cate);
   const { accountId } = useParams();
   const memberPost = { ...members };
 
-  console.log("cate", memberPost.notdone);
+  console.log("notdone", memberPost.notdone);
 
-  // useEffect(() => {
-  //   if (!cookies.get("token")) {
-  //     alert("로그인이 필요한 페이지입니다.");
-  //     navigate("/");
-  //   } else {
-  //     dispatch(__getMemberPosts());
-  //   }
-
-  //   return () => {};
-  // }, []);
-
-  // useEffect(() => {
-
-  //   return () => {};
-  // }, []);
+  useEffect(() => {
+    if (!cookies.get("token")) {
+      alert("로그인이 필요한 페이지입니다.");
+      navigate("/");
+    } else {
+      dispatch(__getMemberPosts());
+    }
+    return () => {
+      // dispatch(changeCates("all"));
+    };
+  }, [cates]);
 
   return (
     <Wrapper>
@@ -44,9 +41,17 @@ function Mypage() {
       <Nav />
       <Category />
       <CardsWrapper>
-        {/* {memberPost.notdone.map((item) => (
+        {memberPost.notdone?.map((item) => (
           <Card key={item.id} item={item} />
-        ))} */}
+        ))}
+        {/* {memberPost.notdone?.filter((item) =>
+          item.category === `${cates}` ? (
+            <Card key={item.id} item={item} />
+          ) : null
+        )} */}
+        {memberPost.done?.map((item) => (
+          <Card key={item.id} item={item} />
+        ))}
       </CardsWrapper>
     </Wrapper>
   );

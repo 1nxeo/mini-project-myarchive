@@ -11,6 +11,7 @@ function Nav() {
   const logoutUserHandler = () => {
     cookies.remove("token");
     cookies.remove("accountId");
+    cookies.remove("nick");
     alert("로그아웃 성공!");
   };
 

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { cookies } from "../../shared/cookies";
 // import apis  from "../../shared/axios";
 // import { v4 as uuidv4 } from "uuid";
@@ -56,17 +57,18 @@ export const __addUsers = createAsyncThunk(
     "users/loginUser",
     async (payload, thunkAPI) => {
         try {
-          const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, payload);
+          const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, payload.userInfo);
           const {token} = response.headers
           // const decode = jwtDecode()
           // const decodeData = jwt_decode(token)
           // console.log(decodeData);
           console.log("response",response);
           cookies.set("token", token,{path:'/'})
-          cookies.set("accountId", payload.accountId, '/')
-          // cookies.set("nick")
+          cookies.set("accountId", payload.userInfo.accountId, {path:'/'})
+          cookies.set("nick", response.data.nick,{path:'/'})
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
+          console.log(payload);
           console.log(error);
           return thunkAPI.rejectWithValue(error.response.status)
         }
@@ -124,7 +126,8 @@ const userSlice =createSlice({
           },
           [__loginUser.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.users = action.payload;
+            state.users = action.payload.userInfo;
+            action.payload.next()
           },
           [__loginUser.rejected]: (state, action) => {
             state.isLoading = false; 
