@@ -34,7 +34,6 @@ const postSlice = createSlice({
   initialState,
   extraReducers: {
     // 게시물 추가 Reducer -------------------------------
-
     [__addPost.pending]: (state, action) => {
       state.isLoading = true
       state.error = false
@@ -48,9 +47,7 @@ const postSlice = createSlice({
       state.isLoading = false
       state.error = action.payload
     },
-
     // 게시물 조회 Reducer -------------------------------
-
     [__getPost.pending]: (state, action) => {
       state.isLoading = true
       state.error = false
@@ -64,8 +61,6 @@ const postSlice = createSlice({
       state.isLoading = false
       state.error = action.payload
     },
-
-    // 게시물 조회 Reducer -------------------------------
   },
 })
 export const {} = postSlice.actions
