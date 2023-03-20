@@ -5,7 +5,7 @@ import apis from '../../shared/axios'
 import api from "../../axios/api"
 
 const initialState = {
-  members: [],
+  memberPosts: [],
   isLoading: false,
   error: null,
 }
@@ -50,7 +50,7 @@ const memberSlice = createSlice({
     [__getMemberPosts.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.members = action.payload
+      state.memberPosts = action.payload
     },
     [__getMemberPosts.rejected]: (state, action) => {
       state.isLoading = false

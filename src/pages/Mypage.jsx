@@ -16,12 +16,15 @@ import { changeCates } from "../redux/modules/cateSlice";
 function Mypage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { members, isLoading, error } = useSelector((state) => state.members);
+  const { memberPosts, isLoading, error } = useSelector(
+    (state) => state.members
+  );
   const { cates } = useSelector((state) => state.cate);
   const { accountId } = useParams();
-  const memberPost = { ...members };
+  const memberPost = JSON.stringify(memberPosts);
 
-  console.log("notdone", memberPost.notdone);
+  console.log("category", cates);
+  console.log(memberPosts);
 
   useEffect(() => {
     if (!cookies.get("token")) {
@@ -29,11 +32,12 @@ function Mypage() {
       navigate("/");
     } else {
       dispatch(__getMemberPosts());
+      dispatch(changeCates("notdone"));
     }
     return () => {
-      // dispatch(changeCates("all"));
+      dispatch(changeCates("notdone"));
     };
-  }, [cates]);
+  }, []);
 
   return (
     <Wrapper>
@@ -41,17 +45,11 @@ function Mypage() {
       <Nav />
       <Category />
       <CardsWrapper>
-        {memberPost.notdone?.map((item) => (
-          <Card key={item.id} item={item} />
-        ))}
-        {/* {memberPost.notdone?.filter((item) =>
-          item.category === `${cates}` ? (
-            <Card key={item.id} item={item} />
-          ) : null
-        )} */}
-        {memberPost.done?.map((item) => (
-          <Card key={item.id} item={item} />
-        ))}
+        {cates == "notdone"
+          ? memberPosts.notdone?.map((item) =>
+              item.category == cates ? <Card key={item.id} item={item} /> : null
+            )
+          : memberPosts.done?.map((item) => <Card key={item.id} item={item} />)}
       </CardsWrapper>
     </Wrapper>
   );
