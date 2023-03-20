@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Header from '../components/Header'
 import Wrapper from '../components/Wrapper'
 import GlobalStyle from '../GlobalStyle'
@@ -7,23 +7,41 @@ import Nav from '../components/Nav'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import styled from 'styled-components'
+import { useParams } from 'react-router-dom'
+import { __getPostDetail } from '../redux/modules/detailSlice'
 
 function Detail() {
-  const item = useSelector((state) => state.posts)
+  const params = useParams()
+  const dispatch = useDispatch()
+
+  const { posts, isLoading, error } = useSelector((state) => state.details)
+
+  const detailPost = posts.find((item) => {
+    return item.postId === +params.postId
+  })
+
+  useEffect(() => {
+    dispatch(__getPostDetail())
+  }, [])
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>{error.message}</div>
+  }
+
   return (
     <Wrapper>
       <GlobalStyle />
       <Nav />
       <Header />{' '}
-      <DetailNav>
-        <Button>수정</Button>
-        <Button>삭제</Button>
-      </DetailNav>
       <DetailWrapper>
         <div>
           <div>여기에 이미지가 들어갑니다</div>
-          <div>여기에 제목이 들어갑니다.</div>
-          <div>여기에 설명이 들어갑니다</div>
+          <div>{detailPost.title}</div>
+          <div>{detailPost.desc}</div>
         </div>
         <CommentBox>
           <StInputBox>
@@ -40,7 +58,6 @@ function Detail() {
 
           <StComment>
             <span>여기에 댓글이 들어갑니다</span>
-            <Button style={{}}>삭제</Button>
           </StComment>
         </CommentBox>
       </DetailWrapper>
