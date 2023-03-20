@@ -7,12 +7,13 @@ import Nav from '../components/Nav'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import styled from 'styled-components'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { __addComment, __getComment, __getPostDetail } from '../redux/modules/detailSlice'
 
 function Detail() {
   const params = useParams()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { posts, isLoading, error } = useSelector((state) => state.details)
   const { comments } = useSelector((state) => state.details)
@@ -61,6 +62,13 @@ function Detail() {
           }}
         >
           <StImg src={`${posts?.img}`} />
+          <Button
+            onClick={() => {
+              window.open(posts.url)
+            }}
+          >
+            상품 바로가기
+          </Button>
           <div>{posts?.title}</div>
           <div>{posts?.desc}</div>
         </div>
