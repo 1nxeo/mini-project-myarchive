@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import apis from '../../shared/axios'
+// import apis from '../../shared/axios'
+import api from '../../axios/api'
 // apis 사용하면 헤더에 토큰 있음 : 로그인 된 유저가 요청 시 사용
 
 const initialState = {
@@ -22,7 +23,7 @@ export const __getPostDetail = createAsyncThunk('getPostDetails', async (payload
 // 게시물 디테일 댓글 조회 Thunk 함수
 export const __getComment = createAsyncThunk('__getComment', async (payload, thunkAPI) => {
   try {
-    const response = await apis.get(`/post/:postId/comments`)
+    const response = await api.get(`/post/:postId/comments`)
     return thunkAPI.fulfillWithValue()
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -31,7 +32,7 @@ export const __getComment = createAsyncThunk('__getComment', async (payload, thu
 // 게시물 디테일 댓글 추가 Thunk 함수
 export const __addComment = createAsyncThunk('__addComment', async (payload, thunkAPI) => {
   try {
-    const response = await apis.post(`/post/:postId/comments`, payload)
+    const response = await api.post(`/post/:postId/comments`, payload)
     console.log(response)
     return thunkAPI.fulfillWithValue(response)
   } catch (error) {
