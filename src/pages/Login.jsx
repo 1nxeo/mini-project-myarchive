@@ -22,14 +22,15 @@ function Login() {
     accountId: "",
     password: "",
   });
+  const token = cookies.get("token");
 
   useEffect(() => {
-    if (cookies.get("token")) {
+    if (token) {
       navigate("/");
     }
-  }, []);
+  }, [token]);
 
-  const submitLoginHandler = (e) => {
+  const submitLoginHandler = async (e) => {
     e.preventDefault();
     dispatch(__loginUser(userInfo));
     setUserInfo({ accountId: "", password: "" });

@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import Card from "../components/Card";
 import Button from "../components/Button";
 import Category from "../components/Category";
+import styled from "styled-components";
+import ErrorMessage from "../components/ErrorMessage";
 
 function Home() {
   const navigate = useNavigate();
@@ -25,7 +27,7 @@ function Home() {
   }
 
   if (error) {
-    return <div>{error.message}</div>;
+    return <ErrorMessage>{error.message}</ErrorMessage>;
   }
 
   return (
@@ -33,19 +35,20 @@ function Home() {
       <GlobalStyle />
       <Nav />
       <Header />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
+      <ContentNav>
         <Category />
         <Button onClick={() => navigate("/post")}>글쓰기</Button>
-      </div>
+      </ContentNav>
       <Card post={posts} />
     </Wrapper>
   );
 }
+
+const ContentNav = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  align-items: center;
+`;
 
 export default Home;

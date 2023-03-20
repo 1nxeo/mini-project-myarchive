@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import apis from '../../shared/axios'
+import api from "../../axios/api"
 
 const initialState = {
   members: [],
@@ -13,10 +14,11 @@ const initialState = {
 
 export const __getMemberPosts = createAsyncThunk('getMemberPosts', async (payload, thunkAPI) => {
     try {
-      const response = await apis.get(`/mypage`)
-      // console.log('response', response.data.posts)
+      const response = await api.get(`/mypage`)
+      console.log( "response",response)
       return thunkAPI.fulfillWithValue(response.data)
     } catch (error) {
+      console.log("error",error);
       return thunkAPI.rejectWithValue(error)
     }
   })

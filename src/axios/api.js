@@ -1,15 +1,24 @@
 import axios from 'axios'
+import { cookies } from '../shared/cookies'
 
-// const instance = axios.create({
-//     baseURL:process.env.REACT_APP_SERVER_URL,
-//     // timeout: 1,
-//     // 오류 확인 가능한지 테스트.. 1밀리세컨드.. 내에 응답을 못받으면 에러처리 하도록 돼 있음.
-// })
+
+const instance = axios.create({
+    baseURL:process.env.REACT_APP_SERVER_URL,
+    headers:{
+      "Access-Control-Allow-Origin": "*",
+    },
+    // timeout: 1,
+    // 오류 확인 가능한지 테스트.. 1밀리세컨드.. 내에 응답을 못받으면 에러처리 하도록 돼 있음.
+})
+
+const token = cookies.get("token")
 
 instance.interceptors.request.use(
   // 요청을 보내기 전 수행되는 함수
   function (config) {
+    config.headers["authorization"] = `Bearer ${token}`;
     console.log('인터셉터 요청 성공!')
+    // alert(config.headers.authorization)
     return config
   },
 
