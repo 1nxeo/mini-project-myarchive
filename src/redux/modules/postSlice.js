@@ -13,7 +13,6 @@ const initialState = {
 export const __addPost = createAsyncThunk('addPosts', async (payload, thunkAPI) => {
   try {
     const response = await apis.post(`/post`, payload)
-    console.log('response', response)
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -24,7 +23,6 @@ export const __addPost = createAsyncThunk('addPosts', async (payload, thunkAPI) 
 export const __getPost = createAsyncThunk('getPosts', async (payload, thunkAPI) => {
   try {
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}`)
-    // console.log('response', response.data.posts)
     return thunkAPI.fulfillWithValue(response.data.posts)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -72,4 +70,3 @@ const postSlice = createSlice({
 })
 export const {} = postSlice.actions
 export default postSlice.reducer
-
