@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
@@ -7,11 +7,35 @@ import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
 import Category from "../components/Category";
 import styled from "styled-components";
+import { cookies } from "../shared/cookies";
+import { __getMemberPosts } from "../redux/modules/memberSlice";
 
 function Mypage() {
   const navigate = useNavigate();
-  const member = useSelector((state) => state.members);
-  const { id } = useParams();
+  const dispatch = useDispatch();
+  // const { members, isLoading, error } = useSelector((state) => state.members);
+  const { accountId } = useParams();
+
+  const token = cookies.get("token");
+
+  useEffect(() => {
+    if (!cookies.get("token")) {
+      alert("로그인이 필요한 페이지입니다.");
+      navigate("/");
+    } else {
+      dispatch(__getMemberPosts());
+    }
+
+    return () => {};
+  }, []);
+
+  console.log(token);
+
+  // useEffect(() => {
+
+  //   return () => {};
+  // }, []);
+
   return (
     <Wrapper>
       <GlobalStyle />

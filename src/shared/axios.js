@@ -1,20 +1,21 @@
 import axios from 'axios'
-import { cookies } from './cookies'
+// import { cookies } from './cookies'
 
-const token = cookies.get('token')
+// const token = cookies.get('token')
 
 const apis = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
   headers:{
-    Authorization: `Bearer ${token}`
+    "Access-Control-Allow-Origin": "*",
   }
 })
 
 apis.interceptors.request.use((config) => {
-  if (config.headers === undefined) return null;
-  
+  // if (config.headers === undefined) return null;
   // 이부분 수정 필요
-  config.headers["Authorization"] = `${token}`;
+  const token = localStorage.getItem("id");
+  config.headers["Authorization"] = `Bearer ${token}`;
+  console.log("config",config);
   return config;
 });
 

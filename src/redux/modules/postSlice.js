@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import apis from '../../shared/axios'
+import api from "../../axios/api"
 
 const initialState = {
   posts: [],
@@ -12,7 +13,7 @@ const initialState = {
 // 게시물 추가 Thunk 함수
 export const __addPost = createAsyncThunk('addPosts', async (payload, thunkAPI) => {
   try {
-    const response = await apis.post(`/post`, payload)
+    const response = await api.post(`/post`, payload)
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)

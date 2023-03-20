@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { cookies } from "../../shared/cookies";
+import jwt_decode from "jwt-decode";
 // import apis  from "../../shared/axios";
 // import { v4 as uuidv4 } from "uuid";
 
@@ -11,6 +12,8 @@ const initialState = {
     isLoading: false,
     error:null,
 };
+
+
 
 
 export const __addUsers = createAsyncThunk(
@@ -55,12 +58,18 @@ export const __addUsers = createAsyncThunk(
     async (payload, thunkAPI) => {
         try {
           const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, payload);
-          const {token} = response.data
+          const {token} = response.headers
+          // const decode = jwtDecode()
+          // const decodeData = jwt_decode(token)
+          // console.log(decodeData);
+          console.log("response",response);
           cookies.set("token", token,{path:'/'})
+          cookies.set("accountId", payload.accountId, '/')
+          // cookies.set("nick")
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
-          console.log(error.response.data.errorMessage);
-          return thunkAPI.rejectWithValue(error)
+          console.log(error);
+          return thunkAPI.rejectWithValue(error.response.status)
         }
       }
   );
@@ -117,12 +126,22 @@ const userSlice =createSlice({
           [__loginUser.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.users = action.payload;
-            alert("로그인완료!")
           },
           [__loginUser.rejected]: (state, action) => {
             state.isLoading = false; 
             state.error = action.payload; 
-            alert("아이디, 비밀번호가 일치하지 않습니다.")
+            const errMsg = action.payload
+            switch (errMsg){
+              case 412:
+                return (alert("비밀번호를 확인해주세요!"))
+              case 401:
+                return (alert("존재하지 않는 유저입니다!"))
+              default:
+                return alert("로그인 실패! 다시 시도해주세요.")
+            }
+            
+            
+            
           },
     }
 
