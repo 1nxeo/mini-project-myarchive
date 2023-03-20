@@ -14,7 +14,6 @@ apis.interceptors.request.use((config) => {
   if (config.headers === undefined) return null;
   
   // 이부분 수정 필요
-  const token = localStorage.getItem("id");
   config.headers["Authorization"] = `${token}`;
   return config;
 });
