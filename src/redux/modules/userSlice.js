@@ -8,7 +8,7 @@ import { cookies } from "../../shared/cookies";
 
 
 const initialState = {
-    users:[],
+    users:{},
     isLoading: false,
     error:null,
 };
@@ -66,9 +66,10 @@ export const __addUsers = createAsyncThunk(
           cookies.set("token", token,{path:'/'})
           cookies.set("accountId", payload.userInfo.accountId, {path:'/'})
           cookies.set("nick", response.data.nick,{path:'/'})
+          console.log("payload = ",payload);
+          payload.userInfo = {accountId:payload.userInfo.accountId, nick:response.data.nick, isLogin: true}
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
-          console.log(payload);
           console.log(error);
           return thunkAPI.rejectWithValue(error.response.status)
         }
@@ -82,6 +83,9 @@ const userSlice =createSlice({
     name:'users',
     initialState,
     reducers:{
+      logoutUser: (state,action)=>{
+        return state = {}
+      }
     },
     extraReducers:{
         [__addUsers.pending]: (state) => {
@@ -149,5 +153,5 @@ const userSlice =createSlice({
 
 })
 
-export const { } = userSlice.actions;
+export const { logoutUser} = userSlice.actions;
 export default userSlice.reducer;
