@@ -92,7 +92,9 @@ function Detail() {
             {comments.map((item) => {
               return (
                 <div>
-                  <span>{item?.comment}</span>
+                  <span>
+                    {item?.nick} : {item?.comment}
+                  </span>
                 </div>
               )
             })}
