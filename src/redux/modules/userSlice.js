@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { cookies } from "../../shared/cookies";
-import jwt_decode from "jwt-decode";
 // import apis  from "../../shared/axios";
 // import { v4 as uuidv4 } from "uuid";
 

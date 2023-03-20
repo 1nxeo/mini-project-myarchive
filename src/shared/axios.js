@@ -15,7 +15,6 @@ apis.interceptors.request.use((config) => {
   // 이부분 수정 필요
   const token = localStorage.getItem("id");
   config.headers["Authorization"] = `Bearer ${token}`;
-  console.log("config",config);
   return config;
 });
 
