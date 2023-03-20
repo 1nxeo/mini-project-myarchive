@@ -15,10 +15,10 @@ const initialState = {
 export const __getMemberPosts = createAsyncThunk('getMemberPosts', async (payload, thunkAPI) => {
     try {
       const response = await api.get(`/mypage`)
-      console.log( "response",response)
+      // console.log( "response.data",response.data)
       return thunkAPI.fulfillWithValue(response.data)
     } catch (error) {
-      console.log("error",error);
+      // console.log("error",error);
       return thunkAPI.rejectWithValue(error)
     }
   })
@@ -50,7 +50,7 @@ const memberSlice = createSlice({
     [__getMemberPosts.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.posts = action.payload
+      state.members = action.payload
     },
     [__getMemberPosts.rejected]: (state, action) => {
       state.isLoading = false

@@ -39,7 +39,12 @@ function Home() {
         <Category />
         <Button onClick={() => navigate("/post")}>글쓰기</Button>
       </ContentNav>
-      <Card post={posts} />
+      <CardsWrapper>
+        {" "}
+        {posts.map((item) => {
+          return <Card key={item.id} item={item} />;
+        })}
+      </CardsWrapper>
     </Wrapper>
   );
 }
@@ -49,6 +54,17 @@ const ContentNav = styled.div`
   justify-content: space-between;
   width: 95%;
   align-items: center;
+`;
+export const CardsWrapper = styled.div`
+  width: 1000px;
+  min-width: none;
+  min-height: none;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+
+  gap: 20px;
 `;
 
 export default Home;

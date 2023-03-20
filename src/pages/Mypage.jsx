@@ -9,14 +9,18 @@ import Category from "../components/Category";
 import styled from "styled-components";
 import { cookies } from "../shared/cookies";
 import { __getMemberPosts } from "../redux/modules/memberSlice";
+import { CardsWrapper } from "./Home";
+import Card from "../components/Card";
 
 function Mypage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { members, isLoading, error } = useSelector((state) => state.members);
+  const { members, isLoading, error } = useSelector((state) => state.members);
+  const cates = useSelector((state) => state.cates);
   const { accountId } = useParams();
+  const memberPost = { ...members };
 
-  const token = cookies.get("token");
+  console.log("cate", memberPost.notdone);
 
   useEffect(() => {
     if (!cookies.get("token")) {
@@ -29,8 +33,6 @@ function Mypage() {
     return () => {};
   }, []);
 
-  console.log(token);
-
   // useEffect(() => {
 
   //   return () => {};
@@ -41,33 +43,13 @@ function Mypage() {
       <GlobalStyle />
       <Nav />
       <Category />
-      <CardWrapper>
-        <StCard>카드</StCard>
-        <StCard>카드</StCard>
-        <StCard>카드</StCard>
-        <StCard>카드</StCard>
-        <StCard>카드</StCard>
-      </CardWrapper>
+      <CardsWrapper>
+        {/* {memberPost.notdone.map((item) => (
+          <Card key={item.id} item={item} />
+        ))} */}
+      </CardsWrapper>
     </Wrapper>
   );
 }
-
-const CardWrapper = styled.div`
-  width: 100%;
-  /* border: 1px solid; */
-  display: flex;
-  justify-content: left;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  box-sizing: border-box;
-`;
-
-const StCard = styled.div`
-  width: 235px;
-  height: 300px;
-  border: 1px solid;
-  overflow: hidden;
-  margin: 10px;
-`;
 
 export default Mypage;
