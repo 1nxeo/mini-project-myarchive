@@ -16,12 +16,8 @@ function Detail() {
 
   const { posts, isLoading, error } = useSelector((state) => state.details)
 
-  const detailPost = posts.find((item) => {
-    return item.postId === +params.postId
-  })
-
   useEffect(() => {
-    dispatch(__getPostDetail())
+    dispatch(__getPostDetail(+params.postId))
   }, [])
 
   if (isLoading) {
@@ -38,10 +34,14 @@ function Detail() {
       <Nav />
       <Header />{' '}
       <DetailWrapper>
-        <div>
-          <div>여기에 이미지가 들어갑니다</div>
-          <div>{detailPost?.title}</div>
-          <div>{detailPost?.desc}</div>
+        <div
+          style={{
+            height: '700px',
+          }}
+        >
+          <StImg src={`${posts?.img}`} />
+          <div>{posts?.title}</div>
+          <div>{posts?.desc}</div>
         </div>
         <CommentBox>
           <StInputBox>
@@ -102,6 +102,12 @@ const StComment = styled.div`
   width: 95%;
   margin: 5px;
   align-items: center;
+`
+
+const StImg = styled.img`
+  width: 300px;
+  height: 500px;
+  background-size: cover;
 `
 
 export default Detail

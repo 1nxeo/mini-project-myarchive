@@ -14,8 +14,8 @@ const initialState = {
 // 게시물 디테일 조회 Thunk 함수
 export const __getPostDetail = createAsyncThunk('getPostDetails', async (payload, thunkAPI) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}`)
-    return thunkAPI.fulfillWithValue(response.data.posts)
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/${payload}`)
+    return thunkAPI.fulfillWithValue(response.data.detail)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
