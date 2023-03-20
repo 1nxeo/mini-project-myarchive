@@ -36,23 +36,11 @@ function Register() {
   const [rePw, setRePw] = useState("");
 
   // 정규표현식 - id, pw 유효성
-  // const checkValidId = (item) => {
-  //   // id 영문소문자, 숫자, "-", "_"
-  //   const idRe = /^[a-z0-9_-]{2,10}$/;
-  //   return idRe.test(item);
-  // };
-
-  // const checkValidPw = (item) => {
-  //   // pw 최소 8 자, 최소 하나의 문자 및 하나의 숫자
-  //   const pwRe = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  //   return pwRe.test(item);
-  // };
-
-  // id 영문소문자, 숫자, "-", "_"
-  // const idRe = /^[a-z0-9_-]{2,10}$/;
-  // pw 최소 8 자, 최소 하나의 문자 및 하나의 숫자
-  // const pwRe = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  //
+  const checkValidId = (item) => {
+    // id 영문소문자, 숫자, 4자리 이상
+    const regEx = /^[a-z0-9]{4,}$/;
+    return regEx.test(item);
+  };
 
   // 아이디 중복확인
   const checkIdHandler = (accId) => {
@@ -74,7 +62,13 @@ function Register() {
   //회원가입 버튼
   const addUserHandler = async (e) => {
     e.preventDefault();
-    if (validId && validNick && checkSamePwHandler(rePw)) {
+    if (
+      validId &&
+      validNick &&
+      checkSamePwHandler(rePw) &&
+      checkValidId(newUser.accountId) &&
+      checkValidId(newUser.password)
+    ) {
       try {
         await dispatch(__addUsers(newUser));
         return navigate("/login");
@@ -106,11 +100,11 @@ function Register() {
               setNewUser({ ...newUser, accountId: e.target.value })
             }
           />
-          {/* {checkValidId(newUser.accountId) ? (
+          {checkValidId(newUser.accountId) ? null : (
             <span style={{ color: "red" }}>
-              아이디는 영문 소문자, 숫자, -, _ 로만 이루어져야합니다.
+              아이디는 영문 소문자, 숫자로 4자리 이상이어야합니다.
             </span>
-          ) : null} */}
+          )}
           <Button
             type="button"
             style={{ width: "80px" }}
@@ -126,11 +120,6 @@ function Register() {
             value={newUser.nick}
             onChange={(e) => setNewUser({ ...newUser, nick: e.target.value })}
           />
-          {/* {checkValidId(newUser.password) ? (
-            <span style={{ color: "red" }}>
-              비밀번호는 영문소문자, 숫자로만 이루어져야합니다.
-            </span>
-          ) : null} */}
           <Button
             type="button"
             style={{ width: "80px" }}
@@ -149,6 +138,11 @@ function Register() {
               setNewUser({ ...newUser, password: e.target.value })
             }
           />
+          {checkValidId(newUser.password) ? null : (
+            <span style={{ color: "red" }}>
+              비밀번호는 영문소문자, 숫자로 4자리 이상이어야합니다.
+            </span>
+          )}
         </FormWrapper>
         <FormWrapper>
           <label>pwVaildation:</label>
