@@ -2,21 +2,18 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import Button from './Button'
 
 function Card({ post }) {
-  const dispatch = useDispatch()
   const navigate = useNavigate()
-  console.log(post)
   return (
     <CardsWrapper>
       {post.map((item) => {
         return (
           <CardWrapper key={item.postId}>
             <CardImage onClick={(e) => navigate(`/detail/${item.postId}`)}></CardImage>
-            제목 : {item.title}
+            {item.nick}
             <br />
-            내용 : {item.desc}
+            제목 : {item.title}
           </CardWrapper>
         )
       })}
@@ -24,7 +21,6 @@ function Card({ post }) {
   )
 }
 
-// const CardToDetail = styled.div``;
 const CardsWrapper = styled.div`
   width: 1000px;
   min-width: none;
@@ -43,8 +39,6 @@ const CardWrapper = styled.div`
   border: 1px solid;
   box-sizing: border-box;
   overflow: hidden;
-  /* margin: 10px; */
-  // 카드별 마진을 상위 div의 gap으로 대체함
   padding: 5px;
   background-color: white;
   font-size: small;
