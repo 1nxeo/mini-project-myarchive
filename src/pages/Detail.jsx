@@ -8,7 +8,8 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import styled from 'styled-components'
 import { useNavigate, useParams } from 'react-router-dom'
-import { __addComment, __getComment, __getPostDetail } from '../redux/modules/detailSlice'
+import { __addComment, __deleteComment, __getComment, __getPostDetail } from '../redux/modules/detailSlice'
+import { cookies } from '../shared/cookies'
 
 function Detail() {
   const params = useParams()
@@ -22,6 +23,7 @@ function Detail() {
   // 의존성 배열에에 서버에서 가져온 값을 바로 넣으면 무한 get 요청 들어감
   // 따라서 서버에서 가져온 값을 JSON.stringify로 변환해준 뒤(고정된 값으로)
   // 의존성 배열에 넣어야 함.
+  const nick = cookies.get('nick')
 
   console.log(comments)
 
@@ -38,7 +40,7 @@ function Detail() {
     return <div>{error.message}</div>
   }
 
-  const commentButtonHandler = (e) => {
+  const commentSubmitButtonClickHandler = (e) => {
     e.preventDefault()
 
     const newComment = {
@@ -50,6 +52,13 @@ function Detail() {
     dispatch(__addComment(newComment))
   }
 
+  const commentDeleteButtonClickHandler = (commentId) => {
+    const deleteComment = {
+      params: +params.postId,
+      commentId,
+    }
+    dispatch(__deleteComment(deleteComment))
+  }
   return (
     <Wrapper>
       <GlobalStyle />
@@ -69,11 +78,12 @@ function Detail() {
           >
             상품 바로가기
           </Button>
+          <div>{posts?.nick}</div>
           <div>{posts?.title}</div>
           <div>{posts?.desc}</div>
         </div>
         <CommentBox>
-          <StInputBox onSubmit={commentButtonHandler}>
+          <StInputBox onSubmit={commentSubmitButtonClickHandler}>
             <Input
               type="text"
               placeholder="댓글을 입력하세요"
@@ -94,6 +104,9 @@ function Detail() {
                 <div>
                   <span>
                     {item?.nick} : {item?.comment}
+                    {nick === item.nick ? (
+                      <button onClick={() => commentDeleteButtonClickHandler(item.commentId)}>삭제</button>
+                    ) : null}
                   </span>
                 </div>
               )

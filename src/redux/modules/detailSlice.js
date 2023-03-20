@@ -41,6 +41,15 @@ export const __addComment = createAsyncThunk('__addComment', async (payload, thu
     return thunkAPI.rejectWithValue(error)
   }
 })
+// 게시물 디테일 댓글 삭제 Thunk 함수
+export const __deleteComment = createAsyncThunk('__deleteComment', async (payload, thunkAPI) => {
+  try {
+    const response = await api.delete(`/post/${payload.params}/comments/${payload.commentId}`)
+    return thunkAPI.fulfillWithValue(response)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error)
+  }
+})
 
 const detailSlice = createSlice({
   name: 'details',
@@ -85,6 +94,20 @@ const detailSlice = createSlice({
       state.comments = [...state.comments, action.payload]
     },
     [__addComment.rejected]: (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    },
+    // 게시물 디테일 댓글 삭제 Reducer -------------------------------
+    [__deleteComment.pending]: (state, action) => {
+      state.isLoading = true
+      state.error = false
+    },
+    [__deleteComment.fulfilled]: (state, action) => {
+      state.isLoading = false
+      state.error = false
+      state.comments = [...state.comments, action.payload]
+    },
+    [__deleteComment.rejected]: (state, action) => {
       state.isLoading = false
       state.error = action.payload
     },
