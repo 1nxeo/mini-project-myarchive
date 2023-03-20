@@ -2,10 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import { changeCates } from "../redux/modules/cateSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { cookies } from "../shared/cookies";
 
 function Category() {
   const dispatch = useDispatch();
+  const token = cookies.get("token");
+  const { users } = useSelector((state) => state.users);
+  // const loginStatus = users.isLogin;
+
   return (
     <StCateBar>
       <StButtonBox>
@@ -15,42 +20,56 @@ function Category() {
             dispatch(changeCates(e.target.value));
           }}
         >
-          전체
+          All
         </Button>
         <Button
-          value="cate1"
+          value="cloth"
           onClick={(e) => {
             dispatch(changeCates(e.target.value));
           }}
         >
-          카테고리 1
+          Clothes
         </Button>
         <Button
-          value="cate2"
+          value="it"
           onClick={(e) => dispatch(changeCates(e.target.value))}
         >
-          카테고리 2
+          IT
         </Button>
         <Button
-          value="cate3"
+          value="acc"
           onClick={(e) => dispatch(changeCates(e.target.value))}
         >
-          카테고리 3
+          Acc
         </Button>
         <Button
-          value="cate4"
+          value="food"
           onClick={(e) => dispatch(changeCates(e.target.value))}
         >
-          카테고리 4
+          Food
+        </Button>
+        <Button
+          value="pet"
+          onClick={(e) => dispatch(changeCates(e.target.value))}
+        >
+          Pet
+        </Button>
+        <Button
+          value="etc"
+          onClick={(e) => dispatch(changeCates(e.target.value))}
+        >
+          etc
         </Button>
       </StButtonBox>
       <StButtonBox>
-        <Button
-          value="done"
-          onClick={(e) => dispatch(changeCates(e.target.value))}
-        >
-          구매한 아이템
-        </Button>
+        {token ? (
+          <Button
+            value="done"
+            onClick={(e) => dispatch(changeCates(e.target.value))}
+          >
+            구매한 아이템
+          </Button>
+        ) : null}
       </StButtonBox>
     </StCateBar>
   );
