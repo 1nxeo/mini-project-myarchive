@@ -40,8 +40,8 @@ function Detail() {
       <DetailWrapper>
         <div>
           <div>여기에 이미지가 들어갑니다</div>
-          <div>{detailPost.title}</div>
-          <div>{detailPost.desc}</div>
+          <div>{detailPost?.title}</div>
+          <div>{detailPost?.desc}</div>
         </div>
         <CommentBox>
           <StInputBox>

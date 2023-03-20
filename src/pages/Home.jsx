@@ -1,33 +1,33 @@
-import React from "react";
-import Header from "../components/Header";
-import Nav from "../components/Nav";
-import Wrapper from "../components/Wrapper";
-import GlobalStyle from "../GlobalStyle";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { __getPost } from "../redux/modules/postSlice";
-import { useEffect } from "react";
-import Card from "../components/Card";
-import Button from "../components/Button";
-import Category from "../components/Category";
-import styled from "styled-components";
-import ErrorMessage from "../components/ErrorMessage";
+import React from 'react'
+import Header from '../components/Header'
+import Nav from '../components/Nav'
+import Wrapper from '../components/Wrapper'
+import GlobalStyle from '../GlobalStyle'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { __getPost } from '../redux/modules/postSlice'
+import { useEffect } from 'react'
+import Card from '../components/Card'
+import Button from '../components/Button'
+import Category from '../components/Category'
+import styled from 'styled-components'
+import ErrorMessage from '../components/ErrorMessage'
 
 function Home() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { posts, isLoading, error } = useSelector((state) => state.posts);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { posts, isLoading, error } = useSelector((state) => state.posts)
 
   useEffect(() => {
-    dispatch(__getPost());
-  }, []);
+    dispatch(__getPost())
+  }, [])
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   if (error) {
-    return <ErrorMessage>{error.message}</ErrorMessage>;
+    return <ErrorMessage>{error.message}</ErrorMessage>
   }
 
   return (
@@ -37,16 +37,16 @@ function Home() {
       <Header />
       <ContentNav>
         <Category />
-        <Button onClick={() => navigate("/post")}>글쓰기</Button>
+        <Button onClick={() => navigate('/post')}>글쓰기</Button>
       </ContentNav>
       <CardsWrapper>
-        {" "}
-        {posts.map((item) => {
-          return <Card key={item.id} item={item} />;
+        {' '}
+        {posts?.map((item) => {
+          return <Card key={item.postId} item={item} />
         })}
       </CardsWrapper>
     </Wrapper>
-  );
+  )
 }
 
 const ContentNav = styled.div`
@@ -54,7 +54,7 @@ const ContentNav = styled.div`
   justify-content: space-between;
   width: 95%;
   align-items: center;
-`;
+`
 export const CardsWrapper = styled.div`
   width: 1000px;
   min-width: none;
@@ -65,6 +65,6 @@ export const CardsWrapper = styled.div`
   justify-content: left;
 
   gap: 20px;
-`;
+`
 
-export default Home;
+export default Home
