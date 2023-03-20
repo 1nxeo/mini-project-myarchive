@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Header from '../components/Header'
 import Wrapper from '../components/Wrapper'
@@ -8,17 +8,26 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import { __getPostDetail } from '../redux/modules/detailSlice'
+import { __addComment, __getComment, __getPostDetail } from '../redux/modules/detailSlice'
 
 function Detail() {
   const params = useParams()
   const dispatch = useDispatch()
 
   const { posts, isLoading, error } = useSelector((state) => state.details)
+  const { comments } = useSelector((state) => state.details)
+  const [comment, setComment] = useState(``)
+  const commentList = JSON.stringify(comments)
+  // 의존성 배열에에 서버에서 가져온 값을 바로 넣으면 무한 get 요청 들어감
+  // 따라서 서버에서 가져온 값을 JSON.stringify로 변환해준 뒤(고정된 값으로)
+  // 의존성 배열에 넣어야 함.
+
+  console.log(comments)
 
   useEffect(() => {
     dispatch(__getPostDetail(+params.postId))
-  }, [])
+    dispatch(__getComment(+params.postId))
+  }, [commentList])
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -26,6 +35,18 @@ function Detail() {
 
   if (error) {
     return <div>{error.message}</div>
+  }
+
+  const commentButtonHandler = (e) => {
+    e.preventDefault()
+
+    const newComment = {
+      params: +params.postId,
+      comment,
+    }
+
+    setComment(``)
+    dispatch(__addComment(newComment))
   }
 
   return (
@@ -44,7 +65,7 @@ function Detail() {
           <div>{posts?.desc}</div>
         </div>
         <CommentBox>
-          <StInputBox>
+          <StInputBox onSubmit={commentButtonHandler}>
             <Input
               type="text"
               placeholder="댓글을 입력하세요"
@@ -52,12 +73,21 @@ function Detail() {
                 width: '80%',
                 margin: '10px',
               }}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              required
             />
             <Button style={{ width: '70px' }}>댓글등록</Button>
           </StInputBox>
 
           <StComment>
-            <span>여기에 댓글이 들어갑니다</span>
+            {comments.map((item) => {
+              return (
+                <div>
+                  <span>{item?.comment}</span>
+                </div>
+              )
+            })}
           </StComment>
         </CommentBox>
       </DetailWrapper>
@@ -87,7 +117,7 @@ const CommentBox = styled.div`
   width: 95%;
 `
 
-const StInputBox = styled.div`
+const StInputBox = styled.form`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -98,7 +128,7 @@ const StComment = styled.div`
   width: 95%;
   display: grid;
   grid-template-columns: 15fr 1fr;
-  overflow: scroll;
+  overflow: auto;
   width: 95%;
   margin: 5px;
   align-items: center;

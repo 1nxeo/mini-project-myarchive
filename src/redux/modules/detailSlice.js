@@ -9,6 +9,7 @@ const initialState = {
   posts: [],
   isLoading: false,
   error: null,
+  comments: [],
 }
 
 // 게시물 디테일 조회 Thunk 함수
@@ -23,8 +24,9 @@ export const __getPostDetail = createAsyncThunk('getPostDetails', async (payload
 // 게시물 디테일 댓글 조회 Thunk 함수
 export const __getComment = createAsyncThunk('__getComment', async (payload, thunkAPI) => {
   try {
-    const response = await api.get(`/post/:postId/comments`)
-    return thunkAPI.fulfillWithValue()
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/${payload}/comments`)
+    console.log(response.data.detail)
+    return thunkAPI.fulfillWithValue(response.data.detail)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
@@ -32,9 +34,9 @@ export const __getComment = createAsyncThunk('__getComment', async (payload, thu
 // 게시물 디테일 댓글 추가 Thunk 함수
 export const __addComment = createAsyncThunk('__addComment', async (payload, thunkAPI) => {
   try {
-    const response = await api.post(`/post/:postId/comments`, payload)
-    console.log(response)
-    return thunkAPI.fulfillWithValue(response)
+    const newComment = { comment: payload.comment }
+    const response = await api.post(`/post/${payload.params}/comments`, newComment)
+    return thunkAPI.fulfillWithValue(response.data)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
@@ -66,7 +68,7 @@ const detailSlice = createSlice({
     [__getComment.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.posts = action.payload
+      state.comments = action.payload
     },
     [__getComment.rejected]: (state, action) => {
       state.isLoading = false
@@ -80,7 +82,7 @@ const detailSlice = createSlice({
     [__addComment.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.posts = action.payload
+      state.comments = [...state.comments, action.payload]
     },
     [__addComment.rejected]: (state, action) => {
       state.isLoading = false
