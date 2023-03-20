@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import Wrapper from "../components/Wrapper";
-import GlobalStyle from "../GlobalStyle";
-import styled from "styled-components";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import { v4 as uuidv4 } from "uuid";
-import { __addPost } from "../redux/modules/postSlice";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Nav from "../components/Nav";
+import React, { useState } from 'react'
+import Wrapper from '../components/Wrapper'
+import GlobalStyle from '../GlobalStyle'
+import styled from 'styled-components'
+import Input from '../components/Input'
+import Button from '../components/Button'
+import { __addPost } from '../redux/modules/postSlice'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
 
 function Post() {
   // input state를 한번에 관리함
