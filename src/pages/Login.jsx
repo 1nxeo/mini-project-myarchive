@@ -29,20 +29,6 @@ function Login() {
     }
   }, []);
 
-  // const submitLoginHandler = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const result = await apis.post("/login", userInfo);
-
-  //     cookies.set("token", result.data.token, { path: "/" });
-  //     cookies.set("test", "test", { path: "/" });
-  //     navigate("/");
-  //     alert("로그인완료!");
-  //   } catch (err) {
-  //     alert("로그인 실패..");
-  //   }
-  // };
-
   const submitLoginHandler = (e) => {
     e.preventDefault();
     dispatch(__loginUser(userInfo));

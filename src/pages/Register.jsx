@@ -32,8 +32,8 @@ function Register() {
 
   // 중복확인용 state들
   const [validId, setValidId] = useState(false);
-  // const [validPw, setValidPw] = useState({ body: "", isValid: false });
   const [validNick, setValidNick] = useState(false);
+  const [rePw, setRePw] = useState("");
 
   // 정규표현식 - id, pw 유효성
   // const checkValidId = (item) => {
@@ -67,31 +67,22 @@ function Register() {
   };
 
   // 비밀번호 중복 확인
-  // const validatePwHandler = () => {
-  //   String(validPw.body) === String(newUser.password)
-  //     ? setValidPw({ ...validPw, isValid: true })
-  //     : setValidPw({ ...validPw, isValid: false });
-  //   console.log("성공적으로 pw값을 바꿨다.", validPw.isValid);
-  // };
+  const checkSamePwHandler = (item) => {
+    return newUser.password !== item ? false : true;
+  };
 
   //회원가입 버튼
-  const addUserHandler = (e) => {
+  const addUserHandler = async (e) => {
     e.preventDefault();
-
-    // validatePwHandler();
-    if (
-      validId &&
-      // validPw.isValid
-      // &&
-      validNick
-      // &&
-      // checkValidId(newUser.accountId) &&
-      // checkValidPw(newUser.password)
-    ) {
-      dispatch(__addUsers(newUser));
-      if (users) {
-        navigate("/login");
+    if (validId && validNick && checkSamePwHandler(rePw)) {
+      try {
+        await dispatch(__addUsers(newUser));
+        return navigate("/login");
+      } catch (err) {
+        return alert("입력한 정보를 확인해주세요");
       }
+    } else {
+      alert("입력한 정보를 확인해주세요");
     }
   };
 
@@ -102,7 +93,6 @@ function Register() {
       <Header />
       <form
         onSubmit={(e) => {
-          console.log("newUser", newUser);
           addUserHandler(e);
         }}
       >
@@ -160,24 +150,23 @@ function Register() {
             }
           />
         </FormWrapper>
-        {/* <FormWrapper>
+        <FormWrapper>
           <label>pwVaildation:</label>
           <Input
             type="password"
-            value={validPw.body}
+            value={rePw}
             onChange={(e) => {
-              setValidPw({ ...validPw, body: e.target.value });
+              setRePw(e.target.value);
             }}
           />
-        </FormWrapper> */}
-        {/* {validPw.body ? (
-          validPw.isValid ? (
+        </FormWrapper>
+        {rePw ? (
+          checkSamePwHandler(rePw) ? (
             <span>비밀번호가 일치합니다.</span>
           ) : (
             <span style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</span>
           )
-        ) : null} */}
-
+        ) : null}
         <Button type="submit" style={{ width: "100px" }}>
           회원가입
         </Button>

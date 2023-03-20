@@ -20,6 +20,7 @@ export const __addUsers = createAsyncThunk(
           await axios.post(`${process.env.REACT_APP_SERVER_URL}/register`, payload);
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
+
           return thunkAPI.rejectWithValue(error)
         }
       }
@@ -58,6 +59,7 @@ export const __addUsers = createAsyncThunk(
           cookies.set("token", token,{path:'/'})
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
+          console.log(error.response.data.errorMessage);
           return thunkAPI.rejectWithValue(error)
         }
       }
