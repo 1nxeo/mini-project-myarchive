@@ -59,14 +59,15 @@ export const __addUsers = createAsyncThunk(
         try {
           const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, payload.userInfo);
           const {token} = response.headers
-          // const decode = jwtDecode()
-          // const decodeData = jwt_decode(token)
-          // console.log(decodeData);
-          console.log("response",response);
-          cookies.set("token", token,{path:'/'})
-          cookies.set("accountId", payload.userInfo.accountId, {path:'/'})
-          cookies.set("nick", response.data.nick,{path:'/'})
-          console.log("payload = ",payload);
+
+          const now = new Date();
+
+          console.log(now.setHours(now.getHours()+1));
+          console.log(now.setSeconds(now.getSeconds()+30));
+
+          cookies.set("token", token,{path:'/', maxAge:7140})
+          cookies.set("accountId", payload.userInfo.accountId, {path:'/', maxAge:7140})
+          cookies.set("nick", response.data.nick,{path:'/', maxAge:7140})
           payload.userInfo = {accountId:payload.userInfo.accountId, nick:response.data.nick, isLogin: true}
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {

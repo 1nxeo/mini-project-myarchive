@@ -23,22 +23,6 @@ function Home() {
 
   console.log(cates);
 
-  // const cateList =
-  // switch (postList.category) {
-  //   case "cloth":
-  //     return ;
-  //     case "it":
-  //       return ;
-  //       case "acc":
-  //         return ;
-  //         case "":
-  //           return ;
-  //   default:
-  //     return;
-  // }
-
-  // const loginStatus = users.isLogin;
-
   useEffect(() => {
     dispatch(__getPost());
   }, [postList]);
