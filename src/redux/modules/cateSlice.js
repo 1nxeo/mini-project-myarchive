@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-  cates: "",
-}
+const initialState = {cates: "notdone"}
 
 
 const cateSlice = createSlice({
@@ -10,7 +8,7 @@ const cateSlice = createSlice({
   initialState,
   reducers:{
     changeCates: (state, action) => {
-        return action.payload
+        return {...state, cates: action.payload}
     }
   },
   extraReducers: {
