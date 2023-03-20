@@ -22,16 +22,16 @@ function Mypage() {
 
   console.log("cate", memberPost.notdone);
 
-  useEffect(() => {
-    if (!cookies.get("token")) {
-      alert("로그인이 필요한 페이지입니다.");
-      navigate("/");
-    } else {
-      dispatch(__getMemberPosts());
-    }
+  // useEffect(() => {
+  //   if (!cookies.get("token")) {
+  //     alert("로그인이 필요한 페이지입니다.");
+  //     navigate("/");
+  //   } else {
+  //     dispatch(__getMemberPosts());
+  //   }
 
-    return () => {};
-  }, []);
+  //   return () => {};
+  // }, []);
 
   // useEffect(() => {
 
