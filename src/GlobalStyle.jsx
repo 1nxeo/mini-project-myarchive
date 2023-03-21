@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import "98.css";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -12,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     body {
     font-family: 'DungGeunMo', sans-serif;
     line-height: 1.5;
+    background-color: #008080;
   }
 
 
