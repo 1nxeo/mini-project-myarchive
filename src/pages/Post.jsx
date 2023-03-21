@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
@@ -12,57 +11,56 @@ import { useNavigate } from "react-router-dom";
 import { cookies } from "../shared/cookies";
 import WinWrapper from "../components/WinWrapper";
 
-
 function Post() {
-  const token = cookies.get('token')
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const token = cookies.get("token");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // input state를 한번에 관리함
   const [posts, setPosts] = useState({
     // accountId: '',
-    url: '',
-    title: '',
-    category: 'category',
-    desc: '',
+    url: "",
+    title: "",
+    category: "category",
+    desc: "",
     isDone: false,
-  })
+  });
 
   useEffect(() => {
     if (!token) {
-      alert('로그인이 필요합니다!')
-      navigate('/login')
+      alert("로그인이 필요합니다!");
+      navigate("/login");
     }
-    return () => {}
-  }, [])
+    return () => {};
+  }, []);
 
-  console.log(posts.category)
+  console.log(posts.category);
 
   // input onChange를 한번에 관리함
-  const inputOnChangeHandler = (event) => {
-    const { value, name } = event.target
+  const changeInputHandler = (event) => {
+    const { value, name } = event.target;
     setPosts((old) => {
-      return { ...old, [name]: value }
-    })
-  }
+      return { ...old, [name]: value };
+    });
+  };
 
   // Posts 추가 함수
   const postsButtonClickHandler = async (e) => {
-    e.preventDefault()
-    if (posts.category !== 'category') {
-      await dispatch(__addPost({ posts: posts, next: () => navigate('/') }))
+    e.preventDefault();
+    if (posts.category !== "category") {
+      await dispatch(__addPost({ posts: posts, next: () => navigate("/") }));
       // input 칸을 리셋함
       setPosts({
-        url: '',
-        title: '',
-        category: 'category',
-        desc: '',
+        url: "",
+        title: "",
+        category: "category",
+        desc: "",
         isDone: false,
-      })
+      });
     } else {
-      alert('입력한 내용을 확인해주세요!')
+      alert("입력한 내용을 확인해주세요!");
     }
-  }
+  };
 
   return (
     <Wrapper>
@@ -116,10 +114,10 @@ function Post() {
         </StForm>
       </WinWrapper>
     </Wrapper>
-  )
+  );
 }
 
-export default Post
+export default Post;
 
 const StForm = styled.form`
   width: 1000px;
@@ -127,4 +125,4 @@ const StForm = styled.form`
 
   margin: 30px auto 30px auto;
   border: 1px solid black;
-`
+`;
