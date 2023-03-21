@@ -5,6 +5,7 @@ import Wrapper from '../components/Wrapper'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { __loginAdmin } from '../redux/modules/adminSlice'
+import GlobalStyle from '../GlobalStyle'
 
 function AdminLogin() {
   const navigate = useNavigate()
@@ -26,7 +27,7 @@ function AdminLogin() {
   // 로그인 버튼 함수
   const loginButtonHandler = (e) => {
     e.preventDefault()
-    dispatch(__loginAdmin(adminInfo))
+    dispatch(__loginAdmin({ adminInfo, next: () => navigate('/admin') }))
     setAdminInfo({
       accountId: '',
       password: '',
