@@ -2,14 +2,27 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { __doneMemberPosts } from "../redux/modules/memberSlice";
+import { __deletePost } from "../redux/modules/postSlice";
+import { cookies } from "../shared/cookies";
+import Button from "./Button";
 
 function Card({ item }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const nick = cookies.get("nick");
+
+  const DeletePostHandler = (id) => {
+    dispatch(__deletePost(id));
+  };
+
+  const DonePostHandler = (item) => {
+    dispatch(__doneMemberPosts(item));
+  };
+
   return (
     <CardWrapper>
-      {/* <CardImage
-        onClick={(e) => navigate(`/detail/${item.postId}`)}
-      ></CardImage> */}
       <StCardImg
         src={`${item.img}`}
         onClick={() => navigate(`/detail/${item.postId}`)}
@@ -17,6 +30,14 @@ function Card({ item }) {
       {item?.nick}
       <br />
       제목 : {item?.title}
+      <div>
+        {nick == item.nick ? (
+          <>
+            <Button onClick={() => DonePostHandler(item)}>구매완료</Button>
+            <Button onClick={() => DeletePostHandler(item.postId)}>삭제</Button>
+          </>
+        ) : null}
+      </div>
     </CardWrapper>
   );
 }

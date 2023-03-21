@@ -23,18 +23,18 @@ export const __getMemberPosts = createAsyncThunk('getMemberPosts', async (payloa
     }
   })
 
-// 게시물 추가 Thunk 함수
-
-// export const __addPost = createAsyncThunk('addPosts', async (payload, thunkAPI) => {
-//   try {
-//     const response = await apis.post(`/post`, payload)
-//     console.log('response', response)
-//     return thunkAPI.fulfillWithValue(response.data)
-//   } catch (error) {
-//     return thunkAPI.rejectWithValue(error)
-//   }
-// })
-
+  // 게시물 구매완료 Thunk 함수
+  export const __doneMemberPosts = createAsyncThunk('getMemberPosts', async (payload, thunkAPI) => {
+    try {
+      const updateDone = {...payload, isDone: !payload.isDone}
+      const response = await api.put(`/mypage/${payload}`, updateDone)
+      // console.log( "response.data",response.data)
+      return thunkAPI.fulfillWithValue(response.data)
+    } catch (error) {
+      // console.log("error",error);
+      return thunkAPI.rejectWithValue(error)
+    }
+  })
 
 
 const memberSlice = createSlice({
@@ -57,21 +57,21 @@ const memberSlice = createSlice({
       state.error = action.payload
     },
 
-    // 게시물 추가 Reducer -------------------------------
+    // 게시물 완료 Reducer -------------------------------
 
-    // [__addPost.pending]: (state, action) => {
-    //   state.isLoading = true
-    //   state.error = false
-    // },
-    // [__addPost.fulfilled]: (state, action) => {
-    //   state.isLoading = false
-    //   state.error = false
-    //   state.posts = action.payload
-    // },
-    // [__addPost.rejected]: (state, action) => {
-    //   state.isLoading = false
-    //   state.error = action.payload
-    // },
+    [__doneMemberPosts.pending]: (state, action) => {
+      state.isLoading = true
+      state.error = false
+    },
+    [__doneMemberPosts.fulfilled]: (state, action) => {
+      state.isLoading = false
+      state.error = false
+      state.memberPosts = action.payload
+    },
+    [__doneMemberPosts.rejected]: (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    },
 
 
     // 게시물 조회 Reducer -------------------------------

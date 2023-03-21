@@ -46,10 +46,18 @@ function Mypage() {
       <Category />
       <CardsWrapper>
         {cates == "notdone"
+          ? memberPosts.notdone?.map((item) => (
+              <Card key={item.id} item={item} />
+            ))
+          : null}
+        {cates
           ? memberPosts.notdone?.map((item) =>
               item.category == cates ? <Card key={item.id} item={item} /> : null
             )
-          : memberPosts.done?.map((item) => <Card key={item.id} item={item} />)}
+          : null}
+        {cates == "done"
+          ? memberPosts.done?.map((item) => <Card key={item.id} item={item} />)
+          : null}
       </CardsWrapper>
     </Wrapper>
   );
