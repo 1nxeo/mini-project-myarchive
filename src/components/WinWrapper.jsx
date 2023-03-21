@@ -15,7 +15,7 @@ function WinWrapper({ children, ...rest }) {
           maxWidth: "1200px",
           minWidth: " 900px",
           minHeight: "90vh",
-          marginTop: "30px",
+          marginTop: "20px",
         }}
         className="window"
       >
@@ -39,7 +39,6 @@ function WinWrapper({ children, ...rest }) {
             className="window-body"
             // style={{ display: "flex", justifyContent: "center" }}
           >
-            <p>여기에 홈버튼이 들어갑니다</p>
             {children}
           </div>
         </BodyWrapper>

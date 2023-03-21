@@ -17,6 +17,7 @@ import {
 import { cookies } from "../shared/cookies";
 import { __deletePost, __editPost } from "../redux/modules/postSlice";
 import { __doneMemberPosts } from "../redux/modules/memberSlice";
+import WinWrapper from "../components/WinWrapper";
 
 function Detail() {
   const params = useParams();
@@ -93,106 +94,107 @@ function Detail() {
   return (
     <Wrapper>
       <GlobalStyle />
-      <Nav />
-      <Header />
-      <DetailWrapper>
-        <div
-          style={{
-            height: "700px",
-          }}
-        >
-          <StImg src={`${posts?.img}`} />
-          <Button
-            onClick={() => {
-              window.open(posts.url);
+      <WinWrapper>
+        <Nav />
+        <DetailWrapper>
+          <div
+            style={{
+              height: "700px",
             }}
           >
-            상품 바로가기
-          </Button>
-          {edit ? (
-            <>
-              <input
-                type="text"
-                value={editItem.url}
-                onChange={(e) =>
-                  setEditItem({ ...editItem, url: e.target.value })
-                }
-              />
-              <input
-                type="text"
-                value={editItem.title}
-                onChange={(e) =>
-                  setEditItem({ ...editItem, title: e.target.value })
-                }
-              />
-              <input
-                type="text"
-                value={editItem.desc}
-                onChange={(e) =>
-                  setEditItem({ ...editItem, title: e.target.value })
-                }
-              />
-              <Button onClick={() => editPostHandler(editItem)}>
-                수정하기
-              </Button>
-            </>
-          ) : (
-            <>
-              <div>{posts?.nick}</div>
-              <div>{posts?.title}</div>
-              <div>{posts?.desc}</div>
-            </>
-          )}
-        </div>
-        <CommentBox>
-          <StInputBox onSubmit={commentSubmitButtonClickHandler}>
-            <Input
-              type="text"
-              placeholder="댓글을 입력하세요"
-              style={{
-                width: "80%",
-                margin: "10px",
+            <StImg src={`${posts?.img}`} />
+            <button
+              onClick={() => {
+                window.open(posts.url);
               }}
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              required
-            />
-            <Button style={{ width: "70px" }}>댓글등록</Button>
-          </StInputBox>
+            >
+              상품 바로가기
+            </button>
+            {edit ? (
+              <>
+                <input
+                  type="text"
+                  value={editItem.url}
+                  onChange={(e) =>
+                    setEditItem({ ...editItem, url: e.target.value })
+                  }
+                />
+                <input
+                  type="text"
+                  value={editItem.title}
+                  onChange={(e) =>
+                    setEditItem({ ...editItem, title: e.target.value })
+                  }
+                />
+                <input
+                  type="text"
+                  value={editItem.desc}
+                  onChange={(e) =>
+                    setEditItem({ ...editItem, title: e.target.value })
+                  }
+                />
+                <button onClick={() => editPostHandler(editItem)}>
+                  수정하기
+                </button>
+              </>
+            ) : (
+              <>
+                <div>{posts?.nick}</div>
+                <div>{posts?.title}</div>
+                <div>{posts?.desc}</div>
+              </>
+            )}
+          </div>
+          <CommentBox>
+            <StInputBox onSubmit={commentSubmitButtonClickHandler}>
+              <Input
+                type="text"
+                placeholder="댓글을 입력하세요"
+                style={{
+                  width: "80%",
+                  margin: "10px",
+                }}
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                required
+              />
+              <button style={{ width: "70px" }}>댓글등록</button>
+            </StInputBox>
 
-          <StComment>
-            {comments.map((item) => {
-              return (
-                <div>
-                  <span>
-                    {item?.nick} : {item?.comment}
-                    {nick === item.nick ? (
-                      <button
-                        onClick={() =>
-                          commentDeleteButtonClickHandler(item.commentId)
-                        }
-                      >
-                        삭제
-                      </button>
-                    ) : null}
-                  </span>
-                </div>
-              );
-            })}
-          </StComment>
-        </CommentBox>
-        <div>
-          {nick == posts.nick ? (
-            <>
-              <Button onClick={() => setEdit(true)}>수정</Button>
-              <Button onClick={() => donePostHandler(posts)}>구매완료</Button>
-              <Button onClick={() => deletePostHandler(posts.postId)}>
-                삭제
-              </Button>
-            </>
-          ) : null}
-        </div>
-      </DetailWrapper>
+            <StComment>
+              {comments.map((item) => {
+                return (
+                  <div>
+                    <span>
+                      {item?.nick} : {item?.comment}
+                      {nick === item.nick ? (
+                        <button
+                          onClick={() =>
+                            commentDeleteButtonClickHandler(item.commentId)
+                          }
+                        >
+                          삭제
+                        </button>
+                      ) : null}
+                    </span>
+                  </div>
+                );
+              })}
+            </StComment>
+          </CommentBox>
+          <div>
+            {nick == posts.nick ? (
+              <>
+                <button onClick={() => setEdit(true)}>수정</button>
+                <button onClick={() => donePostHandler(posts)}>구매완료</button>
+                <button onClick={() => deletePostHandler(posts.postId)}>
+                  삭제
+                </button>
+              </>
+            ) : null}
+          </div>
+        </DetailWrapper>
+      </WinWrapper>
     </Wrapper>
   );
 }
