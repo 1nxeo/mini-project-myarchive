@@ -1,14 +1,21 @@
-import React, { useState } from "react";
-import Button from "./Button";
-import styled from "styled-components";
+import React, { useState } from 'react'
+import Button from './Button'
+import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
+import { __deleteUserAdmin } from '../redux/modules/adminSlice'
 
-const Modal = ({ buttonName, bc, fontColor, buttonSize, margin }) => {
-  const [open, setOpen] = useState(false);
+const Modal = ({ buttonName, bc, fontColor, buttonSize, margin, item }) => {
+  const [open, setOpen] = useState(false)
+  const dispatch = useDispatch()
   const handleClickOutside = (event) => {
     if (event.target === event.currentTarget) {
-      setOpen(false);
+      setOpen(false)
     }
-  };
+  }
+  const userDeleteButtonHandler = (id) => {
+    dispatch(__deleteUserAdmin(id))
+    window.location.reload()
+  }
 
   return (
     <>
@@ -16,12 +23,12 @@ const Modal = ({ buttonName, bc, fontColor, buttonSize, margin }) => {
         style={{
           backgroundColor: bc,
           color: fontColor,
-          width: buttonSize === "large" ? "120px" : "50px",
-          margin: margin ? margin : "none",
+          width: buttonSize === 'large' ? '120px' : '50px',
+          margin: margin ? margin : 'none',
         }}
         onClick={() => setOpen((pre) => !pre)}
       >
-        {buttonName}
+        {item.nick}
       </Button>
       {open ? (
         <StModal onClick={handleClickOutside}>
@@ -29,43 +36,44 @@ const Modal = ({ buttonName, bc, fontColor, buttonSize, margin }) => {
             <CloseBtn onClick={() => setOpen((pre) => !pre)}>X</CloseBtn>
             <ModalForm
               onSubmit={(e) => {
-                e.preventDefault();
+                e.preventDefault()
                 // submitHandle 함수가 들어갑니다.
-                alert("수정완료!");
-                setOpen((pre) => !pre);
+                alert('회원정보가 삭제되었습니다.')
+                setOpen((pre) => !pre)
               }}
             >
               <div
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                <labe> URL : </labe>
-                <StInput
-                  type="text"
-                  onChange={() => {}}
-                  placeholder="수정할 url"
-                />
+                {/* <labe> URL : </labe> */}
+                <label>회원 고유번호 : {item.userId}</label>
+                <label>회원 아이디 : {item.accountId}</label>
+                <label>회원 비밀번호 : {item.password}</label>
+                <label>회원 닉네임 : {item.nick}</label>
+                <label>회원 가입 일 시 : {item.createdAt}</label>
+                {/* <StInput type="text" onChange={() => {}} placeholder="수정할 url" /> */}
               </div>
-              <div
+              {/* <div
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
                 <labe> COMMENTS : </labe>
                 <StInput
                   style={{
-                    height: "50px",
+                    height: '50px',
                   }}
                   type="text"
                   onChange={() => {}}
                   placeholder="수정할 내용"
                 />
-              </div>
-              <Button style={{ width: "100px", marginTop: "15px" }}>
-                수정하기
+              </div> */}
+              <Button style={{ width: '100px', marginTop: '15px' }} onClick={() => userDeleteButtonHandler(item.userId)}>
+                회원삭제
               </Button>
             </ModalForm>
           </ModalSection>
@@ -73,8 +81,8 @@ const Modal = ({ buttonName, bc, fontColor, buttonSize, margin }) => {
         </StModal>
       ) : null}
     </>
-  );
-};
+  )
+}
 
 const StModal = styled.div`
   position: fixed;
@@ -84,7 +92,7 @@ const StModal = styled.div`
   left: 0;
   z-index: 90;
   background-color: rgba(0, 0, 0, 0.6);
-`;
+`
 
 const ModalSection = styled.div`
   position: relative;
@@ -98,7 +106,7 @@ const ModalSection = styled.div`
   z-index: 100;
   /* animation: modal-show 0.3s;
   overflow: hidden; */
-`;
+`
 
 const CloseBtn = styled.button`
   width: 30px;
@@ -107,7 +115,7 @@ const CloseBtn = styled.button`
   background-color: lightgray;
   border: 1px solid transparent;
   margin: 5px;
-`;
+`
 
 const ModalForm = styled.form`
   display: flex;
@@ -116,13 +124,13 @@ const ModalForm = styled.form`
   align-items: center;
   width: 100%;
   height: 70%;
-`;
+`
 
 const StInput = styled.input`
   width: 300px;
   height: 20px;
   border: 1px solid;
   margin: 5px;
-`;
+`
 
-export default Modal;
+export default Modal
