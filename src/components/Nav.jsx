@@ -5,6 +5,7 @@ import Button from "./Button";
 import { cookies } from "../shared/cookies";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/modules/userSlice";
+import { changeCates } from "../redux/modules/cateSlice";
 
 function Nav() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function Nav() {
     cookies.remove("accountId");
     cookies.remove("nick");
     dispatch(logoutUser());
+    dispatch(changeCates("notdone"));
     alert("로그아웃 성공!");
   };
 
