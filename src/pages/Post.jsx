@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
 import styled from "styled-components";
@@ -8,20 +8,33 @@ import Nav from "../components/Nav";
 import { __addPost } from "../redux/modules/postSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { cookies } from "../shared/cookies";
+import Dropdown from "../components/Dropdown";
 
 function Post() {
+  const token = cookies.get("token");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   // input state를 한번에 관리함
   const [posts, setPosts] = useState({
     // accountId: '',
     url: "",
     title: "",
-    category: "",
+    category: "category",
     desc: "",
     isDone: false,
   });
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (!token) {
+      alert("로그인이 필요합니다!");
+      navigate("/login");
+    }
+    return () => {};
+  }, []);
+
+  console.log(posts.category);
 
   // input onChange를 한번에 관리함
   const changeInputHandler = (event) => {
@@ -32,26 +45,21 @@ function Post() {
   };
 
   // Psots 추가 함수
-  const postsButtonClickHandler = (e) => {
+  const postsButtonClickHandler = async (e) => {
     e.preventDefault();
-
-    const newPosts = {
-      url: posts.url,
-      postId: "1",
-      accountId: "abcd",
-      nick: "dami",
-      category: posts.category,
-      title: posts.title,
-      desc: posts.desc,
-      createAt: Date(),
-      updateAt: "2023-03-01",
-      isDone: false,
-    };
-
-    // input 칸을 리셋함
-    setPosts({ url: "", title: "", category: "", desc: "" });
-
-    dispatch(__addPost(newPosts));
+    if (posts.category !== "category") {
+      await dispatch(__addPost({ posts: posts, next: () => navigate("/") }));
+      // input 칸을 리셋함
+      setPosts({
+        url: "",
+        title: "",
+        category: "category",
+        desc: "",
+        isDone: false,
+      });
+    } else {
+      alert("입력한 내용을 확인해주세요!");
+    }
   };
 
   return (
@@ -70,15 +78,19 @@ function Post() {
         ></Input>
         <br />
         카테고리
+        {/* <Dropdown key={posts.id} item={posts} setItem={setPosts} /> */}
         <select
           name="category"
           value={posts.category}
           onChange={changeInputHandler}
         >
-          <option>카테고리1</option>
-          <option>카테고리2</option>
-          <option>카테고리3</option>
-          <option>카테고리4</option>
+          <option>Category</option>
+          <option value="cloth">Clothes</option>
+          <option value="it">IT</option>
+          <option value="acc">Acc</option>
+          <option value="food">Food</option>
+          <option value="pet">Pet</option>
+          <option value="etc">Etc</option>
         </select>
         <br />
         제목
