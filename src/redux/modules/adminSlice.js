@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { cookies } from '../../shared/cookies'
 // import apis from '../../shared/axios'
 import api from '../../axios/api'
 // apis 사용하면 헤더에 토큰 있음 : 로그인 된 유저가 요청 시 사용
@@ -17,8 +18,9 @@ const initialState = {
 export const __loginAdmin = createAsyncThunk('loginAdmin', async (payload, thunkAPI) => {
   try {
     const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/admin`, payload.adminInfo)
-    console.log('response = ', response.data)
-    return thunkAPI.fulfillWithValue(response)
+    const { token } = response.headers
+    cookies.set('token', token, { path: '/admin', maxAge: 600 })
+    return thunkAPI.fulfillWithValue(payload)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
@@ -26,7 +28,7 @@ export const __loginAdmin = createAsyncThunk('loginAdmin', async (payload, thunk
 // admin 게시물 조회 Thunk 함수
 export const __getPostAdmin = createAsyncThunk('__getPostAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/admin/posts`)
+    const response = await api.get(`/admin/posts`)
     return thunkAPI.fulfillWithValue(response.data.posts)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -35,22 +37,31 @@ export const __getPostAdmin = createAsyncThunk('__getPostAdmin', async (payload,
 // admin 유저 조회 함수
 export const __getUserAdmin = createAsyncThunk('__getUserAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/admin/users`)
+    const response = await api.get(`/admin/users`)
     return thunkAPI.fulfillWithValue(response.data.users)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
 })
-// // admin 댓글 조회 함수
-// export const __getCommentAdmin = createAsyncThunk('loginAdmin', async (payload, thunkAPI) => {
-//   try {
-//     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/admin/login`, payload.adminInfo)
-//     console.log('response = ', response.data)
-//     return thunkAPI.fulfillWithValue(response)
-//   } catch (error) {
-//     return thunkAPI.rejectWithValue(error)
-//   }
-// })
+// admin 회원 삭제 함수
+export const __deleteUserAdmin = createAsyncThunk('__deleteUserAdmin', async (payload, thunkAPI) => {
+  try {
+    const response = await api.delete(`/admin/users/${payload}`)
+    console.log(response)
+    return thunkAPI.fulfillWithValue(response.data.users)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error)
+  }
+})
+// admin 게시물 삭제 함수
+export const __deletePostAdmin = createAsyncThunk('__deletePostAdmin', async (payload, thunkAPI) => {
+  try {
+    const response = await api.delete(`/admin/posts/${payload}`)
+    return thunkAPI.fulfillWithValue(response)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error)
+  }
+})
 
 const adminSlice = createSlice({
   name: 'admins',
@@ -65,7 +76,7 @@ const adminSlice = createSlice({
       state.isLoading = false
       state.error = false
       state.admins = action.payload.adminInfo
-      //   action.payload.next()
+      action.payload.next()
     },
     [__loginAdmin.rejected]: (state, action) => {
       state.isLoading = false
@@ -94,42 +105,39 @@ const adminSlice = createSlice({
       state.isLoading = false
       state.error = false
       state.users = action.payload
-      // console.log(`p`, action.payload)
     },
     [__getUserAdmin.rejected]: (state, action) => {
       state.isLoading = false
       state.error = action.payload
     },
-    // // admin 로그인 Reducer -------------------------------
-    // [__loginAdmin.pending]: (state, action) => {
-    //   state.isLoading = true
-    //   state.error = false
-    // },
-    // [__loginAdmin.fulfilled]: (state, action) => {
-    //   state.isLoading = false
-    //   state.error = false
-    //   state.posts = action.payload.adminInfo
-    //   //   action.payload.next()
-    // },
-    // [__loginAdmin.rejected]: (state, action) => {
-    //   state.isLoading = false
-    //   state.error = action.payload
-    // },
-    // // admin 로그인 Reducer -------------------------------
-    // [__loginAdmin.pending]: (state, action) => {
-    //   state.isLoading = true
-    //   state.error = false
-    // },
-    // [__loginAdmin.fulfilled]: (state, action) => {
-    //   state.isLoading = false
-    //   state.error = false
-    //   state.posts = action.payload.adminInfo
-    //   //   action.payload.next()
-    // },
-    // [__loginAdmin.rejected]: (state, action) => {
-    //   state.isLoading = false
-    //   state.error = action.payload
-    // },
+    // admin 회원 삭제 Reducer -------------------------------
+    [__deleteUserAdmin.pending]: (state, action) => {
+      state.isLoading = true
+      state.error = false
+    },
+    [__deleteUserAdmin.fulfilled]: (state, action) => {
+      state.isLoading = false
+      state.error = false
+      state.users = [...state.users, action.payload]
+    },
+    [__deleteUserAdmin.rejected]: (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    },
+    // admin 게시물  삭제 Reducer -------------------------------
+    [__loginAdmin.pending]: (state, action) => {
+      state.isLoading = true
+      state.error = false
+    },
+    [__loginAdmin.fulfilled]: (state, action) => {
+      state.isLoading = false
+      state.error = false
+      state.posts = [...state.posts, action.payload]
+    },
+    [__loginAdmin.rejected]: (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    },
   },
 })
 export const {} = adminSlice.actions
