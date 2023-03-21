@@ -17,39 +17,23 @@ import { cookies } from "../shared/cookies";
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loggedIn } = useSelector((state) => state.users);
 
   const [userInfo, setUserInfo] = useState({
     accountId: "",
     password: "",
   });
+  const token = cookies.get("token");
 
   useEffect(() => {
-    if (cookies.get("token" && loggedIn)) {
+    if (token) {
       navigate("/");
     }
-    return () => {
-      // second
-    };
-  }, []);
+  }, [token]);
 
-  // const submitLoginHandler = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const result = await apis.post("/login", userInfo);
-
-  //     cookies.set("token", result.data.token, { path: "/" });
-  //     cookies.set("test", "test", { path: "/" });
-  //     navigate("/");
-  //     alert("로그인완료!");
-  //   } catch (err) {
-  //     alert("로그인 실패..");
-  //   }
-  // };
-
-  const submitLoginHandler = (e) => {
+  const submitLoginHandler = async (e) => {
     e.preventDefault();
-    dispatch(__loginUser(userInfo));
+    await dispatch(__loginUser({ userInfo, next: () => navigate("/") }));
+    // navigate("/");
     setUserInfo({ accountId: "", password: "" });
   };
 

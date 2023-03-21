@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Wrapper from "../components/Wrapper";
@@ -17,7 +17,11 @@ import { useNavigate } from "react-router-dom";
 function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const users = useSelector((state) => state.users);
+  const users = useSelector((state) => state.users);
+
+  // useEffect(() => {
+  //   console.log("hello world!");
+  // }, []);
 
   // 필요한 state 설정
   const [newUser, setNewUser] = useState({
@@ -28,27 +32,15 @@ function Register() {
 
   // 중복확인용 state들
   const [validId, setValidId] = useState(false);
-  const [validPw, setValidPw] = useState({ body: "", isValid: false });
   const [validNick, setValidNick] = useState(false);
+  const [rePw, setRePw] = useState("");
 
   // 정규표현식 - id, pw 유효성
-  // const checkValidId = (item) => {
-  //   // id 영문소문자, 숫자, "-", "_"
-  //   const idRe = /^[a-z0-9_-]{2,10}$/;
-  //   return idRe.test(item);
-  // };
-
-  // const checkValidPw = (item) => {
-  //   // pw 최소 8 자, 최소 하나의 문자 및 하나의 숫자
-  //   const pwRe = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  //   return pwRe.test(item);
-  // };
-
-  // id 영문소문자, 숫자, "-", "_"
-  // const idRe = /^[a-z0-9_-]{2,10}$/;
-  // pw 최소 8 자, 최소 하나의 문자 및 하나의 숫자
-  // const pwRe = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  //
+  const checkValidId = (item) => {
+    // id 영문소문자, 숫자, 4자리 이상
+    const regEx = /^[a-z0-9]{4,}$/;
+    return regEx.test(item);
+  };
 
   // 아이디 중복확인
   const checkIdHandler = (accId) => {
@@ -62,37 +54,29 @@ function Register() {
     setValidNick(true);
   };
 
-  console.log(validPw);
-
   // 비밀번호 중복 확인
-  const validatePwHandler = () => {
-    validPw.body === newUser.password
-      ? setValidPw({ ...validPw, isValid: true })
-      : setValidPw({ ...validPw, isValid: false });
+  const checkSamePwHandler = (item) => {
+    return newUser.password !== item ? false : true;
   };
 
   //회원가입 버튼
   const addUserHandler = async (e) => {
-    await validatePwHandler();
-    // console.log(validPw);
+    e.preventDefault();
     if (
       validId &&
-      validPw &&
-      validNick
-      // &&
-      // checkValidId(newUser.accountId) &&
-      // checkValidPw(newUser.password)
+      validNick &&
+      checkSamePwHandler(rePw) &&
+      checkValidId(newUser.accountId) &&
+      checkValidId(newUser.password)
     ) {
-      if (validPw.isValid) {
-        dispatch(__addUsers(newUser));
-        navigate("/login");
-      } else if (!validId) {
-        alert("ID를 확인해주세요!");
-      } else if (!validPw.isValid) {
-        alert("패스워드를 확인해주세요!");
-      } else if (!validNick) {
-        alert("닉네임을 확인해주세요!");
+      try {
+        await dispatch(__addUsers(newUser));
+        return navigate("/login");
+      } catch (err) {
+        return alert("입력한 정보를 확인해주세요");
       }
+    } else {
+      alert("입력한 정보를 확인해주세요");
     }
   };
 
@@ -103,15 +87,7 @@ function Register() {
       <Header />
       <form
         onSubmit={(e) => {
-          e.preventDefault();
-          addUserHandler(newUser);
-          setNewUser({
-            accountId: "",
-            password: "",
-            nick: "",
-          });
-          alert("회원가입 성공!");
-          navigate("/login");
+          addUserHandler(e);
         }}
       >
         <FormWrapper>
@@ -124,15 +100,15 @@ function Register() {
               setNewUser({ ...newUser, accountId: e.target.value })
             }
           />
-          {/* {checkValidId(newUser.accountId) ? (
+          {checkValidId(newUser.accountId) ? null : (
             <span style={{ color: "red" }}>
-              아이디는 영문 소문자, 숫자, -, _ 로만 이루어져야합니다.
+              아이디는 영문 소문자, 숫자로 4자리 이상이어야합니다.
             </span>
-          ) : null} */}
+          )}
           <Button
             type="button"
             style={{ width: "80px" }}
-            onClick={() => checkIdHandler(newUser.accountId)}
+            onClick={() => checkIdHandler({ accountId: newUser.accountId })}
           >
             중복확인
           </Button>
@@ -144,15 +120,10 @@ function Register() {
             value={newUser.nick}
             onChange={(e) => setNewUser({ ...newUser, nick: e.target.value })}
           />
-          {/* {checkValidId(newUser.password) ? (
-            <span style={{ color: "red" }}>
-              비밀번호는 영문소문자, 숫자로만 이루어져야합니다.
-            </span>
-          ) : null} */}
           <Button
             type="button"
             style={{ width: "80px" }}
-            onClick={() => checkNickHandler(newUser.nick)}
+            onClick={() => checkNickHandler({ nick: newUser.nick })}
           >
             중복확인
           </Button>
@@ -167,19 +138,24 @@ function Register() {
               setNewUser({ ...newUser, password: e.target.value })
             }
           />
+          {checkValidId(newUser.password) ? null : (
+            <span style={{ color: "red" }}>
+              비밀번호는 영문소문자, 숫자로 4자리 이상이어야합니다.
+            </span>
+          )}
         </FormWrapper>
         <FormWrapper>
           <label>pwVaildation:</label>
           <Input
             type="password"
-            value={validPw.body}
+            value={rePw}
             onChange={(e) => {
-              setValidPw({ ...validPw, body: e.target.value });
+              setRePw(e.target.value);
             }}
           />
         </FormWrapper>
-        {validPw.body ? (
-          validPw.body === newUser.password ? (
+        {rePw ? (
+          checkSamePwHandler(rePw) ? (
             <span>비밀번호가 일치합니다.</span>
           ) : (
             <span style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</span>

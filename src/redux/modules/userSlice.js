@@ -1,17 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { cookies } from "../../shared/cookies";
 // import apis  from "../../shared/axios";
 // import { v4 as uuidv4 } from "uuid";
 
 
 const initialState = {
-    users:[],
+    users:{},
     isLoading: false,
     error:null,
-    loggedIn:false
 };
+
+
 
 
 export const __addUsers = createAsyncThunk(
@@ -21,6 +23,7 @@ export const __addUsers = createAsyncThunk(
           await axios.post(`${process.env.REACT_APP_SERVER_URL}/register`, payload);
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
+
           return thunkAPI.rejectWithValue(error)
         }
       }
@@ -54,12 +57,17 @@ export const __addUsers = createAsyncThunk(
     "users/loginUser",
     async (payload, thunkAPI) => {
         try {
-          const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, payload);
-          const {token} = response.data
-          cookies.set("token", token,{path:'/'})
+          const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, payload.userInfo);
+          const {token} = response.headers
+
+          cookies.set("token", token,{path:'/', maxAge:7140})
+          cookies.set("accountId", payload.userInfo.accountId, {path:'/', maxAge:7140})
+          cookies.set("nick", response.data.nick,{path:'/', maxAge:7140})
+          payload.userInfo = {accountId:payload.userInfo.accountId, nick:response.data.nick, isLogin: true}
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
-          return thunkAPI.rejectWithValue(error)
+          console.log(error);
+          return thunkAPI.rejectWithValue(error.response.status)
         }
       }
   );
@@ -71,6 +79,9 @@ const userSlice =createSlice({
     name:'users',
     initialState,
     reducers:{
+      logoutUser: (state,action)=>{
+        return state = {}
+      }
     },
     extraReducers:{
         [__addUsers.pending]: (state) => {
@@ -79,18 +90,19 @@ const userSlice =createSlice({
           [__addUsers.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.users = action.payload
+            alert("회원가입 성공!")
           },
           [__addUsers.rejected]: (state, action) => {
             state.isLoading = false; 
             state.error = action.payload; 
-            // alert(`${state.error.errorMessage}`)
+            alert("회원가입 실패")
           },
           [__checkUserId.pending]: (state) => {
             state.isLoading = true;
           },
           [__checkUserId.fulfilled]: (state, action) => {
             state.isLoading = false;
-            alert("사용가능한 아이디입니다 !");
+            alert("사용가능한 아이디입니다!");
           },
           [__checkUserId.rejected]: (state, action) => {
             state.isLoading = false; 
@@ -102,7 +114,7 @@ const userSlice =createSlice({
           },
           [__checkUserNick.fulfilled]: (state, action) => {
             state.isLoading = false;
-            alert("사용가능한 닉네임입니다 !");
+            alert("사용가능한 닉네임입니다!");
           },
           [__checkUserNick.rejected]: (state, action) => {
             state.isLoading = false; 
@@ -114,18 +126,28 @@ const userSlice =createSlice({
           },
           [__loginUser.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.users = action.payload;
-            state.loggedIn = true
-            alert("로그인완료!")
+            state.users = action.payload.userInfo;
+            action.payload.next()
           },
           [__loginUser.rejected]: (state, action) => {
             state.isLoading = false; 
             state.error = action.payload; 
-            alert("아이디, 비밀번호가 일치하지 않습니다.")
+            const errMsg = action.payload
+            switch (errMsg){
+              case 412:
+                return (alert("비밀번호를 확인해주세요!"))
+              case 401:
+                return (alert("존재하지 않는 유저입니다!"))
+              default:
+                return alert("로그인 실패! 다시 시도해주세요.")
+            }
+            
+            
+            
           },
     }
 
 })
 
-export const { } = userSlice.actions;
+export const { logoutUser} = userSlice.actions;
 export default userSlice.reducer;
