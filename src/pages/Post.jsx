@@ -9,7 +9,7 @@ import { __addPost } from "../redux/modules/postSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { cookies } from "../shared/cookies";
-import Dropdown from "../components/Dropdown";
+import WinWrapper from "../components/WinWrapper";
 
 function Post() {
   const token = cookies.get("token");
@@ -65,55 +65,54 @@ function Post() {
   return (
     <Wrapper>
       <GlobalStyle />
-      <Nav />
-      Post
-      <StForm onSubmit={postsButtonClickHandler}>
-        URL
-        <Input
-          type="text"
-          name="url"
-          value={posts.url}
-          onChange={changeInputHandler}
-          required
-        ></Input>
-        <br />
-        카테고리
-        {/* <Dropdown key={posts.id} item={posts} setItem={setPosts} /> */}
-        <select
-          name="category"
-          value={posts.category}
-          onChange={changeInputHandler}
-        >
-          <option>Category</option>
-          <option value="cloth">Clothes</option>
-          <option value="it">IT</option>
-          <option value="acc">Acc</option>
-          <option value="food">Food</option>
-          <option value="pet">Pet</option>
-          <option value="etc">Etc</option>
-        </select>
-        <br />
-        제목
-        <Input
-          type="text"
-          name="title"
-          value={posts.title}
-          onChange={changeInputHandler}
-          required
-        ></Input>
-        <br />
-        내용
-        <Input
-          type="text"
-          name="desc"
-          value={posts.desc}
-          onChange={changeInputHandler}
-          required
-        ></Input>
-        <br />
-        <Button>작성하기</Button>
-        <Button onClick={() => navigate("/")}>뒤로가기</Button>
-      </StForm>
+      <WinWrapper>
+        <StForm onSubmit={postsButtonClickHandler}>
+          URL
+          <Input
+            type="text"
+            name="url"
+            value={posts.url}
+            onChange={changeInputHandler}
+            required
+          ></Input>
+          <br />
+          카테고리
+          <select
+            name="category"
+            value={posts.category}
+            onChange={changeInputHandler}
+          >
+            <option>Category</option>
+            <option value="cloth">Clothes</option>
+            <option value="it">IT</option>
+            <option value="acc">Acc</option>
+            <option value="food">Food</option>
+            <option value="pet">Pet</option>
+            <option value="etc">Etc</option>
+          </select>
+          <br />
+          제목
+          <Input
+            type="text"
+            name="title"
+            value={posts.title}
+            onChange={changeInputHandler}
+            required
+          ></Input>
+          <br />
+          내용
+          <Input
+            type="text"
+            name="desc"
+            value={posts.desc}
+            onChange={changeInputHandler}
+            required
+          ></Input>
+          <br />
+          <Button>작성하기</Button>
+          <Button onClick={() => navigate("/")}>뒤로가기</Button>
+        </StForm>
+      </WinWrapper>
     </Wrapper>
   );
 }

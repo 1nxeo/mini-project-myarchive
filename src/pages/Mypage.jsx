@@ -12,6 +12,7 @@ import { __getMemberPosts } from "../redux/modules/memberSlice";
 import { CardsWrapper } from "./Home";
 import Card from "../components/Card";
 import { changeCates } from "../redux/modules/cateSlice";
+import WinWrapper from "../components/WinWrapper";
 
 function Mypage() {
   const navigate = useNavigate();
@@ -42,23 +43,29 @@ function Mypage() {
   return (
     <Wrapper>
       <GlobalStyle />
-      <Nav />
-      <Category />
-      <CardsWrapper>
-        {cates == "notdone"
-          ? memberPosts.notdone?.map((item) => (
-              <Card key={item.id} item={item} />
-            ))
-          : null}
-        {cates
-          ? memberPosts.notdone?.map((item) =>
-              item.category == cates ? <Card key={item.id} item={item} /> : null
-            )
-          : null}
-        {cates == "done"
-          ? memberPosts.done?.map((item) => <Card key={item.id} item={item} />)
-          : null}
-      </CardsWrapper>
+      <WinWrapper>
+        <Nav />
+        <Category />
+        <CardsWrapper>
+          {cates == "notdone"
+            ? memberPosts.notdone?.map((item) => (
+                <Card key={item.id} item={item} />
+              ))
+            : null}
+          {cates
+            ? memberPosts.notdone?.map((item) =>
+                item.category == cates ? (
+                  <Card key={item.id} item={item} />
+                ) : null
+              )
+            : null}
+          {cates == "done"
+            ? memberPosts.done?.map((item) => (
+                <Card key={item.id} item={item} />
+              ))
+            : null}
+        </CardsWrapper>
+      </WinWrapper>
     </Wrapper>
   );
 }

@@ -13,6 +13,7 @@ import {
   __checkUserNick,
 } from "../redux/modules/userSlice";
 import { useNavigate } from "react-router-dom";
+import WinWrapper from "../components/WinWrapper";
 
 function Register() {
   const dispatch = useDispatch();
@@ -83,88 +84,91 @@ function Register() {
   return (
     <Wrapper>
       <GlobalStyle />
-      <Nav />
-      <Header />
-      <form
-        onSubmit={(e) => {
-          addUserHandler(e);
-        }}
-      >
-        <FormWrapper>
-          <label>ID:</label>
-          <Input
-            required
-            type="text"
-            value={newUser.accountId}
-            onChange={(e) =>
-              setNewUser({ ...newUser, accountId: e.target.value })
-            }
-          />
-          {checkValidId(newUser.accountId) ? null : (
-            <span style={{ color: "red" }}>
-              아이디는 영문 소문자, 숫자로 4자리 이상이어야합니다.
-            </span>
-          )}
-          <Button
-            type="button"
-            style={{ width: "80px" }}
-            onClick={() => checkIdHandler({ accountId: newUser.accountId })}
-          >
-            중복확인
-          </Button>
-        </FormWrapper>
-        <FormWrapper>
-          <label>nickname:</label>
-          <Input
-            type="text"
-            value={newUser.nick}
-            onChange={(e) => setNewUser({ ...newUser, nick: e.target.value })}
-          />
-          <Button
-            type="button"
-            style={{ width: "80px" }}
-            onClick={() => checkNickHandler({ nick: newUser.nick })}
-          >
-            중복확인
-          </Button>
-        </FormWrapper>
-        <FormWrapper>
-          <label>pw:</label>
-          <Input
-            required
-            type="password"
-            value={newUser.password}
-            onChange={(e) =>
-              setNewUser({ ...newUser, password: e.target.value })
-            }
-          />
-          {checkValidId(newUser.password) ? null : (
-            <span style={{ color: "red" }}>
-              비밀번호는 영문소문자, 숫자로 4자리 이상이어야합니다.
-            </span>
-          )}
-        </FormWrapper>
-        <FormWrapper>
-          <label>pwVaildation:</label>
-          <Input
-            type="password"
-            value={rePw}
-            onChange={(e) => {
-              setRePw(e.target.value);
-            }}
-          />
-        </FormWrapper>
-        {rePw ? (
-          checkSamePwHandler(rePw) ? (
-            <span>비밀번호가 일치합니다.</span>
-          ) : (
-            <span style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</span>
-          )
-        ) : null}
-        <Button type="submit" style={{ width: "100px" }}>
-          회원가입
-        </Button>
-      </form>
+      <WinWrapper>
+        <Nav />
+        <form
+          onSubmit={(e) => {
+            addUserHandler(e);
+          }}
+        >
+          <FormWrapper>
+            <label>ID:</label>
+            <Input
+              required
+              type="text"
+              value={newUser.accountId}
+              onChange={(e) =>
+                setNewUser({ ...newUser, accountId: e.target.value })
+              }
+            />
+            {checkValidId(newUser.accountId) ? null : (
+              <span style={{ color: "red" }}>
+                아이디는 영문 소문자, 숫자로 4자리 이상이어야합니다.
+              </span>
+            )}
+            <button
+              type="button"
+              style={{ width: "80px" }}
+              onClick={() => checkIdHandler({ accountId: newUser.accountId })}
+            >
+              중복확인
+            </button>
+          </FormWrapper>
+          <FormWrapper>
+            <label>nickname:</label>
+            <Input
+              type="text"
+              value={newUser.nick}
+              onChange={(e) => setNewUser({ ...newUser, nick: e.target.value })}
+            />
+            <button
+              type="button"
+              style={{ width: "80px" }}
+              onClick={() => checkNickHandler({ nick: newUser.nick })}
+            >
+              중복확인
+            </button>
+          </FormWrapper>
+          <FormWrapper>
+            <label>pw:</label>
+            <Input
+              required
+              type="password"
+              value={newUser.password}
+              onChange={(e) =>
+                setNewUser({ ...newUser, password: e.target.value })
+              }
+            />
+            {checkValidId(newUser.password) ? null : (
+              <span style={{ color: "red" }}>
+                비밀번호는 영문소문자, 숫자로 4자리 이상이어야합니다.
+              </span>
+            )}
+          </FormWrapper>
+          <FormWrapper>
+            <label>pwVaildation:</label>
+            <Input
+              type="password"
+              value={rePw}
+              onChange={(e) => {
+                setRePw(e.target.value);
+              }}
+            />
+          </FormWrapper>
+          {rePw ? (
+            checkSamePwHandler(rePw) ? (
+              <span>비밀번호가 일치합니다.</span>
+            ) : (
+              <span style={{ color: "red" }}>
+                비밀번호가 일치하지 않습니다.
+              </span>
+            )
+          ) : null}
+          <button type="submit" style={{ width: "100px" }}>
+            회원가입
+          </button>
+        </form>
+      </WinWrapper>
     </Wrapper>
   );
 }
