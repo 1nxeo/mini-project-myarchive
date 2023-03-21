@@ -2,31 +2,54 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Button from '../components/Button'
 import Wrapper from '../components/Wrapper'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { __loginAdmin } from '../redux/modules/adminSlice'
 
 function AdminLogin() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   // input state를 한번에 관리함
-  const [adminLogin, setAdminLogin] = useState({
-    adminAcountId: '',
-    adminPassword: '',
+  const [adminInfo, setAdminInfo] = useState({
+    accountId: '',
+    password: '',
     secretKey: '',
   })
+  // input onChange를 한번에 관리함
+  const inputOnChangeHandler = (e) => {
+    const { value, name } = e.target
+    setAdminInfo((old) => {
+      return { ...old, [name]: value }
+    })
+  }
+  // 로그인 버튼 함수
+  const loginButtonHandler = (e) => {
+    e.preventDefault()
+    dispatch(__loginAdmin(adminInfo))
+    setAdminInfo({
+      accountId: '',
+      password: '',
+      secretKey: '',
+    })
+  }
 
   return (
     <Wrapper>
       <StDiv>
         관리자 로그인
-        <form>
+        <form onSubmit={loginButtonHandler}>
           아이디
           <br />
-          <input type="text" />
+          <input type="text" name="accountId" value={adminInfo.accountId} onChange={inputOnChangeHandler} required />
           <br />
           비밀번호
           <br />
-          <input type="text" />
+          <input type="text" name="password" value={adminInfo.password} onChange={inputOnChangeHandler} required />
           <br />
           시크릿키
           <br />
-          <input type="text" />
+          <input type="text" name="secretKey" value={adminInfo.secretKey} onChange={inputOnChangeHandler} required />
           <br />
           <Button>로그인</Button>
         </form>
