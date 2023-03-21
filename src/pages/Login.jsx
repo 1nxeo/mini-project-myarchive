@@ -12,6 +12,7 @@ import GlobalStyle from "../GlobalStyle";
 // import { cookies } from "../shared/cookies";
 import { __loginUser } from "../redux/modules/userSlice";
 import { cookies } from "../shared/cookies";
+import WinWrapper from "../components/WinWrapper";
 // import apis from "../shared/axios";
 
 function Login() {
@@ -40,41 +41,43 @@ function Login() {
   return (
     <Wrapper>
       <GlobalStyle />
-      <Nav />
-      <Header />
-      <form onSubmit={(e) => submitLoginHandler(e)}>
-        <FormWrapper>
-          <label>ID:</label>
-          <Input
-            required
-            type="text"
-            value={userInfo.accountId}
-            onChange={(e) =>
-              setUserInfo({ ...userInfo, accountId: e.target.value })
-            }
-          />
-        </FormWrapper>
-        <FormWrapper>
-          <label>PW:</label>
-          <Input
-            required
-            type="password"
-            value={userInfo.password}
-            onChange={(e) =>
-              setUserInfo({ ...userInfo, password: e.target.value })
-            }
-          />
-        </FormWrapper>
-        <FormWrapper>
-          <Button style={{ width: "100px" }}>로그인</Button>
-          <Button
-            style={{ width: "100px" }}
-            onClick={() => navigate("/register")}
-          >
-            회원가입
-          </Button>
-        </FormWrapper>
-      </form>
+      <WinWrapper>
+        <Nav />
+        {/* <Header /> */}
+        <form onSubmit={(e) => submitLoginHandler(e)}>
+          <FormWrapper>
+            <label>ID:</label>
+            <Input
+              required
+              type="text"
+              value={userInfo.accountId}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, accountId: e.target.value })
+              }
+            />
+          </FormWrapper>
+          <FormWrapper>
+            <label>PW:</label>
+            <Input
+              required
+              type="password"
+              value={userInfo.password}
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, password: e.target.value })
+              }
+            />
+          </FormWrapper>
+          <FormWrapper>
+            <button style={{ width: "100px" }}>로그인</button>
+            <button
+              style={{ width: "100px" }}
+              onClick={() => navigate("/register")}
+            >
+              회원가입
+            </button>
+          </FormWrapper>
+        </form>
+      </WinWrapper>
     </Wrapper>
   );
 }

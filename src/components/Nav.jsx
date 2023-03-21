@@ -28,27 +28,27 @@ function Nav() {
 
   return (
     <StNav>
-      <Button onClick={() => navigate("/")}>홈</Button>
+      <button onClick={() => navigate("/")}>홈</button>
       {token ? (
         <>
-          <Button
+          <button
             onClick={() => {
               navigate(`/mypage/${accountId}`);
             }}
           >
             마이페이지
-          </Button>
-          <Button onClick={logoutUserHandler}>로그아웃</Button>
+          </button>
+          <button onClick={logoutUserHandler}>로그아웃</button>
         </>
       ) : (
         <>
-          <Button onClick={() => navigate("/login")}>로그인</Button>
-          <Button
+          <button onClick={() => navigate("/login")}>로그인</button>
+          <button
             style={{ width: "70px" }}
             onClick={() => navigate("/register")}
           >
             회원가입
-          </Button>
+          </button>
         </>
       )}
     </StNav>

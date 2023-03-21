@@ -59,6 +59,7 @@ export const __addUsers = createAsyncThunk(
         try {
           const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, payload.userInfo);
           const {token} = response.headers
+          console.log('response',response);
 
           cookies.set("token", token,{path:'/', maxAge:7140})
           cookies.set("accountId", payload.userInfo.accountId, {path:'/', maxAge:7140})

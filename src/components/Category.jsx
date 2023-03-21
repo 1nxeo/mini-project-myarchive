@@ -5,70 +5,99 @@ import { changeCates } from "../redux/modules/cateSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { cookies } from "../shared/cookies";
 
-function Category() {
+function Category({ chil }) {
   const dispatch = useDispatch();
   const token = cookies.get("token");
   const { users } = useSelector((state) => state.users);
   // const loginStatus = users.isLogin;
 
   return (
+    // <>
+    //   <div class="window-body">
+    //     <menu role="tablist">
+    //       <li role="tab" aria-selected="true">
+    //         <a href="#tabs">Desktop</a>
+    //       </li>
+    //       <li role="tab">
+    //         <a href="#tabs">My computer</a>
+    //       </li>
+    //       <li role="tab">
+    //         <a href="#tabs">Control panel</a>
+    //       </li>
+    //       <li role="tab">
+    //         <a href="#tabs">Devices manager</a>
+    //       </li>
+    //       <li role="tab">
+    //         <a href="#tabs">Hardware profiles</a>
+    //       </li>
+    //       <li role="tab">
+    //         <a href="#tabs">Performance</a>
+    //       </li>
+    //     </menu>
+    //     <div class="window" role="tabpanel">
+    //       <div class="window-body">
+    //         {children}
+    //       </div>
+    //     </div>
+    //   </div>
+    // </>
     <StCateBar>
       <StButtonBox>
-        <Button
+        <button
           value="notdone"
           onClick={(e) => {
             dispatch(changeCates(e.target.value));
           }}
         >
           All
-        </Button>
-        <Button
+        </button>
+        <button
           value="cloth"
           onClick={(e) => {
             dispatch(changeCates(e.target.value));
           }}
         >
           Clothes
-        </Button>
-        <Button
+        </button>
+        <button
           value="it"
           onClick={(e) => dispatch(changeCates(e.target.value))}
         >
           IT
-        </Button>
-        <Button
+        </button>
+        <button
           value="acc"
           onClick={(e) => dispatch(changeCates(e.target.value))}
         >
           Acc
-        </Button>
-        <Button
+        </button>
+        <button
           value="food"
           onClick={(e) => dispatch(changeCates(e.target.value))}
         >
           Food
-        </Button>
-        <Button
+        </button>
+        <button
           value="pet"
           onClick={(e) => dispatch(changeCates(e.target.value))}
         >
           Pet
-        </Button>
-        <Button
+        </button>
+        <button
           value="etc"
           onClick={(e) => dispatch(changeCates(e.target.value))}
         >
           etc
-        </Button>
+        </button>
       </StButtonBox>
       <StButtonBox>
         {token ? (
-          <Button
+          <button
             value="done"
             onClick={(e) => dispatch(changeCates(e.target.value))}
           >
             구매한 아이템
-          </Button>
+          </button>
         ) : null}
       </StButtonBox>
     </StCateBar>

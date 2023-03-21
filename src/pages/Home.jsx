@@ -13,6 +13,7 @@ import Category from "../components/Category";
 import styled from "styled-components";
 import ErrorMessage from "../components/ErrorMessage";
 import { cookies } from "../shared/cookies";
+import WinWrapper from "../components/WinWrapper";
 
 function Home() {
   const navigate = useNavigate();
@@ -39,26 +40,28 @@ function Home() {
 
   return (
     <Wrapper>
-      <GlobalStyle />
-      <Nav />
-      <Header />
-      <ContentNav>
-        <Category />
-        <Button onClick={() => navigate("/post")}>글쓰기</Button>
-      </ContentNav>
-      <CardsWrapper>
-        {cates == "notdone"
-          ? posts?.map((item) => <Card key={item.id} item={item} />)
-          : null}
-        {posts?.map((item) =>
-          item.category == cates ? <Card key={item.id} item={item} /> : null
-        )}
-        {cates == "done"
-          ? posts?.map((item) =>
-              !item.isDone ? <Card key={item.id} item={item} /> : null
-            )
-          : null}
-      </CardsWrapper>
+      <WinWrapper>
+        <GlobalStyle />
+        <Nav />
+        {/* <Header /> */}
+        <ContentNav>
+          <Category />
+          <button onClick={() => navigate("/post")}>글쓰기</button>
+        </ContentNav>
+        <CardsWrapper>
+          {cates == "notdone"
+            ? posts?.map((item) => <Card key={item.id} item={item} />)
+            : null}
+          {posts?.map((item) =>
+            item.category == cates ? <Card key={item.id} item={item} /> : null
+          )}
+          {cates == "done"
+            ? posts?.map((item) =>
+                !item.isDone ? <Card key={item.id} item={item} /> : null
+              )
+            : null}
+        </CardsWrapper>
+      </WinWrapper>
     </Wrapper>
   );
 }
