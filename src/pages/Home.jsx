@@ -14,6 +14,7 @@ import styled from "styled-components";
 import ErrorMessage from "../components/ErrorMessage";
 import { cookies } from "../shared/cookies";
 import WinWrapper from "../components/WinWrapper";
+import WinButton from "./WinButton";
 
 function Home() {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ function Home() {
         {/* <Header /> */}
         <ContentNav>
           <Category />
-          <button onClick={() => navigate("/post")}>글쓰기</button>
+          <WinButton onClick={() => navigate("/post")}>글쓰기</WinButton>
         </ContentNav>
         <CardsWrapper>
           {cates == "notdone"
