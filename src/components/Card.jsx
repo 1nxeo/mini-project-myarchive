@@ -14,7 +14,9 @@ function Card({ item }) {
   const nick = cookies.get("nick");
 
   const DeletePostHandler = (id) => {
-    dispatch(__deletePost(id));
+    if (window.confirm("삭제하시겠습니까?")) {
+      dispatch(__deletePost(id));
+    }
   };
 
   const DonePostHandler = (item) => {
