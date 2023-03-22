@@ -32,18 +32,17 @@ function Detail() {
   // 의존성 배열에에 서버에서 가져온 값을 바로 넣으면 무한 get 요청 들어감
   // 따라서 서버에서 가져온 값을 JSON.stringify로 변환해준 뒤(고정된 값으로)
   // 의존성 배열에 넣어야 함.
+  const param = params.postId;
   const nick = cookies.get("nick");
   const [edit, setEdit] = useState(false);
   const postItem = { ...posts };
   const [editItem, setEditItem] = useState({
     postId: postItem.postId,
-    accountId: postItem.accountId,
-    nick: postItem.nick,
     url: postItem.url,
-    img: postItem.img,
     title: postItem.title,
     desc: postItem.desc,
   });
+  console.log(param);
 
   console.log("postItem = ", postItem);
   console.log("editItem = ", editItem);
@@ -55,12 +54,12 @@ function Detail() {
 
   const deletePostHandler = (id) => {
     if (window.confirm("삭제하시겠습니까?")) {
-      dispatch(__deletePost(id));
+      dispatch(__deletePost(+id));
     }
   };
 
-  const donePostHandler = (item) => {
-    dispatch(__doneMemberPosts(item));
+  const donePostHandler = (id) => {
+    dispatch(__doneMemberPosts(+id));
   };
   const commentSubmitButtonClickHandler = (e) => {
     e.preventDefault();
@@ -104,10 +103,10 @@ function Detail() {
               height: "700px",
             }}
           >
-            <StImg src={`${posts?.img}`} />
+            <StImg src={`${postItem?.img}`} />
             <button
               onClick={() => {
-                window.open(posts.url);
+                window.open(postItem?.url);
               }}
             >
               상품 바로가기
@@ -141,9 +140,9 @@ function Detail() {
               </>
             ) : (
               <>
-                <div>{posts?.nick}</div>
-                <div>{posts?.title}</div>
-                <div>{posts?.desc}</div>
+                <div>{postItem?.nick}</div>
+                <div>{postItem?.title}</div>
+                <div>{postItem?.desc}</div>
               </>
             )}
           </div>
@@ -185,11 +184,13 @@ function Detail() {
             </StComment>
           </CommentBox>
           <div>
-            {nick == posts.nick ? (
+            {nick == postItem.nick ? (
               <>
                 <button onClick={() => setEdit(true)}>수정</button>
-                <button onClick={() => donePostHandler(posts)}>구매완료</button>
-                <button onClick={() => deletePostHandler(posts.postId)}>
+                <button onClick={() => donePostHandler(postItem.postId)}>
+                  구매완료
+                </button>
+                <button onClick={() => deletePostHandler(postItem.postId)}>
                   삭제
                 </button>
               </>

@@ -19,8 +19,8 @@ function Card({ item }) {
     }
   };
 
-  const DonePostHandler = (item) => {
-    dispatch(__doneMemberPosts(item));
+  const DonePostHandler = (id) => {
+    dispatch(__doneMemberPosts(id));
   };
 
   return (
@@ -35,7 +35,7 @@ function Card({ item }) {
       <div>
         {nick == item.nick ? (
           <>
-            <button onClick={() => DonePostHandler(item)}>
+            <button onClick={() => DonePostHandler(item.postId)}>
               {item.isDone ? "구매안함" : "구매완료"}
             </button>
             <button onClick={() => DeletePostHandler(item.postId)}>삭제</button>
