@@ -4,8 +4,11 @@ import Wrapper from "./Wrapper";
 import styled from "styled-components";
 import GlobalStyle from "../GlobalStyle";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { changeCates } from "../redux/modules/cateSlice";
 
 function WinWrapper({ children, ...rest }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
     <Wrapper>
@@ -22,7 +25,10 @@ function WinWrapper({ children, ...rest }) {
         <div
           className="title-bar"
           style={{ height: "25px" }}
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/");
+            dispatch(changeCates("notdone"));
+          }}
         >
           <div className="title-bar-text" style={{ fontSize: "15px" }}>
             My Archive

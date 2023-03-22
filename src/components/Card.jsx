@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -14,11 +14,17 @@ function Card({ item }) {
   const nick = cookies.get("nick");
 
   const DeletePostHandler = (id) => {
-    dispatch(__deletePost(id));
+    if (window.confirm("삭제하시겠습니까?")) {
+      dispatch(__deletePost(id));
+    }
   };
 
-  const DonePostHandler = (item) => {
-    dispatch(__doneMemberPosts(item));
+  useEffect(() => {
+    return () => {};
+  }, [item.isDone]);
+
+  const DonePostHandler = (id) => {
+    dispatch(__doneMemberPosts(id));
   };
 
   return (
@@ -29,11 +35,13 @@ function Card({ item }) {
       />
       {item?.nick}
       <br />
-      제목 : {item?.title}
+      {item?.title}
       <div>
         {nick == item.nick ? (
           <>
-            <button onClick={() => DonePostHandler(item)}>구매완료</button>
+            <button onClick={() => DonePostHandler(item.postId)}>
+              {item.isDone ? "구매안함" : "구매완료"}
+            </button>
             <button onClick={() => DeletePostHandler(item.postId)}>삭제</button>
           </>
         ) : null}

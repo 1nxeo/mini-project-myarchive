@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Button from '../components/Button'
 import Wrapper from '../components/Wrapper'
@@ -6,10 +6,21 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { __loginAdmin } from '../redux/modules/adminSlice'
 import GlobalStyle from '../GlobalStyle'
+import { cookies } from '../shared/cookies'
 
 function AdminLogin() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const adminToken = cookies.get('adminToken')
+
+  useEffect(() => {
+    if (cookies.get('token')) {
+      cookies.remove('token')
+    }
+    if (adminToken) {
+      navigate('/admin')
+    }
+  }, [adminToken])
 
   // input state를 한번에 관리함
   const [adminInfo, setAdminInfo] = useState({
@@ -27,7 +38,7 @@ function AdminLogin() {
   // 로그인 버튼 함수
   const loginButtonHandler = (e) => {
     e.preventDefault()
-    dispatch(__loginAdmin({ adminInfo, next: () => navigate('/admin') }))
+    dispatch(__loginAdmin(adminInfo))
     setAdminInfo({
       accountId: '',
       password: '',

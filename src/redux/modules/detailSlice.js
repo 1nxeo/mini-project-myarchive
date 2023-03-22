@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
 // import apis from '../../shared/axios'
 import api from '../../axios/api'
 // apis 사용하면 헤더에 토큰 있음 : 로그인 된 유저가 요청 시 사용
+
+
 
 const initialState = {
   posts: [],
@@ -21,11 +24,24 @@ export const __getPostDetail = createAsyncThunk('getPostDetails', async (payload
     return thunkAPI.rejectWithValue(error)
   }
 })
+
+// 게시물 수정 Thunk 함수
+export const __editPost = createAsyncThunk('editPosts', async (payload, thunkAPI) => {
+try {
+  const response = await api.patch(`/post/${payload.params}`, payload.editPost)
+  const updateItem =  await thunkAPI.dispatch(__getPostDetail(payload.params))
+  const newDetail = {...updateItem.payload, url:payload.editPost.url,title:payload.editPost.title,desc:payload.editPost.desc}
+
+  return thunkAPI.fulfillWithValue(newDetail)
+} catch (error) {
+  return thunkAPI.rejectWithValue(error)
+}
+})
+
 // 게시물 디테일 댓글 조회 Thunk 함수
 export const __getComment = createAsyncThunk('__getComment', async (payload, thunkAPI) => {
   try {
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/${payload}/comments`)
-    console.log(response.data.detail)
     return thunkAPI.fulfillWithValue(response.data.detail)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -69,6 +85,20 @@ const detailSlice = createSlice({
       state.isLoading = false
       state.error = action.payload
     },
+            //게시물 수정
+            [__editPost.pending]: (state, action) => {
+              state.isLoading = true
+              state.error = false
+            },
+            [__editPost.fulfilled]: (state, action) => {
+              state.isLoading = false
+              state.error = false
+              // state.posts = action.payload
+            },
+            [__editPost.rejected]: (state, action) => {
+              state.isLoading = false
+              state.error = action.payload
+            },
     // 게시물 디테일 댓글 조회 Reducer -------------------------------
     [__getComment.pending]: (state, action) => {
       state.isLoading = true
