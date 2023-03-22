@@ -23,12 +23,15 @@ function Home() {
   const { cates } = useSelector((state) => state.cate);
   const postList = JSON.stringify(posts);
   // const token = cookies.get("token");
+  const postItems = [...posts];
+
+  const token = cookies.get("token");
 
   console.log(posts);
 
   useEffect(() => {
     dispatch(__getPost());
-  }, [postList]);
+  }, [postList || token]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -50,13 +53,13 @@ function Home() {
         </ContentNav>
         <CardsWrapper>
           {cates == "notdone"
-            ? posts?.map((item) => <Card key={item.id} item={item} />)
+            ? postItems?.map((item) => <Card key={item.id} item={item} />)
             : null}
-          {posts?.map((item) =>
+          {postItems?.map((item) =>
             item.category == cates ? <Card key={item.id} item={item} /> : null
           )}
           {cates == "done"
-            ? posts?.map((item) =>
+            ? postItems?.map((item) =>
                 !item.isDone ? <Card key={item.id} item={item} /> : null
               )
             : null}
