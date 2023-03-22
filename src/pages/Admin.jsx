@@ -8,6 +8,7 @@ import ErrorMessage from '../components/ErrorMessage'
 import Button from '../components/Button'
 import Modal from '../components/Modal'
 import GlobalStyle from '../GlobalStyle'
+import { cookies } from '../shared/cookies'
 
 function Admin() {
   const navigate = useNavigate()
@@ -17,7 +18,13 @@ function Admin() {
   const postList = JSON.stringify(posts)
   const userList = JSON.stringify(users)
 
+  const adminToken = cookies.get('adminToken')
+
   useEffect(() => {
+    if (!adminToken) {
+      alert('접근 권한이 없습니다')
+      navigate('/admin/login')
+    }
     dispatch(__getPostAdmin())
     dispatch(__getUserAdmin())
   }, [postList, userList])
