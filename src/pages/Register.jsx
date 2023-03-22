@@ -11,6 +11,7 @@ import {
   __addUsers,
   __checkUserId,
   __checkUserNick,
+  __loginUser,
 } from "../redux/modules/userSlice";
 import { useNavigate } from "react-router-dom";
 import WinWrapper from "../components/WinWrapper";
@@ -72,6 +73,7 @@ function Register() {
     ) {
       try {
         await dispatch(__addUsers(newUser));
+        // await dispatch(__loginUser(newUser));
         return navigate("/login");
       } catch (err) {
         return alert("입력한 정보를 확인해주세요");

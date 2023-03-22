@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -35,7 +35,7 @@ function Card({ item }) {
       />
       {item?.nick}
       <br />
-      제목 : {item?.title}
+      {item?.title}
       <div>
         {nick == item.nick ? (
           <>

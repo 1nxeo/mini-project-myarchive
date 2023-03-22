@@ -27,6 +27,7 @@ export const __getMemberPosts = createAsyncThunk('getMemberPosts', async (payloa
   export const __doneMemberPosts = createAsyncThunk('getMemberPosts', async (payload, thunkAPI) => {
     try {
       const response = await api.patch(`/mypage/${payload}`)
+      const allData = await api.get(`/mypage`)
       // console.log( "response.data",response.data)
       return thunkAPI.fulfillWithValue(response.data)
     } catch (error) {
