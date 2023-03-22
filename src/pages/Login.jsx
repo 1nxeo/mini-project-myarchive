@@ -31,9 +31,9 @@ function Login() {
     }
   }, [token]);
 
-  const submitLoginHandler = async (e) => {
+  const submitLoginHandler = (e) => {
     e.preventDefault();
-    await dispatch(__loginUser({ userInfo, next: () => navigate("/") }));
+    dispatch(__loginUser({ userInfo }));
     // navigate("/");
     setUserInfo({ accountId: "", password: "" });
   };

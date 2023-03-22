@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { cookies } from "../shared/cookies";
 import WinWrapper from "../components/WinWrapper";
+import { changeCates } from "../redux/modules/cateSlice";
 
 function Post() {
   const token = cookies.get("token");
@@ -31,7 +32,9 @@ function Post() {
       alert("로그인이 필요합니다!");
       navigate("/login");
     }
-    return () => {};
+    return () => {
+      dispatch(changeCates("notdone"));
+    };
   }, []);
 
   console.log(posts.category);
@@ -109,8 +112,8 @@ function Post() {
             required
           ></Input>
           <br />
-          <Button>작성하기</Button>
-          <Button onClick={() => navigate("/")}>뒤로가기</Button>
+          <button>작성하기</button>
+          <button onClick={() => navigate("/")}>뒤로가기</button>
         </StForm>
       </WinWrapper>
     </Wrapper>

@@ -38,7 +38,7 @@ function Mypage() {
     return () => {
       dispatch(changeCates("notdone"));
     };
-  }, []);
+  }, [memberPost]);
 
   return (
     <Wrapper>

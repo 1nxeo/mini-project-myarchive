@@ -23,6 +23,10 @@ function Home() {
   const { cates } = useSelector((state) => state.cate);
   const postList = JSON.stringify(posts);
   // const token = cookies.get("token");
+  const postItems = [...posts];
+
+  const token = cookies.get("token");
+  const nick = cookies.get("nick");
 
   console.log(posts);
 
@@ -50,14 +54,16 @@ function Home() {
         </ContentNav>
         <CardsWrapper>
           {cates == "notdone"
-            ? posts?.map((item) => <Card key={item.id} item={item} />)
+            ? postItems?.map((item) => <Card key={item.id} item={item} />)
             : null}
-          {posts?.map((item) =>
+          {postItems?.map((item) =>
             item.category == cates ? <Card key={item.id} item={item} /> : null
           )}
           {cates == "done"
-            ? posts?.map((item) =>
-                !item.isDone ? <Card key={item.id} item={item} /> : null
+            ? postItems?.map((item) =>
+                nick == item.nick && item.isDone ? (
+                  <Card key={item.id} item={item} />
+                ) : null
               )
             : null}
         </CardsWrapper>

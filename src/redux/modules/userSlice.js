@@ -128,7 +128,6 @@ const userSlice =createSlice({
           [__loginUser.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.users = action.payload.userInfo;
-            action.payload.next()
           },
           [__loginUser.rejected]: (state, action) => {
             state.isLoading = false; 
