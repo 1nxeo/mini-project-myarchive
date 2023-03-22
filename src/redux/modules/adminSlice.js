@@ -2,10 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { cookies } from '../../shared/cookies'
-// import apis from '../../shared/axios'
-import api from '../../axios/api'
-import adminapi from '../../axios/adminapi'
-// apis 사용하면 헤더에 토큰 있음 : 로그인 된 유저가 요청 시 사용
 
 const initialState = {
   users: [],
@@ -20,15 +16,14 @@ export const __loginAdmin = createAsyncThunk('loginAdmin', async (payload, thunk
   try {
     const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/admin`, payload.adminInfo)
     const { token } = response.headers
-    cookies.set('adminToken', token, { path: '/', maxAge: 600 })
-    console.log(payload)
+    cookies.set('adminToken', token, { path: '/', maxAge: 600000 })
     return thunkAPI.fulfillWithValue(payload)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
 })
-// admin 게시물 조회 Thunk 함수
-export const __getPostAdmin = createAsyncThunk('__getPostAdmin', async (payload, thunkAPI) => {
+// admin 게시물 조회 함수
+export const __getPostsAdmin = createAsyncThunk('__getPostsAdmin', async (payload, thunkAPI) => {
   try {
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/admin/posts`)
     return thunkAPI.fulfillWithValue(response.data.posts)
@@ -79,23 +74,22 @@ const adminSlice = createSlice({
       state.isLoading = false
       state.error = false
       state.admins = action.payload.adminInfo
-      console.log('리덕스 스토어에 어드민 정보 저장됐어요!')
     },
     [__loginAdmin.rejected]: (state, action) => {
       state.isLoading = false
       state.error = action.payload
     },
     // admin 게시물 조회 Reducer -------------------------------
-    [__getPostAdmin.pending]: (state, action) => {
+    [__getPostsAdmin.pending]: (state, action) => {
       state.isLoading = true
       state.error = false
     },
-    [__getPostAdmin.fulfilled]: (state, action) => {
+    [__getPostsAdmin.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
       state.posts = action.payload
     },
-    [__getPostAdmin.rejected]: (state, action) => {
+    [__getPostsAdmin.rejected]: (state, action) => {
       state.isLoading = false
       state.error = action.payload
     },
