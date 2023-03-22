@@ -8,7 +8,7 @@ import { cookies } from "../../shared/cookies";
 
 
 const initialState = {
-    users:{},
+    users:[{accountId:"",password:""}],
     isLoading: false,
     error:null,
 };

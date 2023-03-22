@@ -9,7 +9,7 @@ import api from '../../axios/api'
 
 
 const initialState = {
-  posts: [],
+  posts: {},
   isLoading: false,
   error: null,
   comments: [],
@@ -24,6 +24,21 @@ export const __getPostDetail = createAsyncThunk('getPostDetails', async (payload
     return thunkAPI.rejectWithValue(error)
   }
 })
+
+
+
+  // 게시물 구매완료 Thunk 함수
+  export const __doneMemberPosts = createAsyncThunk('getMemberPosts', async (payload, thunkAPI) => {
+    try {
+      const response = await api.patch(`/mypage/${payload}`)
+      // console.log( "response.data",response.data)
+      return thunkAPI.fulfillWithValue(payload)
+    } catch (error) {
+      // console.log("error",error);
+      return thunkAPI.rejectWithValue(error)
+    }
+  })
+
 
 // 게시물 수정 Thunk 함수
 export const __editPost = createAsyncThunk('editPosts', async (payload, thunkAPI) => {
@@ -66,6 +81,8 @@ export const __deleteComment = createAsyncThunk('__deleteComment', async (payloa
     return thunkAPI.rejectWithValue(error)
   }
 })
+
+
 
 const detailSlice = createSlice({
   name: 'details',
@@ -138,6 +155,22 @@ const detailSlice = createSlice({
       state.comments = [...state.comments, action.payload]
     },
     [__deleteComment.rejected]: (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    },
+
+    // 게시물 완료 Reducer -------------------------------
+
+    [__doneMemberPosts.pending]: (state, action) => {
+      state.isLoading = true
+      state.error = false
+    },
+    [__doneMemberPosts.fulfilled]: (state, action) => {
+      state.isLoading = false
+      state.error = false
+      state.posts = {...state.posts, isDone:!state.posts.isDone}
+    },
+    [__doneMemberPosts.rejected]: (state, action) => {
       state.isLoading = false
       state.error = action.payload
     },
