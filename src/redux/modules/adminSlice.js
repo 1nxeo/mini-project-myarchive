@@ -4,6 +4,7 @@ import axios from 'axios'
 import { cookies } from '../../shared/cookies'
 // import apis from '../../shared/axios'
 import api from '../../axios/api'
+import adminapi from '../../axios/adminapi'
 // apis 사용하면 헤더에 토큰 있음 : 로그인 된 유저가 요청 시 사용
 
 const initialState = {
@@ -28,7 +29,7 @@ export const __loginAdmin = createAsyncThunk('loginAdmin', async (payload, thunk
 // admin 게시물 조회 Thunk 함수
 export const __getPostAdmin = createAsyncThunk('__getPostAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await api.get(`/admin/posts`)
+    const response = await adminapi.get(`/admin/posts`)
     return thunkAPI.fulfillWithValue(response.data.posts)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -37,7 +38,7 @@ export const __getPostAdmin = createAsyncThunk('__getPostAdmin', async (payload,
 // admin 유저 조회 함수
 export const __getUserAdmin = createAsyncThunk('__getUserAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await api.get(`/admin/users`)
+    const response = await adminapi.get(`/admin/users`)
     return thunkAPI.fulfillWithValue(response.data.users)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -46,7 +47,7 @@ export const __getUserAdmin = createAsyncThunk('__getUserAdmin', async (payload,
 // admin 회원 삭제 함수
 export const __deleteUserAdmin = createAsyncThunk('__deleteUserAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await api.delete(`/admin/users/${payload}`)
+    const response = await adminapi.delete(`/admin/users/${payload}`)
     console.log(response)
     return thunkAPI.fulfillWithValue(response.data.users)
   } catch (error) {
@@ -56,7 +57,7 @@ export const __deleteUserAdmin = createAsyncThunk('__deleteUserAdmin', async (pa
 // admin 게시물 삭제 함수
 export const __deletePostAdmin = createAsyncThunk('__deletePostAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await api.delete(`/admin/posts/${payload}`)
+    const response = await adminapi.delete(`/admin/posts/${payload}`)
     return thunkAPI.fulfillWithValue(response)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
