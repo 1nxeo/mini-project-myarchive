@@ -5,7 +5,13 @@ import apis from '../../shared/axios'
 import api from "../../axios/api"
 
 const initialState = {
-  posts: [],
+  posts: [{postId: 0,
+  accountId: "",
+  nick: "",
+  img: "",
+  category:"",
+  title: "",
+  isDone : false}],
   isLoading: false,
   error: null,
 }
@@ -35,12 +41,13 @@ export const __deletePost = createAsyncThunk('deletePosts', async (payload, thun
   try {
     const response = await api.delete(`/post/${payload}`)
     // console.log("response = ",response);
-
-    return thunkAPI.fulfillWithValue(response.data)
+    return thunkAPI.fulfillWithValue(payload)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
 })
+
+
 
 
 const postSlice = createSlice({

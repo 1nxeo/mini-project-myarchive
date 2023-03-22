@@ -14,10 +14,11 @@ import {
   __getComment,
   __getPostDetail,
   __editPost,
+  __doneMemberPosts,
 } from "../redux/modules/detailSlice";
 import { cookies } from "../shared/cookies";
 import { __deletePost } from "../redux/modules/postSlice";
-import { __doneMemberPosts } from "../redux/modules/memberSlice";
+// import { __doneMemberPosts } from "../redux/modules/memberSlice";
 import WinWrapper from "../components/WinWrapper";
 
 function Detail() {
@@ -56,9 +57,10 @@ function Detail() {
     // };
   }, [commentList, postDetail]);
 
-  const deletePostHandler = (id) => {
+  const deletePostHandler = async (id) => {
     if (window.confirm("삭제하시겠습니까?")) {
-      dispatch(__deletePost(+id));
+      await dispatch(__deletePost(+id));
+      navigate("/");
     }
   };
 

@@ -70,6 +70,13 @@ function Mypage() {
                 <Card key={item.id} item={item} />
               ))
             : null}
+          {/* {cates == "done"
+            ? posts?.map((item) =>
+                item.isDone && item.accountId == accountId ? (
+                  <Card key={item.id} item={item} />
+                ) : null
+              )
+            : null} */}
         </CardsWrapper>
       </WinWrapper>
     </Wrapper>
