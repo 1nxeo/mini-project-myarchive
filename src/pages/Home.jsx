@@ -26,6 +26,7 @@ function Home() {
   const postItems = [...posts];
 
   const token = cookies.get("token");
+  const nick = cookies.get("nick");
 
   console.log(posts);
 
@@ -60,7 +61,9 @@ function Home() {
           )}
           {cates == "done"
             ? postItems?.map((item) =>
-                item.isDone ? <Card key={item.id} item={item} /> : null
+                nick == item.nick && item.isDone ? (
+                  <Card key={item.id} item={item} />
+                ) : null
               )
             : null}
         </CardsWrapper>

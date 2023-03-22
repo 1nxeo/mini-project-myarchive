@@ -112,8 +112,8 @@ function Post() {
             required
           ></Input>
           <br />
-          <Button>작성하기</Button>
-          <Button onClick={() => navigate("/")}>뒤로가기</Button>
+          <button>작성하기</button>
+          <button onClick={() => navigate("/")}>뒤로가기</button>
         </StForm>
       </WinWrapper>
     </Wrapper>
