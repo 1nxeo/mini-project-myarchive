@@ -11,6 +11,8 @@ import { cookies } from '../shared/cookies'
 function AdminLogin() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  // const adminToken = cookies.get('adminToken')
+
   const adminToken = cookies.get('adminToken')
 
   useEffect(() => {
@@ -20,6 +22,7 @@ function AdminLogin() {
       cookies.remove('nick')
     }
     if (adminToken) {
+      console.log('useEffect 실행됐어요 !!')
       navigate('/admin')
     }
   }, [adminToken])
@@ -38,14 +41,20 @@ function AdminLogin() {
     })
   }
   // 로그인 버튼 함수
-  const loginButtonHandler = (e) => {
+  const loginButtonHandler = async (e) => {
     e.preventDefault()
-    dispatch(__loginAdmin(adminInfo))
+    await dispatch(__loginAdmin({ adminInfo }))
     setAdminInfo({
       accountId: '',
       password: '',
       secretKey: '',
     })
+    // const adminToken = cookies.get('adminToken')
+    // if (adminToken) {
+    //   return
+    //   setAdminToken(cookies.get(`adminToken`))
+    //   navigate('/admin')
+    // }
   }
 
   return (

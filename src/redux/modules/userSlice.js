@@ -128,6 +128,7 @@ const userSlice =createSlice({
           [__loginUser.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.users = action.payload.userInfo;
+            console.log("유저정보 리덕스에 저장됐어요", state.users);
           },
           [__loginUser.rejected]: (state, action) => {
             state.isLoading = false; 

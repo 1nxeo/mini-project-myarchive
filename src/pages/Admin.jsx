@@ -24,14 +24,15 @@ function Admin() {
     if (!adminToken) {
       alert('접근 권한이 없습니다')
       navigate('/admin/login')
+    } else {
+      dispatch(__getPostAdmin())
+      dispatch(__getUserAdmin())
     }
-    dispatch(__getPostAdmin())
-    dispatch(__getUserAdmin())
-  }, [postList, userList])
+  }, [postList, userList, adminToken])
 
   const DeletePostAdminHandler = (id) => {
     dispatch(__deletePostAdmin(id))
-    window.location.reload()
+    // window.location.reload()
   }
 
   if (isLoading) {
