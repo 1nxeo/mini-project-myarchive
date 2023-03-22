@@ -29,7 +29,7 @@ function Detail() {
   const { comments } = useSelector((state) => state.details);
   const [comment, setComment] = useState(``);
   const commentList = JSON.stringify(comments);
-  const post = JSON.stringify(posts);
+  const postDetail = JSON.stringify(posts);
   // 의존성 배열에에 서버에서 가져온 값을 바로 넣으면 무한 get 요청 들어감
   // 따라서 서버에서 가져온 값을 JSON.stringify로 변환해준 뒤(고정된 값으로)
   // 의존성 배열에 넣어야 함.
@@ -51,7 +51,7 @@ function Detail() {
     // return () => {
     //   setEditItem({});
     // };
-  }, [commentList && post]);
+  }, [commentList || postDetail]);
 
   const deletePostHandler = (id) => {
     if (window.confirm("삭제하시겠습니까?")) {
@@ -210,7 +210,7 @@ function Detail() {
                   수정
                 </button>
                 <button onClick={() => donePostHandler(postItem.postId)}>
-                  구매완료
+                  {postItem.isDone ? "구매취소" : "구매완료"}
                 </button>
                 <button onClick={() => deletePostHandler(postItem.postId)}>
                   삭제

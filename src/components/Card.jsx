@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -18,6 +18,10 @@ function Card({ item }) {
       dispatch(__deletePost(id));
     }
   };
+
+  useEffect(() => {
+    return () => {};
+  }, [item.isDone]);
 
   const DonePostHandler = (id) => {
     dispatch(__doneMemberPosts(id));

@@ -31,7 +31,7 @@ function Home() {
 
   useEffect(() => {
     dispatch(__getPost());
-  }, [postList || token]);
+  }, [postList]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -60,7 +60,7 @@ function Home() {
           )}
           {cates == "done"
             ? postItems?.map((item) =>
-                !item.isDone ? <Card key={item.id} item={item} /> : null
+                item.isDone ? <Card key={item.id} item={item} /> : null
               )
             : null}
         </CardsWrapper>
