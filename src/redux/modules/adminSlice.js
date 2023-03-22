@@ -17,9 +17,9 @@ const initialState = {
 // admin 로그인 Thunk 함수
 export const __loginAdmin = createAsyncThunk('loginAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/admin`, payload.adminInfo)
+    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/admin`, payload)
     const { token } = response.headers
-    cookies.set('token', token, { path: '/admin', maxAge: 600 })
+    cookies.set('adminToken', token, { path: '/', maxAge: 600 })
     return thunkAPI.fulfillWithValue(payload)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -75,8 +75,7 @@ const adminSlice = createSlice({
     [__loginAdmin.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.admins = action.payload.adminInfo
-      action.payload.next()
+      state.admins = action.payload
     },
     [__loginAdmin.rejected]: (state, action) => {
       state.isLoading = false
