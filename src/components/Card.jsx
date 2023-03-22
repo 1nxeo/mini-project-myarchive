@@ -6,6 +6,7 @@ import { __doneMemberPosts } from "../redux/modules/memberSlice";
 import { __deletePost } from "../redux/modules/postSlice";
 import { cookies } from "../shared/cookies";
 import Button from "./Button";
+import QbookIcon from "./QbookIcon";
 
 function Card({ item }) {
   const navigate = useNavigate();
@@ -28,13 +29,12 @@ function Card({ item }) {
   };
 
   return (
-    <CardWrapper>
-      <StCardImg
-        src={`${item.img}`}
-        onClick={() => navigate(`/detail/${item.postId}`)}
-      />
-      {item?.nick}
-      <br />
+    <WinCard onClick={() => navigate(`/detail/${item.postId}`)}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <StCardImg src={`${item.img}`} />
+      </div>
+
+      <QbookIcon>{item?.nick}</QbookIcon>
       {item?.title}
       <div>
         {/* {nick == item.nick ? (
@@ -46,14 +46,14 @@ function Card({ item }) {
           </>
         ) : null} */}
       </div>
-    </CardWrapper>
+    </WinCard>
   );
 }
 
 const CardWrapper = styled.div`
   width: calc((100% - 60px) / 4);
   height: 300px;
-  border: 1px solid;
+  /* border: 1px solid; */
   box-sizing: border-box;
   overflow: hidden;
   padding: 5px;
@@ -61,6 +61,15 @@ const CardWrapper = styled.div`
   font-size: small;
 `;
 
+const WinCard = styled.div`
+  background: white;
+  width: calc((100% - 60px) / 4);
+  border: 1px;
+  height: 300px;
+  overflow: scroll;
+  max-height: 16rem;
+  top: 1.6rem;
+`;
 // const CardImage = styled.div`
 //   background-image: url(https://moncler-cdn.thron.com/delivery/public/image/moncler/H20921A00024M2017S94_X/dpx6uv/std/0x0/H20921A00024M2017S94_X.jpg);
 //   background-size: cover;
@@ -70,8 +79,8 @@ const CardWrapper = styled.div`
 // `;
 
 const StCardImg = styled.img`
-  height: 220px;
-  width: 300px;
+  height: 75%;
+  width: 75%;
 `;
 
 export default Card;

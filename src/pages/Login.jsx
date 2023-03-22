@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
-import { FormWrapper } from "./Register";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import Input from "../components/Input";
@@ -13,6 +12,8 @@ import GlobalStyle from "../GlobalStyle";
 import { __loginUser } from "../redux/modules/userSlice";
 import { cookies } from "../shared/cookies";
 import WinWrapper from "../components/WinWrapper";
+import styled from "styled-components";
+import WinInput from "../components/WinInput";
 // import apis from "../shared/axios";
 
 function Login() {
@@ -42,45 +43,91 @@ function Login() {
   return (
     <Wrapper>
       <GlobalStyle />
-      <WinWrapper>
-        <Nav />
+      <WinWrapper
+        style={{ width: "400px", height: "300px", marginTop: "230px" }}
+      >
+        {/* <Nav /> */}
         {/* <Header /> */}
-        <form onSubmit={(e) => submitLoginHandler(e)}>
+        <StForm onSubmit={(e) => submitLoginHandler(e)}>
           <FormWrapper>
-            <label>ID:</label>
-            <Input
+            <div>ID:</div>
+            <input
               required
               type="text"
               value={userInfo.accountId}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, accountId: e.target.value })
               }
+              style={{
+                fontFamily: "DungGeunMo, sans-serif",
+                width: "280px",
+                height: "22px",
+                fontSize: "17px",
+              }}
             />
           </FormWrapper>
           <FormWrapper>
-            <label>PW:</label>
-            <Input
+            <div>PW:</div>
+            <input
               required
               type="password"
               value={userInfo.password}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, password: e.target.value })
               }
+              style={{
+                fontFamily: "DungGeunMo, sans-serif",
+                width: "280px",
+                height: "22px",
+                marginBottom: "10px",
+                fontSize: "17px",
+              }}
             />
           </FormWrapper>
           <FormWrapper>
-            <button style={{ width: "100px" }}>로그인</button>
             <button
-              style={{ width: "100px" }}
+              style={{
+                width: "100px",
+                marginBottom: "10px",
+                marginTop: "10px",
+                fontFamily: "DungGeunMo, sans-serif",
+                fontSize: "12px",
+              }}
+            >
+              로그인
+            </button>
+            <button
+              style={{
+                width: "100px",
+                marginBottom: "10px",
+                marginTop: "5px",
+                fontFamily: "DungGeunMo, sans-serif",
+                fontSize: "12px",
+              }}
               onClick={() => navigate("/register")}
             >
               회원가입
             </button>
           </FormWrapper>
-        </form>
+        </StForm>
       </WinWrapper>
     </Wrapper>
   );
 }
+
+const FormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StForm = styled.form`
+  /* border: 1px solid; */
+  height: 260px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default Login;

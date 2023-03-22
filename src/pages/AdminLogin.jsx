@@ -7,6 +7,9 @@ import { useDispatch } from 'react-redux'
 import { __loginAdmin } from '../redux/modules/adminSlice'
 import GlobalStyle from '../GlobalStyle'
 import { cookies } from '../shared/cookies'
+import WinWrapper from '../components/WinWrapper'
+import '98.css'
+import WinButton from './WinButton'
 
 function AdminLogin() {
   const navigate = useNavigate()
@@ -41,9 +44,11 @@ function AdminLogin() {
     })
   }
   // 로그인 버튼 함수
-  const loginButtonHandler = async (e) => {
+  const loginButtonHandler = (e) => {
     e.preventDefault()
-    await dispatch(__loginAdmin({ adminInfo }))
+
+    dispatch(__loginAdmin({ adminInfo }))
+
     setAdminInfo({
       accountId: '',
       password: '',
@@ -59,34 +64,88 @@ function AdminLogin() {
 
   return (
     <Wrapper>
-      <StDiv>
-        관리자 로그인
-        <form onSubmit={loginButtonHandler}>
-          아이디
-          <br />
-          <input type="text" name="accountId" value={adminInfo.accountId} onChange={inputOnChangeHandler} required />
-          <br />
-          비밀번호
-          <br />
-          <input type="text" name="password" value={adminInfo.password} onChange={inputOnChangeHandler} required />
-          <br />
-          시크릿키
-          <br />
-          <input type="text" name="secretKey" value={adminInfo.secretKey} onChange={inputOnChangeHandler} required />
-          <br />
-          <Button>로그인</Button>
-        </form>
-      </StDiv>
+      <GlobalStyle />
+      <div
+        className="window"
+        style={{
+          width: '500px',
+          height: '500px',
+          marginTop: '200px',
+        }}
+      >
+        <div className="title-bar">
+          <div className="title-bar-text">Admin Login</div>
+          <div className="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Maximize"></button>
+            <button aria-label="Close"></button>
+          </div>
+        </div>
+        <div
+          className="window-body"
+          style={{
+            textAlign: 'center',
+            marginTop: '70px',
+          }}
+        >
+          <form onSubmit={loginButtonHandler}>
+            <StFont>Admin ID</StFont>
+            <br />
+            <StInput
+              style={{ height: '30px' }}
+              type="text"
+              name="accountId"
+              value={adminInfo.accountId}
+              onChange={inputOnChangeHandler}
+              required
+            />
+            <br />
+            <StFont>Admin PW</StFont>
+            <br />
+            <StInput
+              style={{ height: '30px' }}
+              type="text"
+              name="password"
+              value={adminInfo.password}
+              onChange={inputOnChangeHandler}
+              required
+            />
+            <br />
+            <StFont>Secret Key</StFont>
+            <br />
+            <StInput
+              style={{ height: '30px' }}
+              type="text"
+              name="secretKey"
+              value={adminInfo.secretKey}
+              onChange={inputOnChangeHandler}
+              required
+            />
+            <br />
+            <WinButton
+              style={{
+                width: '100px',
+                height: '40px',
+                marginTop: '15px',
+              }}
+            >
+              <StFont>Login</StFont>
+            </WinButton>
+          </form>
+        </div>
+      </div>
     </Wrapper>
   )
 }
 
 export default AdminLogin
 
-const StDiv = styled.div`
-  width: 500px;
-  height: 500px;
-  border: 1px solid black;
+const StInput = styled.input`
+  width: 200px;
+  margin: 10px auto 10px auto;
+`
 
-  margin: auto;
+const StFont = styled.span`
+  font-size: 25px;
+  font-weight: 600;
 `

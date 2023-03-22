@@ -15,6 +15,7 @@ import ErrorMessage from "../components/ErrorMessage";
 import { cookies } from "../shared/cookies";
 import WinWrapper from "../components/WinWrapper";
 import WinButton from "./WinButton";
+import NotepadIcon from "../components/NotepadIcon";
 
 function Home() {
   const navigate = useNavigate();
@@ -28,15 +29,16 @@ function Home() {
 
   const nick = cookies.get("nick");
 
-  console.log("posts = ", posts);
-  console.log("postItems =", postItems);
-
   useEffect(() => {
     if (cookies.get("adminToken")) {
       cookies.remove("adminToken");
     }
     dispatch(__getPost());
   }, [postList, nick]);
+
+  // const sortList = posts.sort((a, b) => b - a);
+
+  // console.log("sortlist", sortList);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -52,27 +54,33 @@ function Home() {
         <GlobalStyle />
         <Nav />
         {/* <Header /> */}
-        <ContentNav>
-          <Category />
-          <WinButton onClick={() => navigate("/post")}>글쓰기</WinButton>
-        </ContentNav>
-        <CardsWrapper>
-          {cates == "notdone"
-            ? posts?.map((item) => <Card key={item.postId} item={item} />)
-            : null}
-          {posts?.map((item) =>
-            item.category == cates ? (
-              <Card key={item.postId} item={item} />
-            ) : null
-          )}
-          {cates == "done"
-            ? posts?.map((item) =>
-                nick === item.nick && item.isDone ? (
-                  <Card key={item.postId} item={item} />
-                ) : null
-              )
-            : null}
-        </CardsWrapper>
+        <div style={{ overflow: "scroll" }}>
+          <ContentNav>
+            <Category />
+            {nick ? (
+              <NotepadIcon onClick={() => navigate("/post")}>
+                글쓰기
+              </NotepadIcon>
+            ) : null}
+          </ContentNav>
+          <CardsWrapper>
+            {cates == "notdone"
+              ? posts?.map((item) => <Card key={item.postId} item={item} />)
+              : null}
+            {posts?.map((item) =>
+              item.category == cates ? (
+                <Card key={item.postId} item={item} />
+              ) : null
+            )}
+            {cates == "done"
+              ? posts?.map((item) =>
+                  nick === item.nick && item.isDone ? (
+                    <Card key={item.postId} item={item} />
+                  ) : null
+                )
+              : null}
+          </CardsWrapper>
+        </div>
       </WinWrapper>
     </Wrapper>
   );

@@ -45,7 +45,7 @@ function Detail() {
     title: "",
     desc: "",
   });
-
+  const token = cookies.get("token");
   useEffect(() => {
     if (cookies.get("adminToken")) {
       cookies.remove("adminToken");
@@ -116,49 +116,70 @@ function Detail() {
         <DetailWrapper>
           <div
             style={{
-              height: "700px",
+              height: "600px",
             }}
           >
-            <StImg src={`${postItem?.img}`} />
-            <WinButton
-              onClick={() => {
-                window.open(postItem?.url);
-              }}
-            >
-              상품 바로가기
-            </WinButton>
+            <div style={{ justifyContent: "center" }}>
+              {" "}
+              <StImg src={`${postItem?.img}`} />
+            </div>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              {" "}
+              <WinButton
+                onClick={() => {
+                  window.open(postItem?.url);
+                }}
+              >
+                상품 바로가기
+              </WinButton>
+            </div>
+
             {edit ? (
               <>
-                <input
-                  type="text"
-                  value={editItem.url}
-                  onChange={(e) =>
-                    setEditItem({ ...editItem, url: e.target.value })
-                  }
-                />
-                <input
-                  type="text"
-                  value={editItem.title}
-                  onChange={(e) =>
-                    setEditItem({ ...editItem, title: e.target.value })
-                  }
-                />
-                <input
-                  type="text"
-                  value={editItem.desc}
-                  onChange={(e) =>
-                    setEditItem({ ...editItem, desc: e.target.value })
-                  }
-                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <input
+                    type="text"
+                    value={editItem.url}
+                    onChange={(e) =>
+                      setEditItem({ ...editItem, url: e.target.value })
+                    }
+                  />
+                  <input
+                    type="text"
+                    value={editItem.title}
+                    onChange={(e) =>
+                      setEditItem({ ...editItem, title: e.target.value })
+                    }
+                  />
+                  <input
+                    style={{
+                      height: "50px",
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      overflow: "scroll",
+                    }}
+                    type="text"
+                    value={editItem.desc}
+                    onChange={(e) =>
+                      setEditItem({ ...editItem, desc: e.target.value })
+                    }
+                  />
+                </div>
+
                 <WinButton onClick={() => editPostHandler(editItem)}>
                   수정하기
                 </WinButton>
               </>
             ) : (
               <>
-                <div>{postItem?.nick}</div>
-                <div>{postItem?.title}</div>
-                <div>{postItem?.desc}</div>
+                <div style={{ fontSize: "14px" }}>{postItem?.nick}</div>
+                <div style={{ fontSize: "20px" }}>{postItem?.title}</div>
+                <div style={{ minHeight: "80px" }}>{postItem?.desc}</div>
               </>
             )}
             <div>
@@ -188,38 +209,66 @@ function Detail() {
             </div>
           </div>
           <CommentBox>
-            <StInputBox onSubmit={commentSubmitButtonClickHandler}>
-              <Input
-                type="text"
-                placeholder="댓글을 입력하세요"
-                style={{
-                  width: "80%",
-                  margin: "10px",
-                }}
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                required
-              />
-              <WinButton style={{ width: "70px" }}>댓글등록</WinButton>
-            </StInputBox>
+            {token ? (
+              <StInputBox onSubmit={commentSubmitButtonClickHandler}>
+                <Input
+                  type="text"
+                  placeholder="댓글을 입력하세요"
+                  style={{
+                    width: "80%",
+                    margin: "10px",
+                  }}
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  required
+                />
+                <WinButton style={{ width: "70px" }}>댓글등록</WinButton>
+              </StInputBox>
+            ) : null}
 
             <StComment>
               {comments.map((item) => {
                 return (
-                  <div>
-                    <span>
-                      {item?.nick} : {item?.comment}
-                      {nick === item.nick ? (
-                        <WinButton
+                  <>
+                    <span
+                      style={{
+                        boxShadow:
+                          "inset -1px -1px #dfdfdf, inset 1px 1px grey",
+                        margin: "2px",
+                        padding: "3px",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        // width: "auto",
+                        minWidth: "60px",
+                        maxWidth: "150px",
+                        overflow: "hidden",
+                        fontSize: "14px",
+                      }}
+                    >
+                      {item?.nick}{" "}
+                    </span>
+                    <span>{item?.comment}</span>
+
+                    {nick === item.nick ? (
+                      <div
+                        style={{ display: "flex", justifyContent: "flex-end" }}
+                      >
+                        <button
+                          style={{
+                            fontFamily: "DungGeunMo, sans-serif",
+                            width: "20px",
+                            margin: "2px",
+                          }}
                           onClick={() =>
                             commentDeleteButtonClickHandler(item.commentId)
                           }
                         >
                           삭제
-                        </WinButton>
-                      ) : null}
-                    </span>
-                  </div>
+                        </button>
+                      </div>
+                    ) : null}
+                  </>
                 );
               })}
             </StComment>
@@ -231,25 +280,30 @@ function Detail() {
 }
 
 const DetailWrapper = styled.div`
-  width: 95%;
-  height: 70vh;
+  width: 100%;
+  height: auto;
+  /* display: flex; */
   /* border: 1px solid; */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  justify-content: center;
-  align-items: center;
+  /* justify-content: space-between; */
+  /* align-items: center; */
   justify-items: center;
+  margin-top: 40px;
 `;
-const DetailNav = styled.div`
-  width: 95%;
-  /* border: 1px solid; */
-  display: flex;
-  justify-content: flex-end;
-`;
+// const DetailNav = styled.div`
+//   width: 95%;
+//   /* border: 1px solid; */
+//   display: flex;
+//   justify-content: flex-end;
+// `;
 
 const CommentBox = styled.div`
   height: 100%;
-  width: 95%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
 `;
 
 const StInputBox = styled.form`
@@ -260,18 +314,27 @@ const StInputBox = styled.form`
 `;
 
 const StComment = styled.div`
-  width: 95%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  /* border: 1px solid; */
+  /* overflow: auto; */
   width: 95%;
   margin: 5px;
+  background-color: lightgrey;
+  box-sizing: border-box;
+  box-shadow: inset 2px 2px grey, inset -2px -2px white;
 `;
 
 const StImg = styled.img`
-  width: 300px;
-  height: 500px;
-  background-size: cover;
+  width: 400px;
+  height: 400px;
+  /* background-size: cover; */
+  /* box-sizing: border-box;
+  border-right: 2px grey;
+  border-bottom: 1px grey; */
 `;
+
+// boxShadow:"inset -1px -1px #dfdfdf, inset 1px 1px grey",
 
 export default Detail;
