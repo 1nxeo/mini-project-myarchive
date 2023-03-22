@@ -14,6 +14,7 @@ function Nav() {
   const { users } = useSelector((state) => state.users);
 
   const token = cookies.get("token");
+  const nick = cookies.get("nick");
   // const loginStatus = users.isLogin;
   // console.log(users);
 
@@ -29,6 +30,7 @@ function Nav() {
 
   return (
     <StNav>
+      {token ? <span style={{ margin: "10px" }}>{nick}'s archive </span> : null}
       <WinButton onClick={() => navigate("/")}>홈</WinButton>
       {token ? (
         <>
