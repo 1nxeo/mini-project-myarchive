@@ -51,10 +51,10 @@ function Post() {
   };
 
   // Posts 추가 함수
-  const postsButtonClickHandler = async (e) => {
+  const postsButtonClickHandler = (e) => {
     e.preventDefault();
     if (posts.category !== "category") {
-      await dispatch(__addPost({ posts: posts }));
+      dispatch(__addPost({ posts: posts }));
       // input 칸을 리셋함
       setPosts({
         url: "",
@@ -63,6 +63,7 @@ function Post() {
         desc: "",
         isDone: false,
       });
+      navigate("/");
     } else {
       alert("입력한 내용을 확인해주세요!");
     }

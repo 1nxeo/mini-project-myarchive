@@ -37,14 +37,14 @@ function Card({ item }) {
       <br />
       {item?.title}
       <div>
-        {nick == item.nick ? (
+        {/* {nick == item.nick ? (
           <>
             <button onClick={() => DonePostHandler(item.postId)}>
               {item.isDone ? "구매안함" : "구매완료"}
             </button>
             <button onClick={() => DeletePostHandler(item.postId)}>삭제</button>
           </>
-        ) : null}
+        ) : null} */}
       </div>
     </CardWrapper>
   );
