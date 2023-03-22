@@ -6,6 +6,7 @@ import { cookies } from "../shared/cookies";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/modules/userSlice";
 import { changeCates } from "../redux/modules/cateSlice";
+import WinButton from "../pages/WinButton";
 
 function Nav() {
   const navigate = useNavigate();
@@ -28,27 +29,27 @@ function Nav() {
 
   return (
     <StNav>
-      <button onClick={() => navigate("/")}>홈</button>
+      <WinButton onClick={() => navigate("/")}>홈</WinButton>
       {token ? (
         <>
-          <button
+          <WinButton
             onClick={() => {
               navigate(`/mypage/${accountId}`);
             }}
           >
             마이페이지
-          </button>
-          <button onClick={logoutUserHandler}>로그아웃</button>
+          </WinButton>
+          <WinButton onClick={logoutUserHandler}>로그아웃</WinButton>
         </>
       ) : (
         <>
-          <button onClick={() => navigate("/login")}>로그인</button>
-          <button
+          <WinButton onClick={() => navigate("/login")}>로그인</WinButton>
+          <WinButton
             style={{ width: "70px" }}
             onClick={() => navigate("/register")}
           >
             회원가입
-          </button>
+          </WinButton>
         </>
       )}
     </StNav>
