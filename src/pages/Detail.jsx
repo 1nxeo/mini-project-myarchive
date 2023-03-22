@@ -20,6 +20,7 @@ import { cookies } from "../shared/cookies";
 import { __deletePost } from "../redux/modules/postSlice";
 // import { __doneMemberPosts } from "../redux/modules/memberSlice";
 import WinWrapper from "../components/WinWrapper";
+import WinButton from "./WinButton";
 
 function Detail() {
   const params = useParams();
@@ -119,13 +120,13 @@ function Detail() {
             }}
           >
             <StImg src={`${postItem?.img}`} />
-            <button
+            <WinButton
               onClick={() => {
                 window.open(postItem?.url);
               }}
             >
               상품 바로가기
-            </button>
+            </WinButton>
             {edit ? (
               <>
                 <input
@@ -149,9 +150,9 @@ function Detail() {
                     setEditItem({ ...editItem, desc: e.target.value })
                   }
                 />
-                <button onClick={() => editPostHandler(editItem)}>
+                <WinButton onClick={() => editPostHandler(editItem)}>
                   수정하기
-                </button>
+                </WinButton>
               </>
             ) : (
               <>
@@ -160,6 +161,31 @@ function Detail() {
                 <div>{postItem?.desc}</div>
               </>
             )}
+            <div>
+              {nick == postItem.nick ? (
+                <>
+                  <WinButton
+                    onClick={() => {
+                      setEdit((pre) => !pre);
+                      setEditItem({
+                        postId: +postItem.postId,
+                        url: `${postItem.url}`,
+                        title: `${postItem.title}`,
+                        desc: `${postItem.desc}`,
+                      });
+                    }}
+                  >
+                    수정
+                  </WinButton>
+                  <WinButton onClick={() => donePostHandler(postItem.postId)}>
+                    {postItem.isDone ? "구매취소" : "구매완료"}
+                  </WinButton>
+                  <WinButton onClick={() => deletePostHandler(postItem.postId)}>
+                    삭제
+                  </WinButton>
+                </>
+              ) : null}
+            </div>
           </div>
           <CommentBox>
             <StInputBox onSubmit={commentSubmitButtonClickHandler}>
@@ -174,7 +200,7 @@ function Detail() {
                 onChange={(e) => setComment(e.target.value)}
                 required
               />
-              <button style={{ width: "70px" }}>댓글등록</button>
+              <WinButton style={{ width: "70px" }}>댓글등록</WinButton>
             </StInputBox>
 
             <StComment>
@@ -184,13 +210,13 @@ function Detail() {
                     <span>
                       {item?.nick} : {item?.comment}
                       {nick === item.nick ? (
-                        <button
+                        <WinButton
                           onClick={() =>
                             commentDeleteButtonClickHandler(item.commentId)
                           }
                         >
                           삭제
-                        </button>
+                        </WinButton>
                       ) : null}
                     </span>
                   </div>
@@ -198,31 +224,6 @@ function Detail() {
               })}
             </StComment>
           </CommentBox>
-          <div>
-            {nick == postItem.nick ? (
-              <>
-                <button
-                  onClick={() => {
-                    setEdit((pre) => !pre);
-                    setEditItem({
-                      postId: +postItem.postId,
-                      url: `${postItem.url}`,
-                      title: `${postItem.title}`,
-                      desc: `${postItem.desc}`,
-                    });
-                  }}
-                >
-                  수정
-                </button>
-                <button onClick={() => donePostHandler(postItem.postId)}>
-                  {postItem.isDone ? "구매취소" : "구매완료"}
-                </button>
-                <button onClick={() => deletePostHandler(postItem.postId)}>
-                  삭제
-                </button>
-              </>
-            ) : null}
-          </div>
         </DetailWrapper>
       </WinWrapper>
     </Wrapper>
@@ -232,7 +233,7 @@ function Detail() {
 const DetailWrapper = styled.div`
   width: 95%;
   height: 70vh;
-  border: 1px solid;
+  /* border: 1px solid; */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   justify-content: center;
@@ -260,12 +261,11 @@ const StInputBox = styled.form`
 
 const StComment = styled.div`
   width: 95%;
-  display: grid;
-  grid-template-columns: 15fr 1fr;
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   width: 95%;
   margin: 5px;
-  align-items: center;
 `;
 
 const StImg = styled.img`
