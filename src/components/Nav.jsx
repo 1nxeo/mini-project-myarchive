@@ -7,6 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/modules/userSlice";
 import { changeCates } from "../redux/modules/cateSlice";
 import WinButton from "../pages/WinButton";
+import StartIcon from "./StartIcon";
+import RecycleBinIcon from "./RecycleBinIcon";
+import SmileIcon from "./SmileIcon";
+import LoginIcon from "./LoginIcon";
+import RegisterIcon from "./RegisterIcon";
 
 function Nav() {
   const navigate = useNavigate();
@@ -30,28 +35,41 @@ function Nav() {
 
   return (
     <StNav>
-      {token ? <span style={{ margin: "10px" }}>{nick}'s archive </span> : null}
-      <WinButton onClick={() => navigate("/")}>홈</WinButton>
+      <StartIcon onClick={() => navigate("/")} style={{ float: "left" }} />
+      {token ? (
+        <h4 style={{ margin: "10px" }} onClick={() => navigate("/")}>
+          Archive # {nick}
+        </h4>
+      ) : (
+        <h4 style={{ margin: "10px" }} onClick={() => navigate("/")}>
+          Archive # undefined
+        </h4>
+      )}
+
       {token ? (
         <>
-          <WinButton
-            onClick={() => {
-              navigate(`/mypage/${accountId}`);
-            }}
-          >
-            마이페이지
-          </WinButton>
-          <WinButton onClick={logoutUserHandler}>로그아웃</WinButton>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <SmileIcon
+              onClick={() => {
+                navigate(`/mypage/${accountId}`);
+              }}
+            >
+              Mypage
+            </SmileIcon>
+            <RecycleBinIcon onClick={logoutUserHandler}>Logout</RecycleBinIcon>
+          </div>
         </>
       ) : (
         <>
-          <WinButton onClick={() => navigate("/login")}>로그인</WinButton>
-          <WinButton
-            style={{ width: "70px" }}
-            onClick={() => navigate("/register")}
-          >
-            회원가입
-          </WinButton>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <LoginIcon onClick={() => navigate("/login")}>로그인</LoginIcon>
+            <RegisterIcon
+              style={{ width: "70px" }}
+              onClick={() => navigate("/register")}
+            >
+              회원가입
+            </RegisterIcon>
+          </div>
         </>
       )}
     </StNav>
@@ -61,7 +79,7 @@ function Nav() {
 const StNav = styled.div`
   width: 95%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   /* border: 1px solid; */
   margin-top: 10px;

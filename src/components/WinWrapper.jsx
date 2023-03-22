@@ -21,6 +21,7 @@ function WinWrapper({ children, ...rest }) {
           marginTop: "20px",
         }}
         className="window"
+        {...rest}
       >
         <div
           className="title-bar"
@@ -43,6 +44,13 @@ function WinWrapper({ children, ...rest }) {
         <BodyWrapper>
           <div
             className="window-body"
+            style={{
+              margin: "3px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
             // style={{ display: "flex", justifyContent: "center" }}
           >
             {children}

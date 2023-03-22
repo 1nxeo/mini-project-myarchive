@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { cookies } from "../shared/cookies";
 import WinWrapper from "../components/WinWrapper";
 import { changeCates } from "../redux/modules/cateSlice";
+import WinInput from "../components/WinInput";
+import WinButton from "./WinButton";
 
 function Post() {
   const token = cookies.get("token");
@@ -72,52 +74,79 @@ function Post() {
   return (
     <Wrapper>
       <GlobalStyle />
-      <WinWrapper>
+      <WinWrapper
+        style={{ width: "700px", height: "540px", marginTop: "120px" }}
+      >
         <StForm onSubmit={postsButtonClickHandler}>
-          URL
-          <Input
-            type="text"
-            name="url"
-            value={posts.url}
-            onChange={changeInputHandler}
-            required
-          ></Input>
-          <br />
-          카테고리
-          <select
-            name="category"
-            value={posts.category}
-            onChange={changeInputHandler}
-          >
-            <option>Category</option>
-            <option value="cloth">Clothes</option>
-            <option value="it">IT</option>
-            <option value="acc">Acc</option>
-            <option value="food">Food</option>
-            <option value="pet">Pet</option>
-            <option value="etc">Etc</option>
-          </select>
-          <br />
-          제목
-          <Input
-            type="text"
-            name="title"
-            value={posts.title}
-            onChange={changeInputHandler}
-            required
-          ></Input>
-          <br />
-          내용
-          <Input
-            type="text"
-            name="desc"
-            value={posts.desc}
-            onChange={changeInputHandler}
-            required
-          ></Input>
-          <br />
-          <button>작성하기</button>
-          <button onClick={() => navigate("/")}>뒤로가기</button>
+          <div style={{ marginBottom: "20px" }}>
+            {" "}
+            URL
+            <input
+              type="text"
+              name="url"
+              value={posts.url}
+              onChange={changeInputHandler}
+              required
+              style={{
+                fontFamily: "DungGeunMo, sans-serif",
+                width: "300px",
+                fontSize: "16.5px",
+              }}
+            />
+          </div>
+          <div style={{ marginBottom: "20px" }}>
+            카테고리
+            <select
+              name="category"
+              value={posts.category}
+              onChange={changeInputHandler}
+              style={{ fontSize: "16px" }}
+            >
+              <option>Category</option>
+              <option value="cloth">Clothes</option>
+              <option value="it">IT</option>
+              <option value="acc">Acc</option>
+              <option value="food">Food</option>
+              <option value="pet">Pet</option>
+              <option value="etc">Etc</option>
+            </select>
+          </div>
+          <div style={{ marginBottom: "20px" }}>
+            {" "}
+            제목
+            <input
+              type="text"
+              name="title"
+              value={posts.title}
+              onChange={changeInputHandler}
+              required
+              style={{
+                fontFamily: "DungGeunMo, sans-serif",
+                width: "300px",
+                fontSize: "16.5px",
+              }}
+            />
+          </div>
+          <div style={{ marginBottom: "20px" }}>
+            내용
+            <input
+              type="text"
+              name="desc"
+              value={posts.desc}
+              onChange={changeInputHandler}
+              required
+              style={{
+                fontFamily: "DungGeunMo, sans-serif",
+                width: "500px",
+                fontSize: "16.5px",
+                height: "200px",
+              }}
+            />
+          </div>
+          <div>
+            <WinButton>작성하기</WinButton>
+            <WinButton onClick={() => navigate("/")}>뒤로가기</WinButton>
+          </div>
         </StForm>
       </WinWrapper>
     </Wrapper>
@@ -127,9 +156,17 @@ function Post() {
 export default Post;
 
 const StForm = styled.form`
-  width: 1000px;
-  height: 1000px;
+  width: 600px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  /* margin: 30px auto 30px auto; */
+  /* border: 1px solid black; */
+`;
 
-  margin: 30px auto 30px auto;
-  border: 1px solid black;
+const StInput = styled.input`
+  font-family: "DungGeunMo", sans-serif;
+  font-size: 17px;
 `;
