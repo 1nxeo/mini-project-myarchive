@@ -35,7 +35,9 @@ function Card({ item }) {
       <div>
         {nick == item.nick ? (
           <>
-            <button onClick={() => DonePostHandler(item)}>구매완료</button>
+            <button onClick={() => DonePostHandler(item)}>
+              {item.isDone ? "구매안함" : "구매완료"}
+            </button>
             <button onClick={() => DeletePostHandler(item.postId)}>삭제</button>
           </>
         ) : null}
