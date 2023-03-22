@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { __addUsers, __checkUserId, __checkUserNick, __loginUser } from '../redux/modules/userSlice'
 import { useNavigate } from 'react-router-dom'
 import WinWrapper from '../components/WinWrapper'
+import { cookies } from '../shared/cookies'
 
 function Register() {
   const dispatch = useDispatch()
