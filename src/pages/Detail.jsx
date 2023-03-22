@@ -13,9 +13,10 @@ import {
   __deleteComment,
   __getComment,
   __getPostDetail,
+  __editPost,
 } from "../redux/modules/detailSlice";
 import { cookies } from "../shared/cookies";
-import { __deletePost, __editPost } from "../redux/modules/postSlice";
+import { __deletePost } from "../redux/modules/postSlice";
 import { __doneMemberPosts } from "../redux/modules/memberSlice";
 import WinWrapper from "../components/WinWrapper";
 
@@ -37,20 +38,20 @@ function Detail() {
   const [edit, setEdit] = useState(false);
   const postItem = { ...posts };
   const [editItem, setEditItem] = useState({
-    postId: postItem.postId,
-    url: postItem.url,
-    title: postItem.title,
-    desc: postItem.desc,
+    postId: 0,
+    url: "",
+    title: "",
+    desc: "",
   });
-  console.log(param);
-
-  console.log("postItem = ", postItem);
-  console.log("editItem = ", editItem);
 
   useEffect(() => {
     dispatch(__getPostDetail(+params.postId));
     dispatch(__getComment(+params.postId));
-  }, [commentList || post]);
+
+    // return () => {
+    //   setEditItem({});
+    // };
+  }, [commentList && post]);
 
   const deletePostHandler = (id) => {
     if (window.confirm("삭제하시겠습니까?")) {
@@ -63,12 +64,10 @@ function Detail() {
   };
   const commentSubmitButtonClickHandler = (e) => {
     e.preventDefault();
-
     const newComment = {
       params: +params.postId,
       comment,
     };
-
     setComment(``);
     dispatch(__addComment(newComment));
   };
@@ -80,8 +79,19 @@ function Detail() {
     };
     dispatch(__deleteComment(deleteComment));
   };
-  const editPostHandler = (item) => {
-    dispatch(__editPost(item));
+  const editPostHandler = async (item) => {
+    const editPayload = {
+      params: +params.postId,
+      editPost: item,
+    };
+    await dispatch(__editPost(editPayload));
+    setEditItem({
+      postId: 0,
+      url: "",
+      title: "",
+      desc: "",
+    });
+    setEdit(false);
   };
 
   if (isLoading) {
@@ -131,7 +141,7 @@ function Detail() {
                   type="text"
                   value={editItem.desc}
                   onChange={(e) =>
-                    setEditItem({ ...editItem, title: e.target.value })
+                    setEditItem({ ...editItem, desc: e.target.value })
                   }
                 />
                 <button onClick={() => editPostHandler(editItem)}>
@@ -186,7 +196,19 @@ function Detail() {
           <div>
             {nick == postItem.nick ? (
               <>
-                <button onClick={() => setEdit(true)}>수정</button>
+                <button
+                  onClick={() => {
+                    setEdit((pre) => !pre);
+                    setEditItem({
+                      postId: +postItem.postId,
+                      url: `${postItem.url}`,
+                      title: `${postItem.title}`,
+                      desc: `${postItem.desc}`,
+                    });
+                  }}
+                >
+                  수정
+                </button>
                 <button onClick={() => donePostHandler(postItem.postId)}>
                   구매완료
                 </button>

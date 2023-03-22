@@ -41,16 +41,6 @@ export const __deletePost = createAsyncThunk('deletePosts', async (payload, thun
   }
 })
 
-// 게시물 수정 Thunk 함수
-export const __editPost = createAsyncThunk('editPosts', async (payload, thunkAPI) => {
-  try {
-    const response = await api.patch(`/post/${payload}`, payload)
-    console.log("payload = ",payload);
-    return thunkAPI.fulfillWithValue(response.data)
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error)
-  }
-})
 
 const postSlice = createSlice({
   name: 'posts',
@@ -99,20 +89,7 @@ const postSlice = createSlice({
       state.isLoading = false
       state.error = action.payload
     },
-        //게시물 수정
-        [__editPost.pending]: (state, action) => {
-          state.isLoading = true
-          state.error = false
-        },
-        [__editPost.fulfilled]: (state, action) => {
-          state.isLoading = false
-          state.error = false
-          state.posts = action.payload
-        },
-        [__editPost.rejected]: (state, action) => {
-          state.isLoading = false
-          state.error = action.payload
-        },
+
   },
 })
 export const {} = postSlice.actions
