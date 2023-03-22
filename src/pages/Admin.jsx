@@ -7,9 +7,10 @@ import ErrorMessage from '../components/ErrorMessage'
 import { cookies } from '../shared/cookies'
 import GlobalStyle from '../GlobalStyle'
 import Wrapper from '../components/Wrapper'
-import Modal from '../components/Modal'
 import WinButton from './WinButton'
 import WinWrapper from '../components/WinWrapper'
+import Modal from '../components/Modal'
+import AdminCard from '../components/AdminCard'
 
 function Admin() {
   const navigate = useNavigate()
@@ -34,10 +35,6 @@ function Admin() {
   if (error) {
     return <ErrorMessage>{error.message}</ErrorMessage>
   }
-
-  // const DeletePostAdminHandler = (id) => {
-  //   dispatch(__deletePostAdmin(id))
-  // }
 
   return (
     <Wrapper>
@@ -67,80 +64,8 @@ function Admin() {
             gap: '10px',
           }}
         >
-          {users.map((item) => {
-            return (
-              <div key={item.userId}>
-                <WinButton
-                  style={{
-                    width: '200px',
-                    height: '50px',
-                    maxheight: 'none',
-                    fontSize: '20px',
-                  }}
-                  onClick={() => {
-                    const dialog = document.getElementById('dialog')
-                    if (dialog) {
-                      dialog.showModal()
-                    }
-                  }}
-                >
-                  {item.nick}
-                </WinButton>
-                <dialog
-                  id="dialog"
-                  style={{
-                    border: 'none',
-                    background: 'none',
-                  }}
-                >
-                  <WinWrapper>
-                    <Wrapper>
-                      <div
-                        style={{
-                          marginTop: '20px',
-                        }}
-                        className="window"
-                      >
-                        <div
-                          className="window-body"
-                          style={{
-                            width: '500px',
-                            textAlign: 'center',
-                            fontFamily: 'DungGeunMo, sans-serif',
-                            fontSize: '18px',
-                            fontWeight: '600',
-                          }}
-                        >
-                          <p>고유 아이디 : {item.userId}</p>
-                          <p>가입 아이디 : {item.accountId}</p>
-                          <p>가입 닉네임 : {item.nick}</p>
-                          <p>가입 일시: {item.createdAt}</p>
-                        </div>
-                      </div>
-                      <div>
-                        {/* {posts.map((post) => {
-                          return (
-                            <>
-                              <div></div>
-                            </>
-                          )
-                        })} */}
-                      </div>
-                      <button
-                        onClick={() => {
-                          const dialog = document.getElementById('dialog')
-                          if (dialog) {
-                            dialog.close()
-                          }
-                        }}
-                      >
-                        닫기
-                      </button>
-                    </Wrapper>
-                  </WinWrapper>
-                </dialog>
-              </div>
-            )
+          {users?.map((item) => {
+            return <Modal key={item.userId} item={item} posts={posts} />
           })}
         </div>
       </div>
