@@ -14,7 +14,7 @@ const Modal = ({ buttonName, bc, fontColor, buttonSize, margin, item }) => {
   }
   const userDeleteButtonHandler = (id) => {
     dispatch(__deleteUserAdmin(id))
-    window.location.reload()
+    // window.location.reload()
   }
 
   return (
