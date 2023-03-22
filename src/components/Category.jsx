@@ -5,6 +5,8 @@ import { changeCates } from "../redux/modules/cateSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { cookies } from "../shared/cookies";
 import WinButton from "../pages/WinButton";
+import DocIcon from "./DocIcon";
+import ProgramIcon from "./ProgramIcon";
 
 function Category({ chil }) {
   const dispatch = useDispatch();
@@ -15,61 +17,73 @@ function Category({ chil }) {
   return (
     <StCateBar>
       <StButtonBox>
-        <WinButton
+        <DocIcon
           value="notdone"
           onClick={(e) => {
-            dispatch(changeCates(e.target.value));
+            dispatch(changeCates("notdone"));
           }}
         >
           All
-        </WinButton>
-        <WinButton
+        </DocIcon>
+        <DocIcon
           value="cloth"
           onClick={(e) => {
-            dispatch(changeCates(e.target.value));
+            dispatch(changeCates("cloth"));
           }}
         >
           Clothes
-        </WinButton>
-        <WinButton
+        </DocIcon>
+        <DocIcon
           value="it"
-          onClick={(e) => dispatch(changeCates(e.target.value))}
+          onClick={(e) => {
+            dispatch(changeCates("it"));
+          }}
         >
           IT
-        </WinButton>
-        <WinButton
+        </DocIcon>
+        <DocIcon
           value="acc"
-          onClick={(e) => dispatch(changeCates(e.target.value))}
+          onClick={(e) => {
+            dispatch(changeCates("acc"));
+          }}
         >
           Acc
-        </WinButton>
-        <WinButton
+        </DocIcon>
+        <DocIcon
           value="food"
-          onClick={(e) => dispatch(changeCates(e.target.value))}
+          onClick={(e) => {
+            dispatch(changeCates("food"));
+          }}
         >
           Food
-        </WinButton>
-        <WinButton
+        </DocIcon>
+        <DocIcon
           value="pet"
-          onClick={(e) => dispatch(changeCates(e.target.value))}
+          onClick={(e) => {
+            dispatch(changeCates("pet"));
+          }}
         >
           Pet
-        </WinButton>
-        <WinButton
+        </DocIcon>
+        <DocIcon
           value="etc"
-          onClick={(e) => dispatch(changeCates(e.target.value))}
+          onClick={(e) => {
+            dispatch(changeCates("etc"));
+          }}
         >
           etc
-        </WinButton>
+        </DocIcon>
       </StButtonBox>
       <StButtonBox>
         {token ? (
-          <WinButton
+          <ProgramIcon
             value="done"
-            onClick={(e) => dispatch(changeCates(e.target.value))}
+            onClick={(e) => {
+              dispatch(changeCates("done"));
+            }}
           >
             구매한 아이템
-          </WinButton>
+          </ProgramIcon>
         ) : null}
       </StButtonBox>
     </StCateBar>
