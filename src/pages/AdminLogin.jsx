@@ -14,9 +14,7 @@ import WinButton from './WinButton'
 function AdminLogin() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const adminToken = cookies.get('adminToken')
-
-  const adminToken = cookies.get('adminToken')
+  // then 활용하여 페이지 이동
 
   useEffect(() => {
     if (cookies.get('token') && cookies.get('accountId') && cookies.get('nick')) {
@@ -24,11 +22,7 @@ function AdminLogin() {
       cookies.remove('accountId')
       cookies.remove('nick')
     }
-    if (adminToken) {
-      console.log('useEffect 실행됐어요 !!')
-      navigate('/admin')
-    }
-  }, [adminToken])
+  }, [])
 
   // input state를 한번에 관리함
   const [adminInfo, setAdminInfo] = useState({
@@ -48,18 +42,17 @@ function AdminLogin() {
     e.preventDefault()
 
     dispatch(__loginAdmin({ adminInfo }))
-
+      .then(() => {
+        navigate('/admin')
+      })
+      .catch((error) => {
+        alert('로그인에 실패하였습니다 아이디, 혹은 비밀번호를 확인해주세요.')
+      })
     setAdminInfo({
       accountId: '',
       password: '',
       secretKey: '',
     })
-    // const adminToken = cookies.get('adminToken')
-    // if (adminToken) {
-    //   return
-    //   setAdminToken(cookies.get(`adminToken`))
-    //   navigate('/admin')
-    // }
   }
 
   return (
