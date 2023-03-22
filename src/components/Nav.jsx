@@ -19,7 +19,6 @@ function Nav() {
   const accountId = cookies.get("accountId");
   const logoutUserHandler = () => {
     cookies.remove("token");
-    cookies.remove("accountId");
     cookies.remove("nick");
     dispatch(logoutUser());
     dispatch(changeCates("notdone"));

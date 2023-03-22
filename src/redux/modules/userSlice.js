@@ -62,7 +62,6 @@ export const __addUsers = createAsyncThunk(
           console.log('response',response);
 
           cookies.set("token", token,{path:'/', maxAge:7140})
-          cookies.set("accountId", payload.userInfo.accountId, {path:'/', maxAge:7140})
           cookies.set("nick", response.data.nick,{path:'/', maxAge:7140})
           payload.userInfo = {accountId:payload.userInfo.accountId, nick:response.data.nick, isLogin: true}
           return thunkAPI.fulfillWithValue(payload)
