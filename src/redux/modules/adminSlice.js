@@ -18,9 +18,10 @@ const initialState = {
 // admin 로그인 Thunk 함수
 export const __loginAdmin = createAsyncThunk('loginAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/admin`, payload)
+    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/admin`, payload.adminInfo)
     const { token } = response.headers
     cookies.set('adminToken', token, { path: '/', maxAge: 600 })
+    console.log(payload)
     return thunkAPI.fulfillWithValue(payload)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -76,7 +77,8 @@ const adminSlice = createSlice({
     [__loginAdmin.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.admins = action.payload
+      state.admins = action.payload.adminInfo
+      console.log('리덕스 스토어에 어드민 정보 저장됐어요!')
     },
     [__loginAdmin.rejected]: (state, action) => {
       state.isLoading = false
