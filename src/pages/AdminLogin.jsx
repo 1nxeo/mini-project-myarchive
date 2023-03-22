@@ -14,8 +14,10 @@ function AdminLogin() {
   const adminToken = cookies.get('adminToken')
 
   useEffect(() => {
-    if (cookies.get('token')) {
+    if (cookies.get('token') && cookies.get('accountId') && cookies.get('nick')) {
       cookies.remove('token')
+      cookies.remove('accountId')
+      cookies.remove('nick')
     }
     if (adminToken) {
       navigate('/admin')
