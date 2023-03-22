@@ -13,7 +13,7 @@ const initialState = {
 // 게시물 추가 Thunk 함수
 export const __addPost = createAsyncThunk('addPosts', async (payload, thunkAPI) => {
   try {
-    const response = await api.post(`/post`, payload.posts)
+    await api.post(`/post`, payload.posts)
     return thunkAPI.fulfillWithValue(payload)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -34,7 +34,8 @@ export const __getPost = createAsyncThunk('getPosts', async (payload, thunkAPI) 
 export const __deletePost = createAsyncThunk('deletePosts', async (payload, thunkAPI) => {
   try {
     const response = await api.delete(`/post/${payload}`)
-    console.log("payload = ",payload);
+    // console.log("response = ",response);
+
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -54,8 +55,8 @@ const postSlice = createSlice({
     [__addPost.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.posts = action.payload.posts
-      action.payload.next()
+      state.posts = [...state.posts, action.payload.posts]
+      // action.payload.next()
     },
     [__addPost.rejected]: (state, action) => {
       state.isLoading = false
@@ -81,9 +82,10 @@ const postSlice = createSlice({
       state.error = false
     },
     [__deletePost.fulfilled]: (state, action) => {
+      const deleteList = state.posts.filter((item)=>item.postId !== action.payload)
       state.isLoading = false
       state.error = false
-      state.posts = action.payload
+      state.posts = deleteList
     },
     [__deletePost.rejected]: (state, action) => {
       state.isLoading = false

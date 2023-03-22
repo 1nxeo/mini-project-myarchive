@@ -30,7 +30,7 @@ export const __loginAdmin = createAsyncThunk('loginAdmin', async (payload, thunk
 // admin 게시물 조회 Thunk 함수
 export const __getPostAdmin = createAsyncThunk('__getPostAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await adminapi.get(`/admin/posts`)
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/admin/posts`)
     return thunkAPI.fulfillWithValue(response.data.posts)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -39,7 +39,7 @@ export const __getPostAdmin = createAsyncThunk('__getPostAdmin', async (payload,
 // admin 유저 조회 함수
 export const __getUserAdmin = createAsyncThunk('__getUserAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await adminapi.get(`/admin/users`)
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/admin/users`)
     return thunkAPI.fulfillWithValue(response.data.users)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -48,7 +48,7 @@ export const __getUserAdmin = createAsyncThunk('__getUserAdmin', async (payload,
 // admin 회원 삭제 함수
 export const __deleteUserAdmin = createAsyncThunk('__deleteUserAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await adminapi.delete(`/admin/users/${payload}`)
+    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/admin/users/${payload}`)
     console.log(response)
     return thunkAPI.fulfillWithValue(response.data.users)
   } catch (error) {
@@ -57,8 +57,9 @@ export const __deleteUserAdmin = createAsyncThunk('__deleteUserAdmin', async (pa
 })
 // admin 게시물 삭제 함수
 export const __deletePostAdmin = createAsyncThunk('__deletePostAdmin', async (payload, thunkAPI) => {
+  console.log('payload = ', payload)
   try {
-    const response = await adminapi.delete(`/admin/posts/${payload}`)
+    const response = axios.delete(`${process.env.REACT_APP_SERVER_URL}/admin/posts/${payload}`)
     return thunkAPI.fulfillWithValue(response)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
@@ -120,7 +121,7 @@ const adminSlice = createSlice({
     [__deleteUserAdmin.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.users = [...state.users, action.payload]
+      state.users = action.payload
     },
     [__deleteUserAdmin.rejected]: (state, action) => {
       state.isLoading = false
@@ -134,7 +135,7 @@ const adminSlice = createSlice({
     [__loginAdmin.fulfilled]: (state, action) => {
       state.isLoading = false
       state.error = false
-      state.posts = [...state.posts, action.payload]
+      state.posts = action.payload
     },
     [__loginAdmin.rejected]: (state, action) => {
       state.isLoading = false
