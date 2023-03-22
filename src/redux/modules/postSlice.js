@@ -44,7 +44,7 @@ export const __deletePost = createAsyncThunk('deletePosts', async (payload, thun
 // 게시물 수정 Thunk 함수
 export const __editPost = createAsyncThunk('editPosts', async (payload, thunkAPI) => {
   try {
-    const response = await api.put(`/post/${payload}`, payload)
+    const response = await api.patch(`/post/${payload}`, payload)
     console.log("payload = ",payload);
     return thunkAPI.fulfillWithValue(response.data)
   } catch (error) {
