@@ -50,7 +50,6 @@ function Mypage() {
         <Nav />
         <StCateBar>
           <StButtonBox>
-            {" "}
             <Category />
           </StButtonBox>
           <StButtonBox>
@@ -68,32 +67,27 @@ function Mypage() {
         </StCateBar>
 
         <CardsWrapper>
-          {cates == "notdone"
-            ? posts?.map((item) =>
-                item.accountId === accountId ? (
+          <MypageWrapper>
+            {cates == "notdone"
+              ? posts?.map((item) =>
+                  item.accountId === accountId ? (
+                    <Card key={item.id} item={item} />
+                  ) : null
+                )
+              : null}
+            {cates
+              ? memberPosts.notdone?.map((item) =>
+                  item.category == cates ? (
+                    <Card key={item.id} item={item} />
+                  ) : null
+                )
+              : null}
+            {cates == "done"
+              ? memberPosts.done?.map((item) => (
                   <Card key={item.id} item={item} />
-                ) : null
-              )
-            : null}
-          {cates
-            ? memberPosts.notdone?.map((item) =>
-                item.category == cates ? (
-                  <Card key={item.id} item={item} />
-                ) : null
-              )
-            : null}
-          {cates == "done"
-            ? memberPosts.done?.map((item) => (
-                <Card key={item.id} item={item} />
-              ))
-            : null}
-          {/* {cates == "done"
-            ? posts?.map((item) =>
-                item.isDone && item.accountId == accountId ? (
-                  <Card key={item.id} item={item} />
-                ) : null
-              )
-            : null} */}
+                ))
+              : null}
+          </MypageWrapper>
         </CardsWrapper>
       </WinWrapper>
     </Wrapper>
@@ -102,16 +96,25 @@ function Mypage() {
 
 const StCateBar = styled.div`
   display: flex;
-  width: 90%;
+  width: 93%;
   justify-content: space-between;
   align-items: center;
-  margin: 15px;
+  margin: 5px;
 `;
 
 const StButtonBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const MypageWrapper = styled.div`
+  height: 480px;
+  width: 1000px;
+  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
 `;
 
 export default Mypage;
