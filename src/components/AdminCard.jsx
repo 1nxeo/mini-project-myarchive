@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
-import { __doneMemberPosts } from '../redux/modules/memberSlice'
-import { __deletePost } from '../redux/modules/postSlice'
-import { cookies } from '../shared/cookies'
-import Button from './Button'
-import QbookIcon from './QbookIcon'
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { __doneMemberPosts } from "../redux/modules/memberSlice";
+import { __deletePost } from "../redux/modules/postSlice";
+import { cookies } from "../shared/cookies";
+import Button from "./Button";
+import QbookIcon from "./icons/QbookIcon";
 
 function AdminCard({ item }) {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const nick = cookies.get('nick')
+  const nick = cookies.get("nick");
 
   const DeletePostHandler = (id) => {
-    if (window.confirm('삭제하시겠습니까?')) {
-      dispatch(__deletePost(id))
+    if (window.confirm("삭제하시겠습니까?")) {
+      dispatch(__deletePost(id));
     }
-  }
+  };
 
   const DonePostHandler = (id) => {
-    dispatch(__doneMemberPosts(id))
-  }
+    dispatch(__doneMemberPosts(id));
+  };
 
   return (
     <WinCard onClick={() => navigate(`/detail/${item.postId}`)}>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <StCardImg src={`${item.img}`} />
       </div>
 
@@ -43,7 +43,7 @@ function AdminCard({ item }) {
         ) : null} */}
       </div>
     </WinCard>
-  )
+  );
 }
 
 const CardWrapper = styled.div`
@@ -55,7 +55,7 @@ const CardWrapper = styled.div`
   padding: 5px;
   background-color: white;
   font-size: small;
-`
+`;
 
 const WinCard = styled.div`
   background: white;
@@ -65,7 +65,7 @@ const WinCard = styled.div`
   overflow: scroll;
   max-height: 16rem;
   top: 1.6rem;
-`
+`;
 // const CardImage = styled.div`
 //   background-image: url(https://moncler-cdn.thron.com/delivery/public/image/moncler/H20921A00024M2017S94_X/dpx6uv/std/0x0/H20921A00024M2017S94_X.jpg);
 //   background-size: cover;
@@ -77,6 +77,6 @@ const WinCard = styled.div`
 const StCardImg = styled.img`
   height: 75%;
   width: 75%;
-`
+`;
 
-export default AdminCard
+export default AdminCard;
