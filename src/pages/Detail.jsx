@@ -212,12 +212,14 @@ function Detail() {
           <CommentBox>
             {token ? (
               <StInputBox onSubmit={commentSubmitButtonClickHandler}>
-                <Input
+                <input
                   type="text"
                   placeholder="댓글을 입력하세요"
                   style={{
                     width: "80%",
                     margin: "10px",
+                    fontFamily: "DungGeunMo, sans-serif",
+                    fontSize: "16.5px",
                   }}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
