@@ -90,7 +90,7 @@ const ContentNav = styled.div`
 `;
 export const CardsWrapper = styled.div`
   width: 1000px;
-  max-height: 490px;
+  max-height: 480px;
 
   display: flex;
   flex-wrap: wrap;
