@@ -1,11 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { cookies } from "../../shared/cookies";
-// import apis  from "../../shared/axios";
-// import { v4 as uuidv4 } from "uuid";
-
 
 const initialState = {
     users:[{accountId:"",password:""}],
