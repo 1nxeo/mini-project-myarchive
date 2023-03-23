@@ -34,7 +34,7 @@ function Nav() {
   return (
     <StNav>
       <StartIcon onClick={() => navigate("/")} style={{ float: "left" }} />
-      {token ? (
+      {/* {token ? (
         <h4 style={{ margin: "10px" }} onClick={() => navigate("/")}>
           Archive # {nick}
         </h4>
@@ -42,7 +42,7 @@ function Nav() {
         <h4 style={{ margin: "10px" }} onClick={() => navigate("/")}>
           Archive # undefined
         </h4>
-      )}
+      )} */}
 
       {token ? (
         <>
@@ -60,12 +60,12 @@ function Nav() {
       ) : (
         <>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <LoginIcon onClick={() => navigate("/login")}>로그인</LoginIcon>
+            <LoginIcon onClick={() => navigate("/login")}>Login</LoginIcon>
             <RegisterIcon
               style={{ width: "70px" }}
               onClick={() => navigate("/register")}
             >
-              회원가입
+              Sign up
             </RegisterIcon>
           </div>
         </>
