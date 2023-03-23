@@ -59,8 +59,14 @@ function Detail() {
 
   const deletePostHandler = async (id) => {
     if (window.confirm("삭제하시겠습니까?")) {
-      await dispatch(__deletePost(+id));
-      navigate("/");
+      await dispatch(
+        __deletePost({
+          postId: +id,
+          next: () => {
+            navigate("/");
+          },
+        })
+      );
     }
   };
 
@@ -113,11 +119,7 @@ function Detail() {
       <WinWrapper>
         <Nav />
         <DetailWrapper>
-          <div
-            style={{
-              height: "600px",
-            }}
-          >
+          <div>
             <div style={{ justifyContent: "center" }}>
               {" "}
               <StImg src={`${postItem?.img}`} />
@@ -210,12 +212,14 @@ function Detail() {
           <CommentBox>
             {token ? (
               <StInputBox onSubmit={commentSubmitButtonClickHandler}>
-                <Input
+                <input
                   type="text"
                   placeholder="댓글을 입력하세요"
                   style={{
                     width: "80%",
                     margin: "10px",
+                    fontFamily: "DungGeunMo, sans-serif",
+                    fontSize: "16.5px",
                   }}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
@@ -280,7 +284,7 @@ function Detail() {
 
 const DetailWrapper = styled.div`
   width: 100%;
-  height: auto;
+  height: 500px;
   /* display: flex; */
   /* border: 1px solid; */
   display: grid;
@@ -288,7 +292,7 @@ const DetailWrapper = styled.div`
   /* justify-content: space-between; */
   /* align-items: center; */
   justify-items: center;
-  margin-top: 40px;
+  margin-top: 30px;
 `;
 // const DetailNav = styled.div`
 //   width: 95%;
@@ -318,7 +322,7 @@ const StComment = styled.div`
   flex-direction: column;
   /* border: 1px solid; */
   /* overflow: auto; */
-  width: 95%;
+  /* width: 95%; */
   margin: 5px;
   background-color: lightgrey;
   box-sizing: border-box;

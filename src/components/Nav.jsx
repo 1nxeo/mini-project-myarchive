@@ -34,7 +34,7 @@ function Nav() {
   return (
     <StNav>
       <StartIcon onClick={() => navigate("/")} style={{ float: "left" }} />
-      {token ? (
+      {/* {token ? (
         <h4 style={{ margin: "10px" }} onClick={() => navigate("/")}>
           Archive # {nick}
         </h4>
@@ -42,7 +42,7 @@ function Nav() {
         <h4 style={{ margin: "10px" }} onClick={() => navigate("/")}>
           Archive # undefined
         </h4>
-      )}
+      )} */}
 
       {token ? (
         <>

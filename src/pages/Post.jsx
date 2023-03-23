@@ -54,8 +54,14 @@ function Post() {
   const postsButtonClickHandler = async (e) => {
     e.preventDefault();
     if (posts.category !== "category") {
-      await dispatch(__addPost({ posts: posts }));
-      navigate("/");
+      await dispatch(
+        __addPost({
+          posts: posts,
+          next: () => {
+            navigate("/");
+          },
+        })
+      );
       setPosts({
         url: "",
         title: "",
@@ -77,7 +83,7 @@ function Post() {
         <StForm onSubmit={postsButtonClickHandler}>
           <div style={{ marginBottom: "20px" }}>
             {" "}
-            URL
+            <div>URL</div>
             <input
               type="text"
               name="url"
@@ -92,7 +98,7 @@ function Post() {
             />
           </div>
           <div style={{ marginBottom: "20px" }}>
-            카테고리
+            <div>카테고리</div>
             <select
               name="category"
               value={posts.category}
@@ -110,7 +116,7 @@ function Post() {
           </div>
           <div style={{ marginBottom: "20px" }}>
             {" "}
-            제목
+            <div>title</div>
             <input
               type="text"
               name="title"
@@ -125,7 +131,7 @@ function Post() {
             />
           </div>
           <div style={{ marginBottom: "20px" }}>
-            내용
+            <div>contents</div>
             <input
               type="text"
               name="desc"
@@ -141,8 +147,8 @@ function Post() {
             />
           </div>
           <div>
-            <WinButton>작성하기</WinButton>
-            <WinButton onClick={() => navigate("/")}>뒤로가기</WinButton>
+            <WinButton>post</WinButton>
+            <WinButton onClick={() => navigate("/")}>cancel</WinButton>
           </div>
         </StForm>
       </WinWrapper>
