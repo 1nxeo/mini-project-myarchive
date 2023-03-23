@@ -57,8 +57,6 @@ function WinWrapper({ children, ...rest }) {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              // maxHeight: "100vh",
-              // height: "auto",
             }}
           >
             {children}
