@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-// import apis from '../../shared/axios'
 import api from '../../axios/api'
 // apis 사용하면 헤더에 토큰 있음 : 로그인 된 유저가 요청 시 사용
 
