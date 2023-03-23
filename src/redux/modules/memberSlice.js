@@ -23,7 +23,7 @@ export const __getMemberPosts = createAsyncThunk('getMemberPosts', async (payloa
   // 게시물 구매완료 Thunk 함수
   export const __doneMemberPosts = createAsyncThunk('getMemberPosts', async (payload, thunkAPI) => {
     try {
-      const response = await api.patch(`/mypage/${payload}`)
+      await api.patch(`/mypage/${payload}`)
       return thunkAPI.fulfillWithValue(payload)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)

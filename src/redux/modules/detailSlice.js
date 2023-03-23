@@ -12,7 +12,13 @@ const initialState = {
   posts: {},
   isLoading: false,
   error: null,
-  comments: [],
+  comments: [{
+    postId:0,
+    commentId:0,
+    nick:'',
+    comment:''
+
+  }],
 }
 
 // 게시물 디테일 조회 Thunk 함수
@@ -30,7 +36,7 @@ export const __getPostDetail = createAsyncThunk('getPostDetails', async (payload
   // 게시물 구매완료 Thunk 함수
   export const __doneMemberPosts = createAsyncThunk('getMemberPosts', async (payload, thunkAPI) => {
     try {
-      const response = await api.patch(`/mypage/${payload}`)
+      await api.patch(`/mypage/${payload}`)
       return thunkAPI.fulfillWithValue(payload)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -41,7 +47,8 @@ export const __getPostDetail = createAsyncThunk('getPostDetails', async (payload
 // 게시물 수정 Thunk 함수
 export const __editPost = createAsyncThunk('editPosts', async (payload, thunkAPI) => {
 try {
-  const response = await api.patch(`/post/${payload.params}`, payload.editPost)
+  await api.patch(`/post/${payload.params}`, payload.editPost)
+  // 아이디값으로 게시물 정보 가져오기.
   const updateItem =  await thunkAPI.dispatch(__getPostDetail(payload.params))
   const newDetail = {...updateItem.payload, url:payload.editPost.url,title:payload.editPost.title,desc:payload.editPost.desc}
 
@@ -65,7 +72,7 @@ export const __addComment = createAsyncThunk('__addComment', async (payload, thu
   try {
     const newComment = { comment: payload.comment }
     const response = await api.post(`/post/${payload.params}/comments`, newComment)
-    return thunkAPI.fulfillWithValue(response.data)
+    return thunkAPI.fulfillWithValue(response.data.comments)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
@@ -74,7 +81,8 @@ export const __addComment = createAsyncThunk('__addComment', async (payload, thu
 export const __deleteComment = createAsyncThunk('__deleteComment', async (payload, thunkAPI) => {
   try {
     const response = await api.delete(`/post/${payload.params}/comments/${payload.commentId}`)
-    return thunkAPI.fulfillWithValue(response)
+    console.log(response);
+    return thunkAPI.fulfillWithValue(payload.commentId)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
@@ -108,7 +116,7 @@ const detailSlice = createSlice({
             [__editPost.fulfilled]: (state, action) => {
               state.isLoading = false
               state.error = false
-              // state.posts = action.payload
+              state.posts = action.payload
             },
             [__editPost.rejected]: (state, action) => {
               state.isLoading = false
@@ -148,9 +156,10 @@ const detailSlice = createSlice({
       state.error = false
     },
     [__deleteComment.fulfilled]: (state, action) => {
+      const deleteList = state.comments?.map((item)=>item.commentId !== action.payload  )
       state.isLoading = false
       state.error = false
-      state.comments = [...state.comments, action.payload]
+      state.comments = deleteList
     },
     [__deleteComment.rejected]: (state, action) => {
       state.isLoading = false
