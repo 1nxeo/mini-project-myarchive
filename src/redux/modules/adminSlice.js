@@ -51,7 +51,6 @@ export const __deleteUserAdmin = createAsyncThunk('__deleteUserAdmin', async (pa
 })
 // admin 게시물 삭제 함수
 export const __deletePostAdmin = createAsyncThunk('__deletePostAdmin', async (payload, thunkAPI) => {
-  console.log('payload = ', payload)
   try {
     const response = axios.delete(`${process.env.REACT_APP_SERVER_URL}/admin/posts/${payload}`)
     return thunkAPI.fulfillWithValue(response)

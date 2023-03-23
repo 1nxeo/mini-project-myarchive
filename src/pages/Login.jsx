@@ -28,19 +28,15 @@ function Login() {
 
   useEffect(() => {
     if (token) {
-      console.log("useEffect 실행됐어요!");
       navigate("/");
     }
   }, [token]);
 
-  const submitLoginHandler = (e) => {
+  const submitLoginHandler = async (e) => {
     e.preventDefault();
-    dispatch(__loginUser({ userInfo })).then(() => {
-      navigate("/");
-      setUserInfo({ accountId: "", password: "" }).catch((err) => {
-        alert("입력한 내용을 확인해주세요!");
-      });
-    });
+    await dispatch(__loginUser({ userInfo }));
+    navigate("/");
+    setUserInfo({ accountId: "", password: "" });
   };
 
   return (
