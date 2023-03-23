@@ -115,6 +115,7 @@ const MypageWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
+  overflow: scroll;
 `;
 
 export default Mypage;
