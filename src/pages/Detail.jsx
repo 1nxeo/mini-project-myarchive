@@ -45,10 +45,6 @@ function Detail() {
   useEffect(() => {
     dispatch(__getPostDetail(+params.postId));
     dispatch(__getComment(+params.postId));
-
-    // return () => {
-    //   setEditItem({});
-    // };
   }, [commentList, postDetail]);
 
   const deletePostHandler = async (id) => {
@@ -279,21 +275,11 @@ function Detail() {
 const DetailWrapper = styled.div`
   width: 100%;
   height: 400px;
-  /* display: flex; */
-  /* border: 1px solid; */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* justify-content: space-between; */
-  /* align-items: center; */
   justify-items: center;
   margin-top: 30px;
 `;
-// const DetailNav = styled.div`
-//   width: 95%;
-//   /* border: 1px solid; */
-//   display: flex;
-//   justify-content: flex-end;
-// `;
 
 const CommentBox = styled.div`
   height: 100%;
@@ -326,12 +312,6 @@ const StComment = styled.div`
 const StImg = styled.img`
   width: 400px;
   height: 400px;
-  /* background-size: cover; */
-  /* box-sizing: border-box;
-  border-right: 2px grey;
-  border-bottom: 1px grey; */
 `;
-
-// boxShadow:"inset -1px -1px #dfdfdf, inset 1px 1px grey",
 
 export default Detail;
