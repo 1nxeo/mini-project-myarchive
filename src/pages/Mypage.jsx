@@ -25,9 +25,6 @@ function Mypage() {
   const { accountId } = useParams();
   const memberPost = JSON.stringify(memberPosts);
 
-  console.log("category", cates);
-  console.log(memberPosts);
-
   useEffect(() => {
     if (cookies.get("adminToken")) {
       cookies.remove("adminToken");

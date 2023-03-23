@@ -32,12 +32,9 @@ function Home() {
     if (cookies.get("adminToken")) {
       cookies.remove("adminToken");
     }
+    cookies.get("nick");
     dispatch(__getPost());
   }, [postList, nick]);
-
-  // const sortList = posts.sort((a, b) => b - a);
-
-  // console.log("sortlist", sortList);
 
   if (isLoading) {
     return <div>Loading...</div>;

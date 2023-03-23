@@ -47,6 +47,7 @@ function Detail() {
   });
   const token = cookies.get("token");
   useEffect(() => {
+    cookies.get("token");
     dispatch(__getPostDetail(+params.postId));
     dispatch(__getComment(+params.postId));
 
