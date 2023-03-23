@@ -54,8 +54,14 @@ function Post() {
   const postsButtonClickHandler = async (e) => {
     e.preventDefault();
     if (posts.category !== "category") {
-      await dispatch(__addPost({ posts: posts }));
-      navigate("/");
+      await dispatch(
+        __addPost({
+          posts: posts,
+          next: () => {
+            navigate("/");
+          },
+        })
+      );
       setPosts({
         url: "",
         title: "",
