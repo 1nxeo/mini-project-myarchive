@@ -21,7 +21,7 @@ function WinWrapper({ children, ...rest }) {
         style={{
           maxWidth: "1200px",
           minWidth: " 900px",
-          maxHeight: "90vh",
+          maxHeight: "900px",
           marginTop: "60px",
           minHeight: "700px",
         }}
