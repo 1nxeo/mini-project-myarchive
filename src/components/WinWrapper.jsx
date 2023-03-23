@@ -22,7 +22,7 @@ function WinWrapper({ children, ...rest }) {
           maxWidth: "1200px",
           minWidth: " 900px",
           maxHeight: "90vh",
-          marginTop: "90px",
+          marginTop: "60px",
           minHeight: "700px",
         }}
         className="window"
