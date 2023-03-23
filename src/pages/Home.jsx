@@ -55,7 +55,7 @@ function Home() {
             <Category />
             {nick ? (
               <NotepadIcon onClick={() => navigate("/post")}>
-                글쓰기
+                Commit
               </NotepadIcon>
             ) : null}
           </ContentNav>
@@ -90,8 +90,7 @@ const ContentNav = styled.div`
 `;
 export const CardsWrapper = styled.div`
   width: 1000px;
-  min-width: none;
-  min-height: none;
+  max-height: 490px;
 
   display: flex;
   flex-wrap: wrap;

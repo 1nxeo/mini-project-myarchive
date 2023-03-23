@@ -25,7 +25,7 @@ function NotepadIcon({ children, ...rest }) {
 }
 
 const Stimg = styled.img`
-  width: 60%;
+  width: 65%;
   display: flex;
   justify-content: center;
   align-items: center;

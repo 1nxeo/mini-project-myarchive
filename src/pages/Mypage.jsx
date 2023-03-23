@@ -13,6 +13,8 @@ import { CardsWrapper } from "./Home";
 import Card from "../components/Card";
 import { changeCates } from "../redux/modules/cateSlice";
 import WinWrapper from "../components/WinWrapper";
+import ProgramIcon from "../components/icons/ProgramIcon";
+import NotepadIcon from "../components/icons/NotepadIcon";
 
 function Mypage() {
   const navigate = useNavigate();
@@ -46,7 +48,25 @@ function Mypage() {
       <GlobalStyle />
       <WinWrapper>
         <Nav />
-        <Category />
+        <StCateBar>
+          <StButtonBox>
+            {" "}
+            <Category />
+          </StButtonBox>
+          <StButtonBox>
+            <ProgramIcon
+              value="done"
+              onClick={(e) => {
+                dispatch(changeCates("done"));
+              }}
+              style={{ margin: "0px" }}
+            >
+              Flex
+            </ProgramIcon>
+            <NotepadIcon onClick={() => navigate("/post")}>Commit</NotepadIcon>
+          </StButtonBox>
+        </StCateBar>
+
         <CardsWrapper>
           {cates == "notdone"
             ? posts?.map((item) =>
@@ -79,5 +99,19 @@ function Mypage() {
     </Wrapper>
   );
 }
+
+const StCateBar = styled.div`
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px;
+`;
+
+const StButtonBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default Mypage;
