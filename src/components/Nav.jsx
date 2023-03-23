@@ -60,12 +60,12 @@ function Nav() {
       ) : (
         <>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <LoginIcon onClick={() => navigate("/login")}>로그인</LoginIcon>
+            <LoginIcon onClick={() => navigate("/login")}>Login</LoginIcon>
             <RegisterIcon
               style={{ width: "70px" }}
               onClick={() => navigate("/register")}
             >
-              회원가입
+              Sign up
             </RegisterIcon>
           </div>
         </>
