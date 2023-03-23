@@ -21,6 +21,7 @@ import { __deletePost } from "../redux/modules/postSlice";
 // import { __doneMemberPosts } from "../redux/modules/memberSlice";
 import WinWrapper from "../components/WinWrapper";
 import WinButton from "../components/WinButton";
+import WinFooter from "../components/WinFooter";
 
 function Detail() {
   const params = useParams();

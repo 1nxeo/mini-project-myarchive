@@ -116,7 +116,7 @@ function Register() {
               }}
             />
             {checkValidId(newUser.accountId) ? null : (
-              <span style={{ color: "red" }}>
+              <span style={{ color: "red", fontSize: "14px" }}>
                 아이디는 영문 소문자, 숫자로 4자리 이상이어야합니다.
               </span>
             )}
@@ -175,7 +175,7 @@ function Register() {
               }}
             />
             {checkValidId(newUser.password) ? null : (
-              <span style={{ color: "red" }}>
+              <span style={{ color: "red", fontSize: "14px" }}>
                 비밀번호는 영문소문자, 숫자로 4자리 이상이어야합니다.
               </span>
             )}
