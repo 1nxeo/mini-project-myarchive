@@ -43,9 +43,8 @@ export const __getUserAdmin = createAsyncThunk('__getUserAdmin', async (payload,
 // admin 회원 삭제 함수
 export const __deleteUserAdmin = createAsyncThunk('__deleteUserAdmin', async (payload, thunkAPI) => {
   try {
-    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/admin/users/${payload}`)
-    console.log(response)
-    return thunkAPI.fulfillWithValue(response.data.users)
+    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/admin/users/${payload.userId}`)
+    return thunkAPI.fulfillWithValue(payload.userId)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)
   }
@@ -113,25 +112,12 @@ const adminSlice = createSlice({
       state.error = false
     },
     [__deleteUserAdmin.fulfilled]: (state, action) => {
+      const newUserList = state.users.filter((item) => item.userId !== action.payload)
       state.isLoading = false
       state.error = false
-      state.users = action.payload
+      state.users = newUserList
     },
     [__deleteUserAdmin.rejected]: (state, action) => {
-      state.isLoading = false
-      state.error = action.payload
-    },
-    // admin 게시물  삭제 Reducer -------------------------------
-    [__loginAdmin.pending]: (state, action) => {
-      state.isLoading = true
-      state.error = false
-    },
-    [__loginAdmin.fulfilled]: (state, action) => {
-      state.isLoading = false
-      state.error = false
-      state.posts = action.payload
-    },
-    [__loginAdmin.rejected]: (state, action) => {
       state.isLoading = false
       state.error = action.payload
     },
