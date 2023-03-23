@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../components/Header";
 import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
 import Nav from "../components/Nav";
-import Button from "../components/Button";
-import Input from "../components/Input";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -18,10 +15,8 @@ import {
 } from "../redux/modules/detailSlice";
 import { cookies } from "../shared/cookies";
 import { __deletePost } from "../redux/modules/postSlice";
-// import { __doneMemberPosts } from "../redux/modules/memberSlice";
 import WinWrapper from "../components/WinWrapper";
 import WinButton from "../components/WinButton";
-import WinFooter from "../components/WinFooter";
 
 function Detail() {
   const params = useParams();
@@ -36,7 +31,6 @@ function Detail() {
   // 의존성 배열에에 서버에서 가져온 값을 바로 넣으면 무한 get 요청 들어감
   // 따라서 서버에서 가져온 값을 JSON.stringify로 변환해준 뒤(고정된 값으로)
   // 의존성 배열에 넣어야 함.
-  const param = params.postId;
   const nick = cookies.get("nick");
   const [edit, setEdit] = useState(false);
   const postItem = { ...posts };
