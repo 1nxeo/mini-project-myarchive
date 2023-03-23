@@ -19,7 +19,8 @@ function WinWrapper({ children, ...rest }) {
           maxWidth: "1200px",
           minWidth: " 900px",
           maxHeight: "90vh",
-          marginTop: "20px",
+          marginTop: "90px",
+          minHeight: "700px",
         }}
         className="window"
         {...rest}
@@ -51,7 +52,8 @@ function WinWrapper({ children, ...rest }) {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              maxHeight: "100vh",
+              // maxHeight: "100vh",
+              // height: "auto",
             }}
           >
             {children}
