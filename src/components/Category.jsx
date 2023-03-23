@@ -75,7 +75,7 @@ function Category({ chil }) {
         </DocIcon>
       </StButtonBox>
       <StButtonBox>
-        {token ? (
+        {/* {token ? (
           <ProgramIcon
             value="done"
             onClick={(e) => {
@@ -84,7 +84,7 @@ function Category({ chil }) {
           >
             구매한 아이템
           </ProgramIcon>
-        ) : null}
+        ) : null} */}
       </StButtonBox>
     </StCateBar>
   );

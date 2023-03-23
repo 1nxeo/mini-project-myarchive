@@ -42,8 +42,6 @@ function Post() {
     };
   }, []);
 
-  console.log(posts.category);
-
   // input onChange를 한번에 관리함
   const changeInputHandler = (event) => {
     const { value, name } = event.target;
@@ -53,20 +51,17 @@ function Post() {
   };
 
   // Posts 추가 함수
-  const postsButtonClickHandler = (e) => {
+  const postsButtonClickHandler = async (e) => {
     e.preventDefault();
     if (posts.category !== "category") {
-      dispatch(__addPost({ posts: posts })).then(() => {
-        navigate("/");
-        setPosts({
-          url: "",
-          title: "",
-          category: "category",
-          desc: "",
-          isDone: false,
-        }).catch((err) => {
-          alert("입력한 내용을 확인해주세요!");
-        });
+      await dispatch(__addPost({ posts: posts }));
+      navigate("/");
+      setPosts({
+        url: "",
+        title: "",
+        category: "category",
+        desc: "",
+        isDone: false,
       });
     } else {
       alert("입력한 내용을 확인해주세요!");

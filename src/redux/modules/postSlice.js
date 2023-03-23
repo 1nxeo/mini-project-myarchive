@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import apis from '../../shared/axios'
 import api from "../../axios/api"
 
 const initialState = {
@@ -40,7 +39,6 @@ export const __getPost = createAsyncThunk('getPosts', async (payload, thunkAPI) 
 export const __deletePost = createAsyncThunk('deletePosts', async (payload, thunkAPI) => {
   try {
     const response = await api.delete(`/post/${payload}`)
-    // console.log("response = ",response);
     return thunkAPI.fulfillWithValue(payload)
   } catch (error) {
     return thunkAPI.rejectWithValue(error)

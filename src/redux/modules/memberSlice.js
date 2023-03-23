@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import apis from '../../shared/axios'
 import api from "../../axios/api"
 
 const initialState = {
@@ -15,10 +14,8 @@ const initialState = {
 export const __getMemberPosts = createAsyncThunk('getMemberPosts', async (payload, thunkAPI) => {
     try {
       const response = await api.get(`/mypage`)
-      console.log( "response.data",response.data)
       return thunkAPI.fulfillWithValue(response.data)
     } catch (error) {
-      // console.log("error",error);
       return thunkAPI.rejectWithValue(error)
     }
   })
@@ -27,10 +24,8 @@ export const __getMemberPosts = createAsyncThunk('getMemberPosts', async (payloa
   export const __doneMemberPosts = createAsyncThunk('getMemberPosts', async (payload, thunkAPI) => {
     try {
       const response = await api.patch(`/mypage/${payload}`)
-      // console.log( "response.data",response.data)
       return thunkAPI.fulfillWithValue(payload)
     } catch (error) {
-      // console.log("error",error);
       return thunkAPI.rejectWithValue(error)
     }
   })

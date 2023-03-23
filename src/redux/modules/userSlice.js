@@ -59,15 +59,12 @@ export const __addUsers = createAsyncThunk(
         try {
           const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/login`, payload.userInfo);
           const {token} = response.headers
-          console.log('response',response);
-
           cookies.set("token", token,{path:'/', maxAge:7140})
           cookies.set("accountId", payload.userInfo.accountId, {path:'/', maxAge:7140})
           cookies.set("nick", response.data.nick,{path:'/', maxAge:7140})
           payload.userInfo = {accountId:payload.userInfo.accountId, nick:response.data.nick, isLogin: true}
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
-          console.log(error);
           return thunkAPI.rejectWithValue(error.response.status)
         }
       }
@@ -128,7 +125,6 @@ const userSlice =createSlice({
           [__loginUser.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.users = action.payload.userInfo;
-            console.log("유저정보 리덕스에 저장됐어요", state.users);
           },
           [__loginUser.rejected]: (state, action) => {
             state.isLoading = false; 
