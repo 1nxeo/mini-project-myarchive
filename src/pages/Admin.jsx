@@ -1,38 +1,45 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { __getPostAdmin, __getUserAdmin, __deletePostAdmin, __getPostsAdmin } from '../redux/modules/adminSlice'
-import ErrorMessage from '../components/ErrorMessage'
-import { cookies } from '../shared/cookies'
-import GlobalStyle from '../GlobalStyle'
-import Wrapper from '../components/Wrapper'
-import Modal from '../components/Modal'
-import WinButton from './WinButton'
-import WinWrapper from '../components/WinWrapper'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import {
+  __getPostAdmin,
+  __getUserAdmin,
+  __deletePostAdmin,
+  __getPostsAdmin,
+} from "../redux/modules/adminSlice";
+import ErrorMessage from "../components/ErrorMessage";
+import { cookies } from "../shared/cookies";
+import GlobalStyle from "../GlobalStyle";
+import Wrapper from "../components/Wrapper";
+import Modal from "../components/Modal";
+import WinButton from "../components/WinButton";
+import WinWrapper from "../components/WinWrapper";
 
 function Admin() {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const { posts, users, isLoading, error } = useSelector((state) => state.admins)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { posts, users, isLoading, error } = useSelector(
+    (state) => state.admins
+  );
 
-  const adminToken = cookies.get('adminToken')
+  const adminToken = cookies.get("adminToken");
 
   useEffect(() => {
     if (!adminToken) {
-      alert('접근 권한이 없습니다')
-      navigate('/admin/login')
+      alert("접근 권한이 없습니다");
+      navigate("/admin/login");
     }
-    dispatch(__getUserAdmin())
-    dispatch(__getPostsAdmin())
-  }, [])
+    dispatch(__getUserAdmin());
+    dispatch(__getPostsAdmin());
+  }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <ErrorMessage>{error.message}</ErrorMessage>
+    return <ErrorMessage>{error.message}</ErrorMessage>;
   }
 
   // const DeletePostAdminHandler = (id) => {
@@ -45,9 +52,9 @@ function Admin() {
       <div
         className="window"
         style={{
-          width: '300px',
-          height: '800px',
-          marginTop: '60px',
+          width: "300px",
+          height: "800px",
+          marginTop: "60px",
         }}
       >
         <div className="title-bar">
@@ -61,10 +68,10 @@ function Admin() {
         <div
           className="window-body"
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '10px',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "10px",
           }}
         >
           {users.map((item) => {
@@ -72,15 +79,15 @@ function Admin() {
               <div key={item.userId}>
                 <WinButton
                   style={{
-                    width: '200px',
-                    height: '50px',
-                    maxheight: 'none',
-                    fontSize: '20px',
+                    width: "200px",
+                    height: "50px",
+                    maxheight: "none",
+                    fontSize: "20px",
                   }}
                   onClick={() => {
-                    const dialog = document.getElementById('dialog')
+                    const dialog = document.getElementById("dialog");
                     if (dialog) {
-                      dialog.showModal()
+                      dialog.showModal();
                     }
                   }}
                 >
@@ -89,26 +96,26 @@ function Admin() {
                 <dialog
                   id="dialog"
                   style={{
-                    border: 'none',
-                    background: 'none',
+                    border: "none",
+                    background: "none",
                   }}
                 >
                   <WinWrapper>
                     <Wrapper>
                       <div
                         style={{
-                          marginTop: '20px',
+                          marginTop: "20px",
                         }}
                         className="window"
                       >
                         <div
                           className="window-body"
                           style={{
-                            width: '500px',
-                            textAlign: 'center',
-                            fontFamily: 'DungGeunMo, sans-serif',
-                            fontSize: '18px',
-                            fontWeight: '600',
+                            width: "500px",
+                            textAlign: "center",
+                            fontFamily: "DungGeunMo, sans-serif",
+                            fontSize: "18px",
+                            fontWeight: "600",
                           }}
                         >
                           <p>고유 아이디 : {item.userId}</p>
@@ -128,9 +135,9 @@ function Admin() {
                       </div>
                       <button
                         onClick={() => {
-                          const dialog = document.getElementById('dialog')
+                          const dialog = document.getElementById("dialog");
                           if (dialog) {
-                            dialog.close()
+                            dialog.close();
                           }
                         }}
                       >
@@ -140,12 +147,12 @@ function Admin() {
                   </WinWrapper>
                 </dialog>
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </Wrapper>
-  )
+  );
 }
 
-export default Admin
+export default Admin;

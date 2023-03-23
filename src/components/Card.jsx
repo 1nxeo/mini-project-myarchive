@@ -6,7 +6,7 @@ import { __doneMemberPosts } from "../redux/modules/memberSlice";
 import { __deletePost } from "../redux/modules/postSlice";
 import { cookies } from "../shared/cookies";
 import Button from "./Button";
-import QbookIcon from "./QbookIcon";
+import QbookIcon from "./icons/QbookIcon";
 
 function Card({ item }) {
   const navigate = useNavigate();

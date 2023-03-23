@@ -11,7 +11,7 @@ const instance = axios.create({
     // 오류 확인 가능한지 테스트.. 1밀리세컨드.. 내에 응답을 못받으면 에러처리 하도록 돼 있음.
 })
 
-const token = cookies.get("token")
+const token = cookies.get("token")?cookies.get("token"):cookies.get("token")
 
 instance.interceptors.request.use(
   // 요청을 보내기 전 수행되는 함수
