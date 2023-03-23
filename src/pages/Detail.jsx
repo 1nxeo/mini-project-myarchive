@@ -20,7 +20,7 @@ import { cookies } from "../shared/cookies";
 import { __deletePost } from "../redux/modules/postSlice";
 // import { __doneMemberPosts } from "../redux/modules/memberSlice";
 import WinWrapper from "../components/WinWrapper";
-import WinButton from "./WinButton";
+import WinButton from "../components/WinButton";
 
 function Detail() {
   const params = useParams();
@@ -47,9 +47,6 @@ function Detail() {
   });
   const token = cookies.get("token");
   useEffect(() => {
-    if (cookies.get("adminToken")) {
-      cookies.remove("adminToken");
-    }
     dispatch(__getPostDetail(+params.postId));
     dispatch(__getComment(+params.postId));
 

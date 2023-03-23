@@ -12,7 +12,7 @@ import { cookies } from "../shared/cookies";
 import WinWrapper from "../components/WinWrapper";
 import { changeCates } from "../redux/modules/cateSlice";
 import WinInput from "../components/WinInput";
-import WinButton from "./WinButton";
+import WinButton from "../components/WinButton";
 
 function Post() {
   const token = cookies.get("token");
@@ -56,16 +56,18 @@ function Post() {
   const postsButtonClickHandler = (e) => {
     e.preventDefault();
     if (posts.category !== "category") {
-      dispatch(__addPost({ posts: posts }));
-      // input 칸을 리셋함
-      setPosts({
-        url: "",
-        title: "",
-        category: "category",
-        desc: "",
-        isDone: false,
+      dispatch(__addPost({ posts: posts })).then(() => {
+        navigate("/");
+        setPosts({
+          url: "",
+          title: "",
+          category: "category",
+          desc: "",
+          isDone: false,
+        }).catch((err) => {
+          alert("입력한 내용을 확인해주세요!");
+        });
       });
-      navigate("/");
     } else {
       alert("입력한 내용을 확인해주세요!");
     }

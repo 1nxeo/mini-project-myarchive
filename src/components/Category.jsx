@@ -4,9 +4,9 @@ import Button from "./Button";
 import { changeCates } from "../redux/modules/cateSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { cookies } from "../shared/cookies";
-import WinButton from "../pages/WinButton";
-import DocIcon from "./DocIcon";
-import ProgramIcon from "./ProgramIcon";
+import WinButton from "./WinButton";
+import DocIcon from "./icons/DocIcon";
+import ProgramIcon from "./icons/ProgramIcon";
 
 function Category({ chil }) {
   const dispatch = useDispatch();

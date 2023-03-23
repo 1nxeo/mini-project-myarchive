@@ -14,8 +14,7 @@ import styled from "styled-components";
 import ErrorMessage from "../components/ErrorMessage";
 import { cookies } from "../shared/cookies";
 import WinWrapper from "../components/WinWrapper";
-import WinButton from "./WinButton";
-import NotepadIcon from "../components/NotepadIcon";
+import NotepadIcon from "../components/icons/NotepadIcon";
 
 function Home() {
   const navigate = useNavigate();
