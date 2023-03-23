@@ -70,15 +70,9 @@ const WinCard = styled.div`
   max-height: 16rem;
   top: 1.6rem;
 `;
-// const CardImage = styled.div`
-//   background-image: url(https://moncler-cdn.thron.com/delivery/public/image/moncler/H20921A00024M2017S94_X/dpx6uv/std/0x0/H20921A00024M2017S94_X.jpg);
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   color: transparent;
-//   height: 220px;
-// `;
 
 const StCardImg = styled.img`
+  max-height: 180px;
   height: 75%;
   width: 75%;
 `;
