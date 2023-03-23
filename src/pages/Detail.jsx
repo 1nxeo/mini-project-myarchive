@@ -59,8 +59,14 @@ function Detail() {
 
   const deletePostHandler = async (id) => {
     if (window.confirm("삭제하시겠습니까?")) {
-      await dispatch(__deletePost(+id));
-      navigate("/");
+      await dispatch(
+        __deletePost({
+          postId: +id,
+          next: () => {
+            navigate("/");
+          },
+        })
+      );
     }
   };
 
@@ -280,7 +286,7 @@ function Detail() {
 
 const DetailWrapper = styled.div`
   width: 100%;
-  height: auto;
+  height: 400px;
   /* display: flex; */
   /* border: 1px solid; */
   display: grid;
@@ -288,7 +294,7 @@ const DetailWrapper = styled.div`
   /* justify-content: space-between; */
   /* align-items: center; */
   justify-items: center;
-  margin-top: 40px;
+  margin-top: 30px;
 `;
 // const DetailNav = styled.div`
 //   width: 95%;
@@ -318,7 +324,7 @@ const StComment = styled.div`
   flex-direction: column;
   /* border: 1px solid; */
   /* overflow: auto; */
-  width: 95%;
+  /* width: 95%; */
   margin: 5px;
   background-color: lightgrey;
   box-sizing: border-box;
