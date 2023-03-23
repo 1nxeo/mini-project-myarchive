@@ -12,11 +12,9 @@ import "98.css";
 import WinButton from "../components/WinButton";
 
 function AdminLogin() {
-
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   // then 활용하여 페이지 이동
-
 
   useEffect(() => {
     if (
@@ -28,9 +26,7 @@ function AdminLogin() {
       cookies.remove("accountId");
       cookies.remove("nick");
     }
-
-  }, [])
-
+  }, []);
 
   // input state를 한번에 관리함
   const [adminInfo, setAdminInfo] = useState({
@@ -51,18 +47,17 @@ function AdminLogin() {
 
     dispatch(__loginAdmin({ adminInfo }))
       .then(() => {
-        navigate('/admin')
+        navigate("/admin");
       })
       .catch((error) => {
-        alert('로그인에 실패하였습니다 아이디, 혹은 비밀번호를 확인해주세요.')
-      })
+        alert("로그인에 실패하였습니다 아이디, 혹은 비밀번호를 확인해주세요.");
+      });
     setAdminInfo({
-      accountId: '',
-      password: '',
-      secretKey: '',
-    })
-  }
-
+      accountId: "",
+      password: "",
+      secretKey: "",
+    });
+  };
 
   return (
     <Wrapper>

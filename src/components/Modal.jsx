@@ -1,37 +1,45 @@
-import React, { useState } from 'react'
-import Button from './Button'
-import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
-import { __deleteUserAdmin } from '../redux/modules/adminSlice'
-import WinButton from '../pages/WinButton'
-import WinWrapper from './WinWrapper'
-import AdminCard from './AdminCard'
+import React, { useState } from "react";
+import Button from "./Button";
+import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { __deleteUserAdmin } from "../redux/modules/adminSlice";
+import WinButton from "./WinButton";
+import WinWrapper from "./WinWrapper";
+import AdminCard from "./AdminCard";
 
-const Modal = ({ buttonName, bc, fontColor, buttonSize, margin, item, posts }) => {
-  const [open, setOpen] = useState(false)
-  const dispatch = useDispatch()
+const Modal = ({
+  buttonName,
+  bc,
+  fontColor,
+  buttonSize,
+  margin,
+  item,
+  posts,
+}) => {
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClickOutside = (event) => {
     if (event.target === event.currentTarget) {
-      setOpen(false)
+      setOpen(false);
     }
-  }
+  };
   const userDeleteButtonHandler = (user) => {
-    if (window.confirm('회원정보를 삭제하시겠습니까?')) {
-      dispatch(__deleteUserAdmin(user))
+    if (window.confirm("회원정보를 삭제하시겠습니까?")) {
+      dispatch(__deleteUserAdmin(user));
     } else {
-      alert('삭제가 취소되었습니다.')
+      alert("삭제가 취소되었습니다.");
     }
-  }
+  };
 
   return (
     <>
       <WinButton
         style={{
-          width: '150px',
-          height: '50px',
-          fontSize: '18px',
-          fontWeight: '500',
+          width: "150px",
+          height: "50px",
+          fontSize: "18px",
+          fontWeight: "500",
         }}
         onClick={() => setOpen((pre) => !pre)}
       >
@@ -43,11 +51,11 @@ const Modal = ({ buttonName, bc, fontColor, buttonSize, margin, item, posts }) =
             <div
               className="window"
               style={{
-                width: '500px',
-                textAlign: 'center',
-                fontSize: '15px',
-                fontFamily: 'DungGeunMo, sans-serif',
-                marginTop: '20px',
+                width: "500px",
+                textAlign: "center",
+                fontSize: "15px",
+                fontFamily: "DungGeunMo, sans-serif",
+                marginTop: "20px",
               }}
             >
               <p>회원 고유번호 : {item.userId}</p>
@@ -56,9 +64,9 @@ const Modal = ({ buttonName, bc, fontColor, buttonSize, margin, item, posts }) =
               <p>회원 가입 일 시 : {item.createdAt}</p>
               <WinButton
                 style={{
-                  width: '100px',
-                  height: '35px',
-                  fontSize: '15px',
+                  width: "100px",
+                  height: "35px",
+                  fontSize: "15px",
                 }}
                 onClick={() => userDeleteButtonHandler(item)}
               >
@@ -67,15 +75,16 @@ const Modal = ({ buttonName, bc, fontColor, buttonSize, margin, item, posts }) =
             </div>
             <PostDiv>
               {posts?.map((post) => {
-                if (item.accountId == post.accountId) return <AdminCard key={post.postId} item={post} />
+                if (item.accountId == post.accountId)
+                  return <AdminCard key={post.postId} item={post} />;
               })}
             </PostDiv>
           </WinWrapper>
         </StModal>
       ) : null}
     </>
-  )
-}
+  );
+};
 
 const StModal = styled.div`
   position: fixed;
@@ -85,7 +94,7 @@ const StModal = styled.div`
   left: 0;
   z-index: 90;
   background-color: rgba(0, 0, 0, 0.6);
-`
+`;
 
 const PostDiv = styled.div`
   width: 1000px;
@@ -94,6 +103,6 @@ const PostDiv = styled.div`
 
   display: flex;
   flex-wrap: wrap;
-`
+`;
 
-export default Modal
+export default Modal;

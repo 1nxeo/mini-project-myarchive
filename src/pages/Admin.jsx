@@ -1,18 +1,21 @@
-
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { __getPostAdmin, __getUserAdmin, __deletePostAdmin, __getPostsAdmin } from '../redux/modules/adminSlice'
-import ErrorMessage from '../components/ErrorMessage'
-import { cookies } from '../shared/cookies'
-import GlobalStyle from '../GlobalStyle'
-import Wrapper from '../components/Wrapper'
-import WinButton from './WinButton'
-import WinWrapper from '../components/WinWrapper'
-import Modal from '../components/Modal'
-import AdminCard from '../components/AdminCard'
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import {
+  __getPostAdmin,
+  __getUserAdmin,
+  __deletePostAdmin,
+  __getPostsAdmin,
+} from "../redux/modules/adminSlice";
+import ErrorMessage from "../components/ErrorMessage";
+import { cookies } from "../shared/cookies";
+import GlobalStyle from "../GlobalStyle";
+import Wrapper from "../components/Wrapper";
+import WinButton from "../components/WinButton";
+import WinWrapper from "../components/WinWrapper";
+import Modal from "../components/Modal";
+import AdminCard from "../components/AdminCard";
 
 function Admin() {
   const navigate = useNavigate();
@@ -68,10 +71,8 @@ function Admin() {
             gap: "10px",
           }}
         >
-
           {users?.map((item) => {
-            return <Modal key={item.userId} item={item} posts={posts} />
-
+            return <Modal key={item.userId} item={item} posts={posts} />;
           })}
         </div>
       </div>
