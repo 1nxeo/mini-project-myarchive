@@ -31,10 +31,8 @@ export const __getPostDetail = createAsyncThunk('getPostDetails', async (payload
   export const __doneMemberPosts = createAsyncThunk('getMemberPosts', async (payload, thunkAPI) => {
     try {
       const response = await api.patch(`/mypage/${payload}`)
-      // console.log( "response.data",response.data)
       return thunkAPI.fulfillWithValue(payload)
     } catch (error) {
-      // console.log("error",error);
       return thunkAPI.rejectWithValue(error)
     }
   })

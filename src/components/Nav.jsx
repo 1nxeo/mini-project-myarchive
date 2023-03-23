@@ -20,8 +20,6 @@ function Nav() {
 
   const token = cookies.get("token");
   const nick = cookies.get("nick");
-  // const loginStatus = users.isLogin;
-  // console.log(users);
 
   const accountId = cookies.get("accountId");
   const logoutUserHandler = () => {

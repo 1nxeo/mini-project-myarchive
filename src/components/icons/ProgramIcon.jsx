@@ -26,7 +26,7 @@ function ProgramIcon({ children, ...rest }) {
 }
 
 const Stimg = styled.img`
-  width: 35%;
+  width: 51.5%;
   display: flex;
   justify-content: center;
   align-items: center;
