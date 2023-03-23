@@ -82,6 +82,7 @@ const userSlice =createSlice({
       }
     },
     extraReducers:{
+      // 회원가입
         [__addUsers.pending]: (state) => {
             state.isLoading = true;
           },
@@ -96,6 +97,8 @@ const userSlice =createSlice({
             state.error = action.payload; 
             alert("회원가입 실패. 입력한 정보를 확인해주세요")
           },
+
+          // 아이디 중복확인
           [__checkUserId.pending]: (state) => {
             state.isLoading = true;
           },
@@ -108,6 +111,8 @@ const userSlice =createSlice({
             state.error = action.payload; 
             alert(`사용할 수 없는 아이디입니다!`)
           },
+
+          // 닉네임 중복확인
           [__checkUserNick.pending]: (state) => {
             state.isLoading = true;
           },
@@ -120,6 +125,8 @@ const userSlice =createSlice({
             state.error = action.payload; 
             alert(`사용할 수 없는 닉네임입니다!`)
           },
+
+          // 로그인 
           [__loginUser.pending]: (state) => {
             state.isLoading = true;
           },
