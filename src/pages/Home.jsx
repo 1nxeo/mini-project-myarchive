@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
@@ -8,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { __getPost } from "../redux/modules/postSlice";
 import { useEffect } from "react";
 import Card from "../components/Card";
-import Button from "../components/Button";
 import Category from "../components/Category";
 import styled from "styled-components";
 import ErrorMessage from "../components/ErrorMessage";
@@ -21,16 +19,10 @@ function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { posts, isLoading, error } = useSelector((state) => state.posts);
-  // const { users } = useSelector((state) => state.users);
   const { cates } = useSelector((state) => state.cate);
   const postList = JSON.stringify(posts);
-  // const token = cookies.get("token");
-  const postItems = [...posts];
 
   const nick = cookies.get("nick");
-  const linkGitHubHandler = (url) => {
-    window.open(url);
-  };
 
   useEffect(() => {
     if (cookies.get("adminToken")) {
@@ -53,7 +45,6 @@ function Home() {
       <WinWrapper>
         <GlobalStyle />
         <Nav />
-        {/* <Header /> */}
         <div>
           <ContentNav>
             <Category />

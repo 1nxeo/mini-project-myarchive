@@ -7,9 +7,9 @@ function WinFooter() {
   };
   return (
     <>
-      <FooterWrapper class="status-bar">
+      <FooterWrapper className="status-bar">
         <div
-          class="status-bar-field"
+          className="status-bar-field"
           onClick={() => {
             linkGitHubHandler(`https://github.com/ryu820`);
           }}
@@ -18,7 +18,7 @@ function WinFooter() {
           BE : HyunJu Ryu
         </div>
         <div
-          class="status-bar-field"
+          className="status-bar-field"
           onClick={() => {
             linkGitHubHandler(`https://github.com/dabeenkim`);
           }}
@@ -26,7 +26,7 @@ function WinFooter() {
           BE : Dabin Kim
         </div>
         <div
-          class="status-bar-field"
+          className="status-bar-field"
           onClick={() => {
             linkGitHubHandler(`https://github.com/song33ztpgg`);
           }}
@@ -34,7 +34,7 @@ function WinFooter() {
           BE : JongHo Song
         </div>
         <div
-          class="status-bar-field"
+          className="status-bar-field"
           onClick={() => {
             linkGitHubHandler(`https://github.com/choidami5126`);
           }}
@@ -42,7 +42,7 @@ function WinFooter() {
           FE : DaHyun Choi
         </div>
         <div
-          class="status-bar-field"
+          className="status-bar-field"
           onClick={() => {
             linkGitHubHandler(`https://github.com/1nxeo`);
           }}

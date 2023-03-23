@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -12,10 +12,7 @@ import ErrorMessage from "../components/ErrorMessage";
 import { cookies } from "../shared/cookies";
 import GlobalStyle from "../GlobalStyle";
 import Wrapper from "../components/Wrapper";
-import WinButton from "../components/WinButton";
-import WinWrapper from "../components/WinWrapper";
 import Modal from "../components/Modal";
-import AdminCard from "../components/AdminCard";
 
 function Admin() {
   const navigate = useNavigate();
