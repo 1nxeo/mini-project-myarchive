@@ -1,11 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { cookies } from "../../shared/cookies";
-// import apis  from "../../shared/axios";
-// import { v4 as uuidv4 } from "uuid";
-
 
 const initialState = {
     users:[{accountId:"",password:""}],
@@ -20,7 +16,7 @@ export const __addUsers = createAsyncThunk(
     "users/addUsers",
     async (payload, thunkAPI) => {
         try {
-          await axios.post(`${process.env.REACT_APP_SERVER_URL}/register`, payload);
+          await axios.post(`${process.env.REACT_APP_SERVER_URL}/register`, payload.newUser);
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
 
@@ -82,19 +78,23 @@ const userSlice =createSlice({
       }
     },
     extraReducers:{
+      // 회원가입
         [__addUsers.pending]: (state) => {
             state.isLoading = true;
           },
           [__addUsers.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.users = action.payload
+            state.users = action.payload.newUser
             alert("회원가입 성공!")
+            action.payload.next()
           },
           [__addUsers.rejected]: (state, action) => {
             state.isLoading = false; 
             state.error = action.payload; 
-            alert("회원가입 실패")
+            alert("회원가입 실패. 입력한 정보를 확인해주세요")
           },
+
+          // 아이디 중복확인
           [__checkUserId.pending]: (state) => {
             state.isLoading = true;
           },
@@ -107,6 +107,8 @@ const userSlice =createSlice({
             state.error = action.payload; 
             alert(`사용할 수 없는 아이디입니다!`)
           },
+
+          // 닉네임 중복확인
           [__checkUserNick.pending]: (state) => {
             state.isLoading = true;
           },
@@ -119,6 +121,8 @@ const userSlice =createSlice({
             state.error = action.payload; 
             alert(`사용할 수 없는 닉네임입니다!`)
           },
+
+          // 로그인 
           [__loginUser.pending]: (state) => {
             state.isLoading = true;
           },

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import Button from '../components/Button'
-import Wrapper from '../components/Wrapper'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { __loginAdmin } from '../redux/modules/adminSlice'
-import GlobalStyle from '../GlobalStyle'
-import { cookies } from '../shared/cookies'
-import WinWrapper from '../components/WinWrapper'
-import '98.css'
-import WinButton from '../components/WinButton'
+
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import Wrapper from "../components/Wrapper";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { __loginAdmin } from "../redux/modules/adminSlice";
+import GlobalStyle from "../GlobalStyle";
+import { cookies } from "../shared/cookies";
+import "98.css";
+import WinButton from "../components/WinButton";
+
 
 function AdminLogin() {
   const navigate = useNavigate()

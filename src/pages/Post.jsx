@@ -2,16 +2,12 @@ import React, { useEffect, useState } from "react";
 import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
 import styled from "styled-components";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import Nav from "../components/Nav";
 import { __addPost } from "../redux/modules/postSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { cookies } from "../shared/cookies";
 import WinWrapper from "../components/WinWrapper";
 import { changeCates } from "../redux/modules/cateSlice";
-import WinInput from "../components/WinInput";
 import WinButton from "../components/WinButton";
 
 function Post() {
@@ -21,7 +17,6 @@ function Post() {
 
   // input state를 한번에 관리함
   const [posts, setPosts] = useState({
-    // accountId: '',
     url: "",
     title: "",
     category: "category",
@@ -165,11 +160,4 @@ const StForm = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  /* margin: 30px auto 30px auto; */
-  /* border: 1px solid black; */
-`;
-
-const StInput = styled.input`
-  font-family: "DungGeunMo", sans-serif;
-  font-size: 17px;
 `;
