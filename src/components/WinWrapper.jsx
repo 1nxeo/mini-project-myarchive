@@ -67,7 +67,7 @@ function WinWrapper({ children, ...rest }) {
                 linkGitHubHandler(`https://github.com/ryu820`);
               }}
             >
-              BE : HyunJu Rye
+              BE : HyunJu Ryu
             </div>
             <div
               class="status-bar-field"
