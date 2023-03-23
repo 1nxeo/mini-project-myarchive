@@ -20,7 +20,7 @@ export const __addUsers = createAsyncThunk(
     "users/addUsers",
     async (payload, thunkAPI) => {
         try {
-          await axios.post(`${process.env.REACT_APP_SERVER_URL}/register`, payload);
+          await axios.post(`${process.env.REACT_APP_SERVER_URL}/register`, payload.newUser);
           return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
 
@@ -87,13 +87,14 @@ const userSlice =createSlice({
           },
           [__addUsers.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.users = action.payload
+            state.users = action.payload.newUser
             alert("회원가입 성공!")
+            action.payload.next()
           },
           [__addUsers.rejected]: (state, action) => {
             state.isLoading = false; 
             state.error = action.payload; 
-            alert("회원가입 실패")
+            alert("회원가입 실패. 입력한 정보를 확인해주세요")
           },
           [__checkUserId.pending]: (state) => {
             state.isLoading = true;
