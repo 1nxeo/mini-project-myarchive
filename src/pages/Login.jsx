@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
-import Button from "../components/Button";
-import Header from "../components/Header";
-import Input from "../components/Input";
-import Nav from "../components/Nav";
 import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
-// import { cookies } from "../shared/cookies";
 import { __loginUser } from "../redux/modules/userSlice";
 import { cookies } from "../shared/cookies";
 import WinWrapper from "../components/WinWrapper";
 import styled from "styled-components";
-import WinInput from "../components/WinInput";
-// import apis from "../shared/axios";
 
 function Login() {
   const navigate = useNavigate();
@@ -24,6 +16,7 @@ function Login() {
     accountId: "",
     password: "",
   });
+
   const token = cookies.get("token");
 
   useEffect(() => {
@@ -42,7 +35,6 @@ function Login() {
         },
       })
     );
-    // navigate("/");
     setUserInfo({ accountId: "", password: "" });
   };
 
@@ -52,8 +44,6 @@ function Login() {
       <WinWrapper
         style={{ width: "400px", height: "300px", marginTop: "230px" }}
       >
-        {/* <Nav /> */}
-        {/* <Header /> */}
         <StForm onSubmit={(e) => submitLoginHandler(e)}>
           <FormWrapper>
             <div>ID:</div>
@@ -127,7 +117,6 @@ const FormWrapper = styled.div`
 `;
 
 const StForm = styled.form`
-  /* border: 1px solid; */
   height: 260px;
   width: 300px;
   display: flex;

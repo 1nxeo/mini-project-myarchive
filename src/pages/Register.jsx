@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
-import Nav from "../components/Nav";
 import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
 import styled from "styled-components";
-import Input from "../components/Input";
-import Button from "../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import {
   __addUsers,
   __checkUserId,
   __checkUserNick,
-  __loginUser,
 } from "../redux/modules/userSlice";
 import { useNavigate } from "react-router-dom";
 import WinWrapper from "../components/WinWrapper";
@@ -20,7 +15,6 @@ import { cookies } from "../shared/cookies";
 function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const users = useSelector((state) => state.users);
 
   useEffect(() => {
     if (cookies.get("adminToken")) {
@@ -74,13 +68,14 @@ function Register() {
       checkValidId(newUser.accountId) &&
       checkValidId(newUser.password)
     ) {
-      try {
-        await dispatch(__addUsers(newUser));
-        // await dispatch(__loginUser(newUser));
-        return navigate("/login");
-      } catch (err) {
-        return alert("입력한 정보를 확인해주세요");
-      }
+      await dispatch(
+        __addUsers({
+          newUser,
+          next: () => {
+            navigate("/login");
+          },
+        })
+      );
     } else {
       alert("입력한 정보를 확인해주세요");
     }

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import Header from "../components/Header";
 import Nav from "../components/Nav";
+import ErrorMessage from "../components/ErrorMessage";
 import Wrapper from "../components/Wrapper";
 import GlobalStyle from "../GlobalStyle";
 import Category from "../components/Category";
@@ -42,6 +42,14 @@ function Mypage() {
       dispatch(changeCates("notdone"));
     };
   }, [memberPost]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <ErrorMessage>{error.message}</ErrorMessage>;
+  }
 
   return (
     <Wrapper>
