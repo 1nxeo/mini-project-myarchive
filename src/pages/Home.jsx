@@ -15,6 +15,7 @@ import ErrorMessage from "../components/ErrorMessage";
 import { cookies } from "../shared/cookies";
 import WinWrapper from "../components/WinWrapper";
 import NotepadIcon from "../components/icons/NotepadIcon";
+import WinFooter from "../components/WinFooter";
 
 function Home() {
   const navigate = useNavigate();
@@ -27,6 +28,9 @@ function Home() {
   const postItems = [...posts];
 
   const nick = cookies.get("nick");
+  const linkGitHubHandler = (url) => {
+    window.open(url);
+  };
 
   useEffect(() => {
     if (cookies.get("adminToken")) {
@@ -50,7 +54,7 @@ function Home() {
         <GlobalStyle />
         <Nav />
         {/* <Header /> */}
-        <div style={{ overflow: "scroll" }}>
+        <div>
           <ContentNav>
             <Category />
             {nick ? (
@@ -77,6 +81,7 @@ function Home() {
               : null}
           </CardsWrapper>
         </div>
+        <WinFooter />
       </WinWrapper>
     </Wrapper>
   );
@@ -91,10 +96,12 @@ const ContentNav = styled.div`
 export const CardsWrapper = styled.div`
   width: 1000px;
   max-height: 480px;
+  min-height: 480px;
 
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
+  overflow: scroll;
 
   gap: 20px;
 `;
