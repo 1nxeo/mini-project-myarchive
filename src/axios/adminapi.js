@@ -17,7 +17,6 @@ instance.interceptors.request.use(
   // 요청을 보내기 전 수행되는 함수
   function (config) {
     config.headers["authorization"] = `Bearer ${token}`;
-    // alert(config.headers.authorization)
     return config
   },
 
