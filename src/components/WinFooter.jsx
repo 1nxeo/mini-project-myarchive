@@ -57,6 +57,7 @@ function WinFooter() {
 const FooterWrapper = styled.div`
   width: 100%;
   display: flex;
+  margin-top: 10px;
 `;
 
 export default WinFooter;

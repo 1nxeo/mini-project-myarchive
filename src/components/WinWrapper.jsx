@@ -6,10 +6,13 @@ import GlobalStyle from "../GlobalStyle";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { changeCates } from "../redux/modules/cateSlice";
+import { cookies } from "../shared/cookies";
 
 function WinWrapper({ children, ...rest }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const nick = cookies.get("nick");
 
   return (
     <Wrapper>
@@ -34,7 +37,9 @@ function WinWrapper({ children, ...rest }) {
           }}
         >
           <div className="title-bar-text" style={{ fontSize: "15px" }}>
-            My Archive
+            <span style={{ fontFamily: "DungGeunMo, sans-serif" }}>
+              {nick ? `Archive # ${nick}` : `Undefined Archive`}
+            </span>
           </div>
           <div className="title-bar-controls">
             <button aria-label="Minimize" />
