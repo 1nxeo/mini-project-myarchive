@@ -119,11 +119,7 @@ function Detail() {
       <WinWrapper>
         <Nav />
         <DetailWrapper>
-          <div
-            style={{
-              height: "600px",
-            }}
-          >
+          <div>
             <div style={{ justifyContent: "center" }}>
               {" "}
               <StImg src={`${postItem?.img}`} />
@@ -286,7 +282,7 @@ function Detail() {
 
 const DetailWrapper = styled.div`
   width: 100%;
-  height: 400px;
+  height: 500px;
   /* display: flex; */
   /* border: 1px solid; */
   display: grid;
