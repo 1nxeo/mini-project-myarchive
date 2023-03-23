@@ -33,11 +33,14 @@ function Login() {
     }
   }, [token]);
 
-  const submitLoginHandler = async (e) => {
+  const submitLoginHandler = (e) => {
     e.preventDefault();
-    await dispatch(__loginUser({ userInfo }));
-    // navigate("/");
-    setUserInfo({ accountId: "", password: "" });
+    dispatch(__loginUser({ userInfo })).then(() => {
+      navigate("/");
+      setUserInfo({ accountId: "", password: "" }).catch((err) => {
+        alert("입력한 내용을 확인해주세요!");
+      });
+    });
   };
 
   return (

@@ -6,12 +6,12 @@ import { cookies } from "../shared/cookies";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/modules/userSlice";
 import { changeCates } from "../redux/modules/cateSlice";
-import WinButton from "../pages/WinButton";
-import StartIcon from "./StartIcon";
-import RecycleBinIcon from "./RecycleBinIcon";
-import SmileIcon from "./SmileIcon";
-import LoginIcon from "./LoginIcon";
-import RegisterIcon from "./RegisterIcon";
+import WinButton from "./WinButton";
+import StartIcon from "./icons/StartIcon";
+import RecycleBinIcon from "./icons/RecycleBinIcon";
+import SmileIcon from "./icons/SmileIcon";
+import LoginIcon from "./icons/LoginIcon";
+import RegisterIcon from "./icons/RegisterIcon";
 
 function Nav() {
   const navigate = useNavigate();
